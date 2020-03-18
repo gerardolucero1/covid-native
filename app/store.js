@@ -1,16 +1,28 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import Home from './components/pages/Home.vue'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
+	state: {
+	  	user: null,
+      token: null
+	},
 
-  },
-  mutations: {
+  	mutations: {
+  		updateUser(state, payload){
+  			state.user = payload
+  		},
 
-  },
-  actions: {
+		updateToken(state, payload){
+			state.token = payload
+		}
+	},
 
-  }
+  	actions: {
+		
+  	}
 });
+

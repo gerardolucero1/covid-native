@@ -1,2 +1,10 @@
 // Global SCSS styling
 // @see https://docs.nativescript.org/ui/styling
+
+* {
+    font-family: "Roboto";
+}
+
+.font-awesome {
+    font-family: "fa-solid-900";
+}
