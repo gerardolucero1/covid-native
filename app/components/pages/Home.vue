@@ -19,6 +19,8 @@
                                 <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
                                 <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
                             </FlexboxLayout>
+
+                            <Label v-if="origin" :text="locationDescription" textWrap="true" />
                         </StackLayout>
 
                         <StackLayout>
@@ -150,13 +152,19 @@ export default {
                 latitude: 0, 
                 longitude: 0 
             },
-            api_key: 'api_key',
+            newOrigin: {
+                latitude: 0, 
+                longitude: 0 
+            },
+            api_key: 'AIzaSyCB9_lFAa3pH2-aluiAEMWNnaZPiv9qGSk',
             infoDirection: {
                 direction: 'No se puede obtener tu direccion...',
                 country: '',
                 state: ''
             },
-            permissions: false,
+            breakTime: false,
+            watchId: '',
+            saveUbicationVar: '',
         }
     },
 
@@ -183,13 +191,80 @@ export default {
         }
     },
 
+    watch: {
+        'origin.latitude': function (newVal, oldVal) {
+            let number_1 = this.truncarNumbers(oldVal, 3)
+            let number_2 = this.truncarNumbers(newVal, 3)
+
+            console.log(number_1)
+            console.log(number_2)
+
+            if(number_1 != number_2){
+                if(this.breakTime){
+                    clearTimeout(this.saveUbicationVar)
+                    this.breakTime = false
+                }
+                this.getNewUbication()
+            }
+        },
+
+        'origin.longitude': function (newVal, oldVal) {
+            let number_1 = this.truncarNumbers(oldVal, 3)
+            let number_2 = this.truncarNumbers(newVal, 3)
+
+            console.log(number_1)
+            console.log(number_2)
+
+            if(number_1 != number_2){
+                if(this.breakTime){
+                    clearTimeout(this.saveUbicationVar)
+                    this.breakTime = false
+                }
+                this.getNewUbication()
+            }
+        },
+    },
+
     computed: {
         ...mapState([
                 'user'
             ]),
+
+        locationDescription() {
+            return `You are at ${this.origin.latitude}, ${this.origin.longitude}.`;
+        }
     },
 
     methods: {
+        //Truncar numeros
+        truncarNumbers(x, posiciones = 0) {
+            var s = x.toString()
+            var l = s.length
+            var decimalLength = s.indexOf('.') + 1
+
+            if (l - decimalLength <= posiciones){
+                return x
+            }
+            // Parte decimal del número
+            var isNeg  = x < 0
+            var decimal =  x % 1
+            var entera  = isNeg ? Math.ceil(x) : Math.floor(x)
+            // Parte decimal como número entero
+            // Ejemplo: parte decimal = 0.77
+            // decimalFormated = 0.77 * (10^posiciones)
+            // si posiciones es 2 ==> 0.77 * 100
+            // si posiciones es 3 ==> 0.77 * 1000
+            var decimalFormated = Math.floor(
+                Math.abs(decimal) * Math.pow(10, posiciones)
+            )
+            // Sustraemos del número original la parte decimal
+            // y le sumamos la parte decimal que hemos formateado
+            var finalNum = entera + 
+                ((decimalFormated / Math.pow(10, posiciones))*(isNeg ? -1 : 1))
+            
+            return finalNum
+        },
+
         //Geolocalizacion
         getLocation(){
             //Loader activate
@@ -205,6 +280,7 @@ export default {
                     this.origin.longitude = location.longitude
 
                     this.reverseGeo()
+                    this.watchLocation()
                 }
             }, (e) => {
                 console.log(e);
@@ -217,6 +293,8 @@ export default {
                 this.infoDirection.country = r.results[0].address_components[6].long_name
                 this.infoDirection.state = r.results[0].address_components[5].long_name
 
+                this.saveUbication()
+
                 //Loader deactivate
                 loader.hide()
             }, (e) => {
@@ -224,16 +302,52 @@ export default {
             });
         },
 
-        //Exit
-        logout(){
-            firebase.logout()
-
-            this.$navigateTo(Login, {
-                animated: true,
-                transition: {
-                    name: 'fade',
+        async watchLocation(){
+            try {
+                this.watchId = await geolocation.watchLocation(
+                loc => {
+                    if (loc) {
+                        this.origin.latitude = loc.latitude
+                        this.origin.longitude = loc.longitude
+                    }
                 },
-            })
+                e => {
+                    console.log(e)
+                    alert(ErrorFormatter(e))
+                },
+                {
+                    desiredAccuracy: Accuracy.HIGH,
+                    updateDistance: 1,
+                    updateTime: 3000,
+                    minimumUpdateTime: 100
+                }
+                )
+
+            } catch (ex) {
+                console.log(ex)
+                alert(ErrorFormatter(ex))
+            }
+        },
+
+        //Save de new location
+        getNewUbication(){
+            this.breakTime = true
+            this.saveUbicationVar = setTimeout(() => {
+                //Obtenemos la ubicacion
+                this.getLocation()
+                
+            }, 2000)
+        },
+
+        async saveUbication(){
+            try {
+                let response = await firebase.firestore.collection('user_locations')
+                                                        .doc(this.user.uid)
+                                                        .update({locations: firebase.firestore.FieldValue.arrayUnion(this.infoDirection.direction)})
+                this.breakTime = false
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }
