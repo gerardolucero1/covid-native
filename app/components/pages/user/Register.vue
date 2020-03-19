@@ -10,7 +10,7 @@
 
                 <Button text="Registrarse" borderRadius="20" backgroundColor="white" marginTop="20" color="black" @tap="createUser" />
                 
-                <Label text="Ya tienes una cuenta? Inicia sesion" marginTop="20" textWrap="true" horizontalAlignment="center" />
+                <Label text="¿Ya tienes una cuenta? Inicia sesion" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToLogin" />
                 
                 <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
                 <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" />
@@ -26,6 +26,7 @@ const firebase = require("nativescript-plugin-firebase")
 
 //Pages
 import Home from '../Home.vue'
+import Login from '../user/Login'
 
 export default {
     name: 'Login',
@@ -48,6 +49,11 @@ export default {
     },
 
     methods: {
+        //Router
+        goToLogin(){
+            this.$navigateTo(Login)
+        },
+
         //Show password
         showHidePassword(){
             console.log(this.$refs.pw.nativeView.secure)
@@ -66,7 +72,8 @@ export default {
                     let user = {
                             uid: response.uid,
                             nombre: 'User-' + response.uid,
-                            email: this.user.email
+                            email: this.user.email,
+                            infection: false,
                         }
 
                     if(response.additionalUserInfo.isNewUser){
@@ -95,7 +102,8 @@ export default {
                     let user = {
                         uid: response.uid,
                         name: response.displayName,
-                        email: response.additionalUserInfo.profile.email
+                        email: response.additionalUserInfo.profile.email,
+                        infection: false,
                     }
 
                     if(response.additionalUserInfo.isNewUser){
@@ -125,7 +133,8 @@ export default {
                     let user = {
                         uid: response.uid,
                         name: response.displayName,
-                        email: response.additionalUserInfo.profile.email
+                        email: response.additionalUserInfo.profile.email,
+                        infection: false,
                     }
 
                     if(response.additionalUserInfo.isNewUser){

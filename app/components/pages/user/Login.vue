@@ -138,7 +138,8 @@ export default {
                     let user = {
                         uid: response.uid,
                         name: response.displayName,
-                        email: response.additionalUserInfo.profile.email
+                        email: response.additionalUserInfo.profile.email,
+                        infection: false,
                     }
 
                     if(response.additionalUserInfo.isNewUser){
@@ -168,7 +169,8 @@ export default {
                     let user = {
                         uid: response.uid,
                         name: response.displayName,
-                        email: response.additionalUserInfo.profile.email
+                        email: response.additionalUserInfo.profile.email,
+                        infection: false,
                     }
 
                     if(response.additionalUserInfo.isNewUser){
