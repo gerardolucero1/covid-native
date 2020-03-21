@@ -66,6 +66,11 @@
                 <Label color="black" fontSize="13" class="drawer-item" text="Añadir Ubicacion"/>
             </FlexboxLayout>
 
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToDashboard">
+                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label color="black" fontSize="13" class="drawer-item" text="Infecciones"/>
+            </FlexboxLayout>
+
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Salir"/>
@@ -87,6 +92,7 @@ import { mapState } from 'vuex'
 
 //Pages
 import Login from '../pages/user/Login'
+import Dashboard from '../pages/user/Dashboard'
 
 export default {
     name: 'Navbar',
@@ -108,6 +114,15 @@ export default {
             firebase.logout()
 
             this.$navigateTo(Login, {
+                animated: true,
+                transition: {
+                    name: 'fade',
+                },
+            })
+        },
+
+        goToDashboard(){
+            this.$navigateTo(Dashboard, {
                 animated: true,
                 transition: {
                     name: 'fade',

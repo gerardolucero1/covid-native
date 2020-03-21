@@ -7,3 +7,6 @@ node_modules
 # NativeScript application
 hooks
 platforms
+
+# Api Key
+app/components/key.js

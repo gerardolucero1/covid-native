@@ -110,6 +110,9 @@ import axios from 'axios'
 //HTTP
 const httpModule = require("tns-core-modules/http");
 
+//API KEY
+import apiKeyHelper from '../key.js'
+
 //Loader
 const LoadingIndicator = require('@nstudio/nativescript-loading-indicator').LoadingIndicator;
 const Mode = require('@nstudio/nativescript-loading-indicator').Mode;
@@ -156,17 +159,21 @@ export default {
                 latitude: 0, 
                 longitude: 0 
             },
-            api_key: 'AIzaSyCB9_lFAa3pH2-aluiAEMWNnaZPiv9qGSk',
             infoDirection: {
                 direction: 'No se puede obtener tu direccion...',
                 country: '',
-                state: ''
+                state: '',
+                placeId: '',
             },
             breakTime: false,
             watchId: '',
             saveUbicationVar: '',
         }
     },
+
+    mixins: [ 
+        apiKeyHelper,
+    ],
 
     created(){
         /* list of permissions needed */
@@ -287,12 +294,15 @@ export default {
             })
         },
 
+        //Obtenemos la direccion por medio de las coordenadas dadas
         reverseGeo(){
-            httpModule.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origin.latitude},${this.origin.longitude}&key=${this.api_key}`).then((r) => {
+            httpModule.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origin.latitude},${this.origin.longitude}&key=${this.apiKey}`).then((r) => {
                 this.infoDirection.direction = r.results[0].formatted_address
                 this.infoDirection.country = r.results[0].address_components[6].long_name
                 this.infoDirection.state = r.results[0].address_components[5].long_name
+                this.infoDirection.placeId = r.results[0].place_id
 
+                //Despues de obtener la direccion nos dirigimos a guardarla en la BDD
                 this.saveUbication()
 
                 //Loader deactivate
@@ -329,21 +339,94 @@ export default {
             }
         },
 
-        //Save de new location
+        //Iniciamos un contador de 10 segundos, despues de eso obtenemos la posicion actual
         getNewUbication(){
             this.breakTime = true
             this.saveUbicationVar = setTimeout(() => {
                 //Obtenemos la ubicacion
                 this.getLocation()
                 
-            }, 2000)
+            }, 10000)
         },
 
+        //Antes de guardar la nueva direccion primero verificamos si el usuario ya ha visitado ese lugar
         async saveUbication(){
             try {
+
+                //Generamos un objeto con los datos de la ubicacion
+                let ubication = {
+                    name: this.infoDirection.direction,
+                    dates: [
+                        {
+                            createdAt: new Date(),
+                            updatedAt: null,
+                        }
+                    ],
+                    placeId: this.infoDirection.placeId,
+                }
+                
+                //Obtenemos el documento que corresponde a la direccion que queremos almacenar
                 let response = await firebase.firestore.collection('user_locations')
                                                         .doc(this.user.uid)
-                                                        .update({locations: firebase.firestore.FieldValue.arrayUnion(this.infoDirection.direction)})
+                                                        .collection('places')
+                                                        .doc(ubication.placeId)
+                                                        .get()
+
+                //Si el usuario ya ha visitado esa direccion procedemos a actualizarla, de caso contrario
+                //guardaremos la direccion como un nuevo registro
+                if(response.exists){
+                    this.updateUbication(ubication.placeId)
+                }else{
+                    this.addNewUbication(ubication.placeId)
+                }
+                
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        //Si el usuario no habia visitado essa direccion la guardamos como un registro nuevo
+        async addNewUbication(id){
+            try {
+                let ubication = {
+                    name: this.infoDirection.direction,
+                    dates: [
+                        {
+                            createdAt: new Date(),
+                            updatedAt: null,
+                        }
+                    ],
+                    placeId: this.infoDirection.placeId,
+                }
+
+                let response = await firebase.firestore.collection('user_locations')
+                                                        .doc(this.user.uid)
+                                                        .collection('places')
+                                                        .doc(id)
+                                                        .set(ubication)
+
+                this.breakTime = false
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        //Si el usuario ya haia visitado esa direccion procedemos entonces a actualizar los registros 
+        //de visita del lugar, agregando una nueva hora
+        async updateUbication(id){
+            try {
+
+                let date = {
+                    createdAt: new Date(),
+                    updatedAt: null,
+                }
+
+                let response = await firebase.firestore.collection('user_locations')
+                                                        .doc(this.user.uid)
+                                                        .collection('places')
+                                                        .doc(id)
+                                                        .update({dates: firebase.firestore.FieldValue.arrayUnion(date)})
+
                 this.breakTime = false
             } catch (error) {
                 console.log(error)
