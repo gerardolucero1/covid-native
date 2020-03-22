@@ -20,7 +20,7 @@
                                 <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
                             </FlexboxLayout>
 
-                            <Label v-if="origin" :text="locationDescription" textWrap="true" />
+                            <!-- <Label v-if="origin" :text="locationDescription" textWrap="true" /> -->
                         </StackLayout>
 
                         <StackLayout>
@@ -29,7 +29,8 @@
                                 <Label text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
                             </FlexboxLayout>
 
-                            <Label text="SIN EXPOSICION" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                            <Label v-if="!user.infection" text="SIN EXPOSICION" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                            <Label v-else text="EXPUESTO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" color="red" />
                             
                             <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
                             <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
@@ -81,6 +82,11 @@
                                     </FlexboxLayout>
                                 </GridLayout>
                             </StackLayout>
+
+                            <StackLayout width="100%" marginTop="20">
+                                <Button text="Analizar" @tap="getInfectedLocations" backgroundColor="black" color="white" width="100%" />
+                                
+                            </StackLayout>
                         </StackLayout>
                     </WrapLayout>
                 </ScrollView>
@@ -112,6 +118,14 @@ const httpModule = require("tns-core-modules/http");
 
 //API KEY
 import apiKeyHelper from '../key.js'
+
+//Moment
+let moment = require('moment')
+
+//Local notification
+import { LocalNotifications } from "nativescript-local-notifications";
+import { alert } from "tns-core-modules/ui/dialogs";
+import { Color } from "tns-core-modules/color";
 
 //Loader
 const LoadingIndicator = require('@nstudio/nativescript-loading-indicator').LoadingIndicator;
@@ -155,10 +169,6 @@ export default {
                 latitude: 0, 
                 longitude: 0 
             },
-            newOrigin: {
-                latitude: 0, 
-                longitude: 0 
-            },
             infoDirection: {
                 direction: 'No se puede obtener tu direccion...',
                 country: '',
@@ -168,6 +178,9 @@ export default {
             breakTime: false,
             watchId: '',
             saveUbicationVar: '',
+            infectedLocations: [],
+            userLocations: [],
+            flag: false,
         }
     },
 
@@ -230,6 +243,10 @@ export default {
                 this.getNewUbication()
             }
         },
+
+        // userLocations(){
+        //     this.getDatesInfection()
+        // }
     },
 
     computed: {
@@ -243,6 +260,7 @@ export default {
     },
 
     methods: {
+
         //Truncar numeros
         truncarNumbers(x, posiciones = 0) {
             var s = x.toString()
@@ -431,7 +449,139 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-        }
+        },
+
+        //Obtenemos las zonas infectadas hasta el momento, y despues pasamos a compararlas con
+        //las ubicaciones del usuario
+        async getInfectedLocations(){
+            this.infectedLocations = []
+            this.userLocations = []
+            try {
+                let response = await firebase.firestore.collection('infected_locations')
+                                                            .get()
+                                                            .then((query) => {
+                                                                query.forEach((doc) => {
+                                                                    this.infectedLocations.push(doc.data())
+                                                                })
+                                                            })
+
+                this.getUserLocations()
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        //Obtenemos las ubicaciones en las que ha estado el usuario que han estado infectadas
+        getUserLocations(){
+            this.infectedLocations.forEach(async (doc, index) => {
+                let response = await firebase.firestore.collection('user_locations')
+                                                        .doc(this.user.uid)
+                                                        .collection('places')
+                                                        .doc(doc.placeId)
+                                                        .get()
+
+                if(response.exists){
+                    this.userLocations.push(response.data())
+                }
+            })
+
+            setTimeout(() => {
+                this.getDatesInfection();
+            }, 10000)
+        },
+
+        //Si detectamos una zona infectada dentro de las ubicaciones del usuario, pasamos
+        //a verificar las fechas de infeccion
+        getDatesInfection(){
+            try {
+                this.userLocations.forEach((doc) => {
+                    let ubicationFound = this.infectedLocations.find((document) => {
+                        return document.placeId == doc.placeId
+                    })
+
+                    //Si encuentra una ubicacion
+                    if(ubicationFound != undefined){
+                        doc.dates.forEach((val, index) => {
+                            let date_1 = moment(val.createdAt).format('L')
+                            let dateFound = ubicationFound.dates.find((value, index) => {
+                                let date_2 = moment(value.createdAt).format('L')
+                                return date_1 == date_2
+                            })
+
+                            //Si encuentra una fecha
+                            if(dateFound != undefined){
+                                let diff_1 = moment(val.createdAt)
+                                let diff_2 = moment(dateFound.createdAt)
+
+                                console.log(moment(val.createdAt).format('LT'))
+                                console.log(moment(dateFound.createdAt).format('LT'))
+                                //Calcular la diferencia entre las horas
+                                // let hour_1 = moment(val.createdAt)
+                                // var hour_2 = moment(dateFound.createdAt)
+
+                                let duration = moment.duration(diff_1.diff(diff_2))
+                                let diference = duration.asMinutes()
+                                
+                                if(Math.sign(diference) == (-1)){
+                                    diference = diference * (-1)
+                                }
+                                console.log(diference)
+
+                                if(diference < 10){
+                                    this.getNotification()
+                                }
+
+                            }
+                        })
+                    }
+                    
+                })
+            } catch (error) {
+                console.log(error)
+            }
+            
+        },
+
+        //Lanzamos la notificacion de aviso de infeccion
+        getNotification() {
+            LocalNotifications.schedule(
+                [{
+                    id: 1,
+                    title: 'Alerta de infeccion',
+                    subtitle: 'Posible riesgo de infeccion',
+                    body: 'Se detecto que una de las zonas que visitaste recientemente pudiera haber estado en contacto con una persona infectada',
+                    bigTextStyle: false,
+                    color: new Color("green"),
+                    //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
+                    thumbnail: "https://apprecs.org/ios/images/app-icons/256/b9/1331737785.jpg",
+                    forceShowWhenInForeground: true,
+                    channel: "vue-channel",
+                    ticker: "Special ticker text for Vue (Android only)",
+                    at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
+                    actions: [
+                        {
+                            id: "yes",
+                            type: "button",
+                            title: "Entendido",
+                            launch: true
+                        },
+                        {
+                            id: "no",
+                            type: "button",
+                            title: "Ignorar",
+                            launch: false
+                        }
+                    ]
+                }])
+                    // .then(() => {
+                    //     alert({
+                    //         title: "Notification scheduled",
+                    //         message: "ID: 1",
+                    //         okButtonText: "OK, thanks"
+                    //     });
+                    // })
+                    // .catch(error => console.log("doSchedule error: " + error));
+        },
     }
 }
 </script>

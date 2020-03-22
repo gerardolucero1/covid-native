@@ -21,6 +21,7 @@
     "moment": "^2.24.0",
     "nativescript-datetimepicker": "^1.2.2",
     "nativescript-geolocation": "^5.1.0",
+    "nativescript-local-notifications": "^4.2.0",
     "nativescript-plugin-firebase": "^10.5.0",
     "nativescript-socketio": "^3.3.1",
     "nativescript-toasty": "^1.4.0",
