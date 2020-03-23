@@ -51,6 +51,7 @@ Vue.config.silent = (TNS_ENV === 'production')
 Vue.config.debug = (TNS_ENV !== 'production')
 
 Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer)
+Vue.registerElement('MLKitBarcodeScanner', () => require('nativescript-plugin-firebase/mlkit/barcodescanning').MLKitBarcodeScanner)
 Vue.component('Sidedrawer', Sidedrawer)
 Vue.component('Actionbar', Actionbar)
 Vue.use(DateTimePicker)

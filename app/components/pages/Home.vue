@@ -315,10 +315,18 @@ export default {
         //Obtenemos la direccion por medio de las coordenadas dadas
         reverseGeo(){
             httpModule.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origin.latitude},${this.origin.longitude}&key=${this.apiKey}`).then((r) => {
-                this.infoDirection.direction = r.results[0].formatted_address
-                this.infoDirection.country = r.results[0].address_components[6].long_name
-                this.infoDirection.state = r.results[0].address_components[5].long_name
-                this.infoDirection.placeId = r.results[0].place_id
+                if(r.results[0].address_components.length == 6){
+                    this.infoDirection.direction = r.results[0].formatted_address
+                    this.infoDirection.country = r.results[0].address_components[5].long_name
+                    this.infoDirection.state = r.results[0].address_components[4].long_name
+                    this.infoDirection.placeId = r.results[0].place_id
+                }else{
+                    this.infoDirection.direction = r.results[0].formatted_address
+                    this.infoDirection.country = r.results[0].address_components[6].long_name
+                    this.infoDirection.state = r.results[0].address_components[5].long_name
+                    this.infoDirection.placeId = r.results[0].place_id
+                }
+                
 
                 //Despues de obtener la direccion nos dirigimos a guardarla en la BDD
                 this.saveUbication()

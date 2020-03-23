@@ -49,26 +49,31 @@
                 <Label color="black" fontSize="13" class="drawer-item" text="Inicio" />
             </FlexboxLayout>
 
-            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center">
+            <!-- <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Global" />
-            </FlexboxLayout>
+            </FlexboxLayout> -->
 
-            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center">
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToRecomendations">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Informacion" />
             </FlexboxLayout>
 
             <StackLayout class="line" marginTop="20" />
 
-            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
+            <!-- <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Añadir Ubicacion"/>
-            </FlexboxLayout>
+            </FlexboxLayout> -->
 
             <FlexboxLayout v-if="user.userType == 'admin'" class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToDashboard">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Infecciones"/>
+            </FlexboxLayout>
+
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToQR">
+                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label color="black" fontSize="13" class="drawer-item" text="Compartir ID"/>
             </FlexboxLayout>
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
@@ -92,7 +97,10 @@ import { mapState } from 'vuex'
 
 //Pages
 import Login from '../pages/user/Login'
+import QR from '../pages/user/QR'
 import Home from '../pages/Home'
+import Recomendations from '../pages/Recomendations'
+import Global from '../pages/Global'
 import Dashboard from '../pages/user/Dashboard'
 
 export default {
@@ -124,6 +132,33 @@ export default {
 
         goToDashboard(){
             this.$navigateTo(Dashboard, {
+                animated: true,
+                transition: {
+                    name: 'fade',
+                },
+            })
+        },
+
+        goToQR(){
+            this.$navigateTo(QR, {
+                animated: true,
+                transition: {
+                    name: 'fade',
+                },
+            })
+        },
+
+        goToGlobal(){
+            this.$navigateTo(Global, {
+                animated: true,
+                transition: {
+                    name: 'fade',
+                },
+            })
+        },
+
+        goToRecomendations(){
+            this.$navigateTo(Recomendations, {
                 animated: true,
                 transition: {
                     name: 'fade',

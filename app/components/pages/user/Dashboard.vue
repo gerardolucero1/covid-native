@@ -15,6 +15,18 @@
                         <StackLayout orientation="vertical">
                             <TextField hint="User number" text="" fontSize="12" marginTop="20" v-model="uid" width="100%" />
                             <Button text="Obtener" @tap="getUser" width="100%" />
+
+                            <MLKitBarcodeScanner
+                                v-if="camera"
+                                width="260"
+                                height="380"
+                                beepOnScan="true"
+                                formats="QR_CODE, EAN_8, EAN_13"
+                                preferFrontCamera="false"
+                                supportInverseBarcodes="false"
+                                @scanResult="getQRResult($event)">
+                            </MLKitBarcodeScanner>
+                            <Button text="Camara" @tap="camera = !camera" width="100%" />
                         </StackLayout>
 
                         <StackLayout v-if="userData != null" marginTop="20">
@@ -68,6 +80,13 @@ import { mapState } from 'vuex'
 //HTTP
 const httpModule = require("tns-core-modules/http");
 
+//Access permissions
+import * as permissions from 'nativescript-permissions'
+import * as platform from 'platform'
+
+//Camera firebase
+import { BarcodeFormat, MLKitScanBarcodesOnDeviceResult } from "nativescript-plugin-firebase/mlkit/barcodescanning";
+
 //Loader
 const LoadingIndicator = require('@nstudio/nativescript-loading-indicator').LoadingIndicator;
 const Mode = require('@nstudio/nativescript-loading-indicator').Mode;
@@ -110,14 +129,27 @@ export default {
 
     data(){
         return{
-            uid: 'zBujRyClYTMym8lZsePuvxecwAr2',
+            uid: '',
             userData: null,
             ubications: [],
+            camera: true,
         }
     },
 
     created(){
+        /* list of permissions needed */
+        let permissionsNeeded = [
+            android.Manifest.permission.CAMERA,
+        ]
 
+        /* showing up permissions dialog */
+        permissions
+            .requestPermissions(permissionsNeeded, "Give it to me!")
+            .then(() => {
+                this.allowExecution = true
+                this.getLocation()
+            })
+            .catch(() => this.allowExecution = false)
     },
 
     mounted(){
@@ -143,6 +175,16 @@ export default {
     },
 
     methods: {
+        //Lector QR
+        getQRResult(args){
+            if(args.value.barcodes[0] != undefined){
+                console.log(args.value.barcodes[0].value)
+                this.uid = args.value.barcodes[0].value
+                this.camera = false
+            }
+
+        },
+
         //Obtenemos al usuario seleccionado
         async getUser(){
             try {
