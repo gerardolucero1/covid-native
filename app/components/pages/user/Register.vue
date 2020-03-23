@@ -69,20 +69,21 @@ export default {
                 })
 
                 if(response){
+
                     let user = {
                             uid: response.uid,
                             nombre: 'User-' + response.uid,
                             email: this.user.email,
                             infection: false,
+                            userType: 'user'
                         }
 
                     if(response.additionalUserInfo.isNewUser){
 
-                        firebase.firestore.collection('users').doc(user.uid).set(user)
+                        await firebase.firestore.collection('users').doc(user.uid).set(user)
                     }
 
-                    this.$store.commit('updateUser', user)
-                    this.$navigateTo(Home)
+                    this.getUser(response.uid)
 
                 }
             } catch(e) {
@@ -99,20 +100,25 @@ export default {
                 if(response){
                     console.log(JSON.stringify(response.additionalUserInfo.isNewUser))
 
-                    let user = {
-                        uid: response.uid,
-                        name: response.displayName,
-                        email: response.additionalUserInfo.profile.email,
-                        infection: false,
-                    }
-
                     if(response.additionalUserInfo.isNewUser){
 
-                        firebase.firestore.collection('users').doc(user.uid).set(user)
+                        let user = {
+                            uid: response.uid,
+                            name: response.displayName,
+                            email: response.additionalUserInfo.profile.email,
+                            infection: false,
+                            userType: 'user'
+                        }
+
+                        let locations = {
+                            locations: [],
+                        }
+
+                        await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
-                    this.$store.commit('updateUser', user)
-                    this.$navigateTo(Home)
+                    this.getUser(response.uid)
                 }
             }
             catch(e){
@@ -130,24 +136,44 @@ export default {
                 if(response){
                     console.log(JSON.stringify(response.additionalUserInfo.isNewUser))
 
-                    let user = {
-                        uid: response.uid,
-                        name: response.displayName,
-                        email: response.additionalUserInfo.profile.email,
-                        infection: false,
-                    }
-
                     if(response.additionalUserInfo.isNewUser){
+                        let user = {
+                            uid: response.uid,
+                            name: response.displayName,
+                            email: response.additionalUserInfo.profile.email,
+                            infection: false,
+                            userType: 'user'
+                        }
 
-                        firebase.firestore.collection('users').doc(user.uid).set(user)
+                        let locations = {
+                            locations: [],
+                        }
+
+                        await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
-                    this.$store.commit('updateUser', user)
-                    this.$navigateTo(Home)
+                    this.getUser(response.uid)
                 }
             }
             catch(e){
                 console.log(e)
+            }
+        },
+
+        //We get the user data from firebase
+        async getUser(uid){
+            try {
+                let response = await firebase.firestore.collection('users').doc(uid).get()
+
+                if(response.exists){
+                    let user = response.data()
+
+                    this.$store.commit('updateUser', user)
+                    this.$navigateTo(Home)
+                }
+            } catch (error) {
+                console.log(error)
             }
         },
     }
