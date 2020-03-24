@@ -83,7 +83,7 @@
         </StackLayout>
 
         <FlexboxLayout row="1" justifyContent="center" alignItems="center">
-            <Label color="#43809D" fontSize="20" fontWeight="bold" text="COVID-Native" />
+            <Label color="#43809D" fontSize="20" fontWeight="bold" text="PrevenApp" />
         </FlexboxLayout>
     </GridLayout>
 </template>

@@ -84,7 +84,7 @@
                             </StackLayout>
 
                             <StackLayout width="100%" marginTop="20">
-                                <Button text="Analizar" @tap="getInfectedLocations" backgroundColor="black" color="white" width="100%" />
+                                <Button text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" />
                                 
                             </StackLayout>
                         </StackLayout>
@@ -459,6 +459,17 @@ export default {
             }
         },
 
+        //Alert de iniciar analizis
+        startAnalysis(){
+            alert({
+                title: "Iniciar Analisis",
+                message: "Esto comenzara un analisis de tus ubicaciones, porfavor no cierres la aplicacion.",
+                okButtonText: "Entendido"
+            }).then(() => {
+                this.getInfectedLocations()
+            });
+        },
+
         //Obtenemos las zonas infectadas hasta el momento, y despues pasamos a compararlas con
         //las ubicaciones del usuario
         async getInfectedLocations(){
@@ -561,7 +572,7 @@ export default {
                     bigTextStyle: false,
                     color: new Color("green"),
                     //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
-                    thumbnail: "https://apprecs.org/ios/images/app-icons/256/b9/1331737785.jpg",
+                    thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
                     forceShowWhenInForeground: true,
                     channel: "vue-channel",
                     ticker: "Special ticker text for Vue (Android only)",
