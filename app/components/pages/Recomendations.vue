@@ -15,7 +15,9 @@
                         
                         <GridLayout rows="*, 2*" colums="*">
                             <StackLayout row="0" col="0">
-                                <Label text="RECOMENDACIONES" horizontalAlignment="center" marginTop="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                <Label text="CONSERVA LA CALMA" horizontalAlignment="center" marginTop="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                <Label text="ESTAS SON ALGUNAS RECOMENDACIONES A SEGUIR" textAlignment="center" marginTop="10" fontSize="16" textWrap="true" />
+                                
                             </StackLayout>
 
                             <StackLayout row="1" col="0">

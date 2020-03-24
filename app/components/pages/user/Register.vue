@@ -75,7 +75,8 @@ export default {
                             nombre: 'User-' + response.uid,
                             email: this.user.email,
                             infection: false,
-                            userType: 'user'
+                            userType: 'user',
+                            terms: false,
                         }
 
                     if(response.additionalUserInfo.isNewUser){
@@ -107,11 +108,8 @@ export default {
                             name: response.displayName,
                             email: response.additionalUserInfo.profile.email,
                             infection: false,
-                            userType: 'user'
-                        }
-
-                        let locations = {
-                            locations: [],
+                            userType: 'user',
+                            terms: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -142,11 +140,8 @@ export default {
                             name: response.displayName,
                             email: response.additionalUserInfo.profile.email,
                             infection: false,
-                            userType: 'user'
-                        }
-
-                        let locations = {
-                            locations: [],
+                            userType: 'user',
+                            terms: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)

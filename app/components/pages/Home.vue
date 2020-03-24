@@ -13,7 +13,7 @@
                 <ScrollView col="0" row="0">
                     <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
                         <StackLayout marginTop="20">
-                            <Label :text="'Hola, ' + user.name" fontSize="25" fontWeight="lighter" textWrap="true" horizontalAlignment="left" @tap="reverseGeo" />
+                            <Label :text="'Hola, ' + user.name" fontSize="25" fontWeight="lighter" textWrap="true" horizontalAlignment="left" />
                             <FlexboxLayout marginTop="10">
                                 <Label text="" class="font-awesome" textWrap="true" />
                                 <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
@@ -25,7 +25,7 @@
 
                         <StackLayout>
                             <FlexboxLayout marginTop="40">
-                                <Label text="" class="font-awesome" textWrap="true" />
+                                <Label text="" class="font-awesome" textWrap="true" />
                                 <Label text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
                             </FlexboxLayout>
 
@@ -159,6 +159,7 @@ const options = {
 
 //Pages
 import Login from './user/Login.vue'
+import Recomendations from '../pages/Recomendations'
 
 export default {
     name: 'Home',
@@ -203,6 +204,10 @@ export default {
                 this.getLocation()
             })
             .catch(() => this.allowExecution = false)
+
+        LocalNotifications.addOnMessageReceivedCallback(notificationData => {
+            this.$navigateTo(Recomendations)
+        });
     },
 
     mounted(){
@@ -473,6 +478,7 @@ export default {
         //Obtenemos las zonas infectadas hasta el momento, y despues pasamos a compararlas con
         //las ubicaciones del usuario
         async getInfectedLocations(){
+            console.log('1')
             this.infectedLocations = []
             this.userLocations = []
             try {
@@ -483,8 +489,8 @@ export default {
                                                                     this.infectedLocations.push(doc.data())
                                                                 })
                                                             })
-
                 this.getUserLocations()
+
             } catch (error) {
                 console.log(error)
             }
@@ -492,6 +498,7 @@ export default {
 
         //Obtenemos las ubicaciones en las que ha estado el usuario que han estado infectadas
         getUserLocations(){
+            console.log('2')
             this.infectedLocations.forEach(async (doc, index) => {
                 let response = await firebase.firestore.collection('user_locations')
                                                         .doc(this.user.uid)
@@ -512,6 +519,7 @@ export default {
         //Si detectamos una zona infectada dentro de las ubicaciones del usuario, pasamos
         //a verificar las fechas de infeccion
         getDatesInfection(){
+            console.log('3')
             try {
                 this.userLocations.forEach((doc) => {
                     let ubicationFound = this.infectedLocations.find((document) => {
@@ -549,9 +557,10 @@ export default {
                                 if(diference < 10){
                                     this.getNotification()
                                 }
-
                             }
                         })
+                    }else{
+                        console.log('No encontro ubicacion')
                     }
                     
                 })
@@ -566,16 +575,16 @@ export default {
             LocalNotifications.schedule(
                 [{
                     id: 1,
-                    title: 'Alerta de infeccion',
-                    subtitle: 'Posible riesgo de infeccion',
-                    body: 'Se detecto que una de las zonas que visitaste recientemente pudiera haber estado en contacto con una persona infectada',
+                    title: 'Alerta de exposicion',
+                    subtitle: 'Posible riesgo de exposicion',
+                    body: 'Se detecto que una de las zonas que visitaste recientemente pudiera haber estado expuesta.',
                     bigTextStyle: false,
                     color: new Color("green"),
                     //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
                     thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
                     forceShowWhenInForeground: true,
                     channel: "vue-channel",
-                    ticker: "Special ticker text for Vue (Android only)",
+                    ticker: "partnergrammer",
                     at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
                     actions: [
                         {

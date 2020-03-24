@@ -67,8 +67,8 @@
             </FlexboxLayout> -->
 
             <FlexboxLayout v-if="user.userType == 'admin'" class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToDashboard">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
-                <Label color="black" fontSize="13" class="drawer-item" text="Infecciones"/>
+                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label color="black" fontSize="13" class="drawer-item" text="Estado"/>
             </FlexboxLayout>
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToQR">

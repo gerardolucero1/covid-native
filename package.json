@@ -1,11 +1,11 @@
 {
-  "name": "covid",
+  "name": "prevenapp",
   "version": "1.0.0",
-  "description": "covid app",
+  "description": "Pandemic Track",
   "author": "Gerardo Lucero <34350583+gerardolucero1@users.noreply.github.com>",
   "license": "MIT",
   "nativescript": {
-    "id": "com.partnergrammer.covid",
+    "id": "com.partnergrammer.prevenapp",
     "templateVersion": "v2",
     "tns-android": {
       "version": "6.0.0"
@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@nstudio/nativescript-loading-indicator": "^3.0.3",
+    "@nstudio/nativescript-loading-indicator": "^3.0.4",
     "@vue/devtools": "^5.3.3",
     "axios": "^0.19.2",
     "moment": "^2.24.0",

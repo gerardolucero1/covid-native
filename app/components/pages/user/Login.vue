@@ -7,7 +7,7 @@
                 <TextField hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
                 <TextField hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
                 
-                <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" />
+                <!-- <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" /> -->
 
                 <Button text="Acceder" borderRadius="20" backgroundColor="white" marginTop="20" color="black" @tap="loginEmail" />
                 
@@ -28,6 +28,7 @@ const firebase = require("nativescript-plugin-firebase")
 //Pages
 import Home from '../Home.vue'
 import Register from '../user/Register.vue'
+import Terms from '../Terms'
 
 export default {
     name: 'Login',
@@ -91,11 +92,8 @@ export default {
                             name: this.user.email,
                             email: this.user.email,
                             infection: false,
-                            userType: 'user'
-                        }
-
-                        let locations = {
-                            locations: [],
+                            userType: 'user',
+                            terms: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -156,11 +154,8 @@ export default {
                             name: response.displayName,
                             email: response.additionalUserInfo.profile.email,
                             infection: false,
-                            userType: 'user'
-                        }
-
-                        let locations = {
-                            locations: [],
+                            userType: 'user',
+                            terms: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -191,11 +186,8 @@ export default {
                             name: response.displayName,
                             email: response.additionalUserInfo.profile.email,
                             infection: false,
-                            userType: 'user'
-                        }
-
-                        let locations = {
-                            locations: [],
+                            userType: 'user',
+                            terms: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -218,8 +210,14 @@ export default {
                 if(response.exists){
                     let user = response.data()
 
-                    this.$store.commit('updateUser', user)
-                    this.$navigateTo(Home)
+                    if(user.terms){
+                        this.$store.commit('updateUser', user)
+                        this.$navigateTo(Home)
+                    }else{
+                        this.$store.commit('updateUser', user)
+                        this.$navigateTo(Terms)
+                    }
+                    
                 }
             } catch (error) {
                 console.log(error)

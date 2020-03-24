@@ -32,8 +32,8 @@
                         <StackLayout v-if="userData != null" marginTop="20">
                             <Label :text="userData.name" textWrap="true" fontSize="25" horizontalAlignment="center" />
                             <StackLayout marginTop="15">
-                                <Label v-if="!userData.infection" text="NO INFECTADO" fontSize="20" fontWeight="bold" color="green" horizontalAlignment="center" textWrap="true" />
-                                <Label v-else text="INFECTADO" fontSize="20" fontWeight="bold" color="red" horizontalAlignment="center" textWrap="true" />
+                                <Label v-if="!userData.infection" text="NO EXPUESTO" fontSize="20" fontWeight="bold" color="green" horizontalAlignment="center" textWrap="true" />
+                                <Label v-else text="EXPUESTO" fontSize="20" fontWeight="bold" color="red" horizontalAlignment="center" textWrap="true" />
                             </StackLayout>
                             
                             <Button text="CAMBIAR" marginTop="20" backgroundColor="red" color="black" width="150" height="150" borderRadius="100" @tap="updateUser" />
