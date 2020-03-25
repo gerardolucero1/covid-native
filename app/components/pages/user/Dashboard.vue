@@ -53,15 +53,28 @@
                                         <Switch checked="false" @checkedChange="setDate(item)" />
                                         <Label :text="item.name" textWrap="true" />
                                     </StackLayout>
-                                    
-                                    <!-- <StackLayout v-if="item.show">
-                                        <DateTimePickerFields
-                                            hintDate="tap to choose date" hintTime="tap to choose time"
-                                            :minDate="minDatePicker" 
-                                            :maxDate="maxDatePicker"></DateTimePickerFields>
-                                    </StackLayout> -->
                                 </StackLayout>
+
                             </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout v-if="user.userType == 'webmaster'">
+                            <StackLayout>
+                                <Label text="Confirmados" textWrap="true" />
+                                <TextField hint="" text="" v-model="cases.confirmed" keyboardType="number" />
+                            </StackLayout>
+
+                            <StackLayout>
+                                <Label text="Sospechosos" textWrap="true" />
+                                <TextField hint="" text="" v-model="cases.suspect" keyboardType="number" />
+                            </StackLayout>
+                            <StackLayout>
+                                <Label text="Recuperados" textWrap="true" />
+                                <TextField hint="" text="" v-model="cases.recovered" keyboardType="number" />
+                            </StackLayout>
+
+                            <Button text="Actualizar casos" @tap="updateCases" />
+                            
                         </StackLayout>
                     </WrapLayout>
                 </ScrollView>
@@ -133,10 +146,12 @@ export default {
             userData: null,
             ubications: [],
             camera: true,
+            cases: ''
         }
     },
 
     created(){
+        this.getCases()
         /* list of permissions needed */
         let permissionsNeeded = [
             android.Manifest.permission.CAMERA,
@@ -153,7 +168,7 @@ export default {
     },
 
     mounted(){
-
+        this.getCases()
     },
 
     watch: {
@@ -175,6 +190,32 @@ export default {
     },
 
     methods: {
+        //Obtener casos de covid
+        async getCases(){
+            try {
+                let response = await firebase.firestore.collection('cases')
+                                                        .doc('chihuahua')
+                                                        .get()
+
+                if(response.exists){
+                    this.cases = response.data()
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        async updateCases(){
+            try {
+                let response = await firebase.firestore.collection('cases')
+                                                        .doc('chihuahua')
+                                                        .update(this.cases)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
         //Lector QR
         getQRResult(args){
             if(args.value.barcodes[0] != undefined){

@@ -38,7 +38,7 @@
     <GridLayout class="drawer-body" ~drawerContent rows="*, 60">
         <StackLayout row="0">
             <FlexboxLayout height="200" justifyContent="center" alignItems="center" flexDirection="column">
-                <Image width="70" borderRadius="100" src="https://www.nunuoropesa.com/wp-content/uploads/2018/03/profile-img-1.jpg" />
+                <Image width="50" marginBottom="10" src="http://partnergrammer.com/img/logoHeaderBlack.png" />
 
                 <Label color="black" :text="user.name" fontWeight="bold" fontSize="15" />
                 <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="12" />
@@ -66,7 +66,7 @@
                 <Label color="black" fontSize="13" class="drawer-item" text="Añadir Ubicacion"/>
             </FlexboxLayout> -->
 
-            <FlexboxLayout v-if="user.userType == 'admin'" class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToDashboard">
+            <FlexboxLayout v-if="user.userType == 'admin' || user.userType == 'webmaster'" class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToDashboard">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Estado"/>
             </FlexboxLayout>

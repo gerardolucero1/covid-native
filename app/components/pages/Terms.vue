@@ -59,6 +59,7 @@ let moment = require('moment')
 //Pages
 import Home from '../pages/Home'
 import Login from '../pages/user/Login'
+import Permissions from '../pages/Permissions'
 
 export default {
     name: 'Terms',

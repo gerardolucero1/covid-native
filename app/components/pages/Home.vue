@@ -29,13 +29,39 @@
                                 <Label text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
                             </FlexboxLayout>
 
-                            <Label v-if="!user.infection" text="SIN EXPOSICION" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                            <Label v-if="!user.infection" text="SIN EXPOSICION" marginLeft="20" fontSize="25" fontWeight="bold" color="black" textWrap="true" />
                             <Label v-else text="EXPUESTO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" color="red" />
                             
                             <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
                             <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
+
+                            <Label horizontalAlignment="center" marginTop="10" fontSize="25" color="black" text="CASOS EN CHIHUAHUA" fontWeight="bold"  textWrap="true" />
+
+                            <StackLayout verticalAlignment="center" marginTop="10">
+                                <Label horizontalAlignment="center" fontSize="18" text="Confirmados" textWrap="true" />
+
+                                <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#EC462F" borderRadius="150" marginTop="5">
+                                    <Label :text="cases.confirmed" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout verticalAlignment="center" marginTop="10">
+                                <Label horizontalAlignment="center" fontSize="18" text="Sospechosos" textWrap="true" />
+
+                                <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#E6A82E" borderRadius="150" marginTop="5">
+                                    <Label :text="cases.suspect" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout verticalAlignment="center" marginTop="10">
+                                <Label horizontalAlignment="center" fontSize="18" text="Negativos" textWrap="true" />
+
+                                <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#3C8106" borderRadius="150" marginTop="5">
+                                    <Label :text="cases.recovered" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
+                                </StackLayout>
+                            </StackLayout>
                             
-                            <StackLayout width="100%" backgroundColor="red" borderRadius="15" marginTop="20">
+                            <!-- <StackLayout width="100%" backgroundColor="red" borderRadius="15" marginTop="20">
                                 <Label text="Casos Confirmados" fontSize="18" horizontalAlignment="center" textWrap="true" color="white" marginTop="10" />
                                 
                                 <GridLayout columns="*, *" rows="100">
@@ -81,7 +107,7 @@
                                         <Label text="6" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
-                            </StackLayout>
+                            </StackLayout> -->
 
                             <StackLayout width="100%" marginTop="20">
                                 <Button text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" />
@@ -182,6 +208,7 @@ export default {
             infectedLocations: [],
             userLocations: [],
             flag: false,
+            cases: '',
         }
     },
 
@@ -191,19 +218,19 @@ export default {
 
     created(){
         /* list of permissions needed */
-        let permissionsNeeded = [
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.ACCESS_COARSE_LOCATION
-        ]
+        // let permissionsNeeded = [
+        //     android.Manifest.permission.ACCESS_FINE_LOCATION,
+        //     android.Manifest.permission.ACCESS_COARSE_LOCATION
+        // ]
 
-        /* showing up permissions dialog */
-        permissions
-            .requestPermissions(permissionsNeeded, "Give it to me!")
-            .then(() => {
-                this.allowExecution = true
-                this.getLocation()
-            })
-            .catch(() => this.allowExecution = false)
+        // /* showing up permissions dialog */
+        // permissions
+        //     .requestPermissions(permissionsNeeded, "Give it to me!")
+        //     .then((args) => {
+        //         console.log(args)
+        //         this.allowExecution = true
+        //     })
+        //     .catch(() => this.allowExecution = false)
 
         LocalNotifications.addOnMessageReceivedCallback(notificationData => {
             this.$navigateTo(Recomendations)
@@ -211,9 +238,8 @@ export default {
     },
 
     mounted(){
-        if(this.allowExecution){
-            this.getLocation()
-        }
+        this.getLocation()
+        this.getCases()
     },
 
     watch: {
@@ -266,6 +292,19 @@ export default {
 
     methods: {
 
+        async getCases(){
+            try {
+                let response = await firebase.firestore.collection('cases')
+                                                        .doc('chihuahua')
+                                                        .onSnapshot((doc) => {
+                                                            this.cases = doc.data()
+                                                            console.log(this.cases)
+                                                        })
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
         //Truncar numeros
         truncarNumbers(x, posiciones = 0) {
             var s = x.toString()
@@ -298,7 +337,7 @@ export default {
         //Geolocalizacion
         getLocation(){
             //Loader activate
-            loader.show(options)
+            //loader.show(options)
 
             geolocation.getCurrentLocation({
                 desiredAccuracy: Accuracy.high,
@@ -337,7 +376,7 @@ export default {
                 this.saveUbication()
 
                 //Loader deactivate
-                loader.hide()
+                //loader.hide()
             }, (e) => {
                 console.log(e)
             });

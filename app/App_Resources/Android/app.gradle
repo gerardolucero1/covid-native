@@ -13,8 +13,35 @@ android {
   defaultConfig {
     minSdkVersion 17
     generatedDensities = []
+    ndk {
+      abiFilters.clear()
+      abiFilters.addAll(['armeabi-v7a','arm64-v8a'])
+    }
+  }    
+  buildTypes {
+    debug {
+      ndk {
+        abiFilters 'x86'
+      }
+    }
   }
   aaptOptions {
     additionalParameters "--no-version-vectors"
   }
+}
+
+
+def settingsGradlePath
+
+if(project.hasProperty("appResourcesPath")){
+    settingsGradlePath = "$project.appResourcesPath/Android/settings.gradle";
+} else {
+    settingsGradlePath = "$rootDir/../../app/App_Resources/Android/settings.gradle";
+}
+
+def settingsGradleFile = new File(settingsGradlePath);
+
+if(settingsGradleFile.exists())
+{
+    apply from: settingsGradleFile;
 }

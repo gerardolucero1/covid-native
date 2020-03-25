@@ -1,6 +1,7 @@
 import Vue from 'nativescript-vue'
 import Login from './components/pages/user/Login.vue'
 import Home from './components/pages/Home.vue'
+import Terms from './components/pages/Terms.vue'
 import App from './components/App.vue'
 
 import store from './store'
@@ -12,7 +13,7 @@ import Actionbar from './components/shared/Actionbar.vue'
 import DateTimePicker from "nativescript-datetimepicker/vue";
 
 if(TNS_ENV !== 'production') {
-  Vue.use(VueDevtools, { host: '192.168.0.7' })
+  Vue.use(VueDevtools, { host: '192.168.0.8' })
 }
 
 //Local notifications
@@ -67,9 +68,18 @@ new Vue({
                                                       .doc(user.uid)
                                                       .get()
 
-              this.$store.commit('updateUser', response.data())
+              if(response.exists){
+                    let user = response.data()
 
-              this.$navigateTo(Home)
+                    if(user.terms){
+                        this.$store.commit('updateUser', user)
+                        this.$navigateTo(Home)
+                    }else{
+                        this.$store.commit('updateUser', user)
+                        this.$navigateTo(Terms)
+                    }
+                    
+                }
             })
           .catch(error => console.log("Trouble in paradise: " + error));
   },

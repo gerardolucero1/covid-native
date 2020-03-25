@@ -164,8 +164,14 @@ export default {
                 if(response.exists){
                     let user = response.data()
 
-                    this.$store.commit('updateUser', user)
-                    this.$navigateTo(Home)
+                    if(user.terms){
+                        this.$store.commit('updateUser', user)
+                        this.$navigateTo(Home)
+                    }else{
+                        this.$store.commit('updateUser', user)
+                        this.$navigateTo(Terms)
+                    }
+                    
                 }
             } catch (error) {
                 console.log(error)
