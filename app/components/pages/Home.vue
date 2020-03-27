@@ -19,6 +19,8 @@
                                 <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
                                 <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
                             </FlexboxLayout>
+                            <Button text="Dale" @tap="demo()" />
+                            
 
                             <!-- <Label v-if="origin" :text="locationDescription" textWrap="true" /> -->
                         </StackLayout>
@@ -183,6 +185,14 @@ const options = {
     // }
 };
 
+//Background service
+const utils = require("tns-core-modules/utils/utils");
+import * as application from "tns-core-modules/application";
+import { device } from "tns-core-modules/platform";
+const jobScheduler = require("../../service-helper");
+
+const app = require("tns-core-modules/application");
+
 //Pages
 import Login from './user/Login.vue'
 import Recomendations from '../pages/Recomendations'
@@ -240,6 +250,14 @@ export default {
     mounted(){
         this.getLocation()
         this.getCases()
+
+        app.android.registerBroadcastReceiver("customservice",
+
+        (androidContext, intent) => {
+                console.log("________________________________________________Data Received");
+                that.data = intent.getIntExtra("message",-1/*default value*/);
+                console.log("Data + " + that.data);
+        });
     },
 
     watch: {
@@ -291,7 +309,11 @@ export default {
     },
 
     methods: {
+        demo(){
+            jobScheduler.scheduleJob(utils.ad.getApplicationContext());
+        },
 
+        //Obtener el contador de casos infectados de firebase
         async getCases(){
             try {
                 let response = await firebase.firestore.collection('cases')
@@ -467,6 +489,7 @@ export default {
                         }
                     ],
                     placeId: this.infoDirection.placeId,
+                    origin: this.origin,
                 }
 
                 let response = await firebase.firestore.collection('user_locations')

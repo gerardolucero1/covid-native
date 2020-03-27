@@ -25,6 +25,7 @@
     "nativescript-plugin-firebase": "^10.5.0",
     "nativescript-qr-generator": "^1.0.0",
     "nativescript-socketio": "^3.3.1",
+    "nativescript-toasts": "^1.0.3",
     "nativescript-toasty": "^1.4.0",
     "nativescript-ui-sidedrawer": "^7.0.0",
     "nativescript-vue": "^2.5.0",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/preset-env": "^7.9.0",
     "babel-loader": "^8.1.0",
     "nativescript-dev-webpack": "^1.0.0",
