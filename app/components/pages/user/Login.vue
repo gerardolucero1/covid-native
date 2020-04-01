@@ -25,6 +25,14 @@
 //Firebase
 const firebase = require("nativescript-plugin-firebase")
 
+//Local notification
+import { LocalNotifications } from "nativescript-local-notifications";
+import { alert } from "tns-core-modules/ui/dialogs";
+import { Color } from "tns-core-modules/color";
+
+//Toast
+const toast = require('nativescript-toasts')
+
 //Pages
 import Home from '../Home.vue'
 import Register from '../user/Register.vue'
@@ -97,6 +105,7 @@ export default {
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
                         //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
@@ -106,35 +115,35 @@ export default {
             } catch(e) {
                 console.log(e)
                 // statements
-                // if(e == 'Logging in the user failed. com.google.firebase.auth.FirebaseAuthInvalidUserException: There is no user record corresponding to this identifier. The user may have been deleted.'){
+                if(e == 'Logging in the user failed. com.google.firebase.auth.FirebaseAuthInvalidUserException: There is no user record corresponding to this identifier. The user may have been deleted.'){
 
-                //     console.log('USUARIO NO EXISTE')
+                    console.log('USUARIO NO EXISTE')
 
-                //     var options = {
-                //         text: "USUARIO NO EXISTE",
-                //         duration : toast.DURATION.SHORT,
-                //         position : toast.POSITION.BOTTOM 
-                //     }
-                //     toast.show(options)
-                // }else if(e == 'Logging in the user failed. com.google.firebase.FirebaseTooManyRequestsException: We have blocked all requests from this device due to unusual activity. Try again later. [ Too many unsuccessful login attempts. Please try again later. ]'){
-                //     console.log('INTENTA MAS TARDE')
+                    var options = {
+                        text: "USUARIO NO EXISTE",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM 
+                    }
+                    toast.show(options)
+                }else if(e == 'Logging in the user failed. com.google.firebase.FirebaseTooManyRequestsException: We have blocked all requests from this device due to unusual activity. Try again later. [ Too many unsuccessful login attempts. Please try again later. ]'){
+                    console.log('INTENTA MAS TARDE')
 
-                //     var options = {
-                //         text: "INTENTA MAS TARDE",
-                //         duration : toast.DURATION.SHORT,
-                //         position : toast.POSITION.BOTTOM 
-                //     }
-                //     toast.show(options)
-                // }else{
-                //     console.log('CONTRASEÑA INCORRECTA')
+                    var options = {
+                        text: "INTENTA MAS TARDE",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM 
+                    }
+                    toast.show(options)
+                }else{
+                    console.log('CONTRASEÑA INCORRECTA')
 
-                //     var options = {
-                //         text: "CONTRASEÑA INCORRECTA",
-                //         duration : toast.DURATION.SHORT,
-                //         position : toast.POSITION.BOTTOM 
-                //     }
-                //     toast.show(options)
-                // }
+                    var options = {
+                        text: "CONTRASEÑA INCORRECTA",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM 
+                    }
+                    toast.show(options)
+                }
             }
         },
 
@@ -159,6 +168,7 @@ export default {
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
                         //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
@@ -191,6 +201,7 @@ export default {
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
                         //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
@@ -222,6 +233,39 @@ export default {
             } catch (error) {
                 console.log(error)
             }
+        },
+
+        //Lanzamos la notificacion de bienvenida al usuario
+        getUserWelcome() {
+            LocalNotifications.schedule(
+                [{
+                    id: 1,
+                    title: 'Bienvenido',
+                    subtitle: 'Bienvenido a prevenapp',
+                    body: 'Muchas gracias por registrarte en nuestra aplicacion.',
+                    bigTextStyle: false,
+                    color: new Color("green"),
+                    //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
+                    thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
+                    forceShowWhenInForeground: true,
+                    channel: "vue-channel",
+                    ticker: "partnergrammer",
+                    at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
+                    actions: [
+                        {
+                            id: "yes",
+                            type: "button",
+                            title: "Entendido",
+                            launch: false
+                        },
+                        {
+                            id: "no",
+                            type: "button",
+                            title: "Ignorar",
+                            launch: false
+                        }
+                    ]
+                }])
         },
     }
 }

@@ -82,6 +82,7 @@ export default {
             try {
                 let ubication = {
                     name: this.item.name,
+                    origin: this.item.origin,
                     dates: [
                         {
                             createdAt: date,
@@ -112,7 +113,7 @@ export default {
 
                 let response = await firebase.firestore.collection('infected_locations')
                                                         .doc(this.item.placeId)
-                                                        .update({dates: firebase.firestore.FieldValue.arrayUnion(newDate)})
+                                                        .update({dates: firebase.firestore.FieldValue.arrayUnion(newDate), origin: this.item.origin,})
 
             } catch (error) {
                 console.log(error)

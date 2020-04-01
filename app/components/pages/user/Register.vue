@@ -4,8 +4,21 @@
             <StackLayout width="70%" row="1" col="1">
                 <Label marginBottom="20" horizontalAlignment="center" text="REGISTRO" fontSize="25" textWrap="true" />
                 
+                <TextField hint="Nombre" fontSize="14" v-model="user.name" text="" keyboardType="text" />
+                <!-- <StackLayout>
+                    <Label v-if="!$v.user.name.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
+                </StackLayout> -->
+                
                 <TextField hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
+                <!-- <StackLayout>
+                    <Label v-if="!$v.user.email.email" text="Ingresa un email valido" textWrap="true" fontSize="9" marginLeft="5" color="red" />
+                </StackLayout> -->
+
                 <TextField ref="pw" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
+                <!-- <StackLayout>
+                    <Label v-if="!$v.user.password.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
+                </StackLayout> -->
+
                 <Label col="0" row="0" class="forget-password" fontSize="12" text="Ver/Ocultar" @tap="showHidePassword" />
 
                 <Button text="Registrarse" borderRadius="20" backgroundColor="white" marginTop="20" color="black" @tap="createUser" />
@@ -24,9 +37,21 @@
 //Firebase
 const firebase = require("nativescript-plugin-firebase")
 
+//Vuelidate
+import { required, email, minLength } from 'vuelidate/lib/validators'
+
+//Toast
+const toast = require('nativescript-toasts')
+
+//Local notification
+import { LocalNotifications } from "nativescript-local-notifications";
+import { alert } from "tns-core-modules/ui/dialogs";
+import { Color } from "tns-core-modules/color";
+
 //Pages
 import Home from '../Home.vue'
 import Login from '../user/Login'
+import Terms from '../Terms'
 
 export default {
     name: 'Login',
@@ -34,8 +59,27 @@ export default {
     data(){
         return{
             user: {
+                name:  '',
                 email: '',
                 password: '',
+            }
+        }
+    },
+
+    validations: {
+        user: {
+            name: {
+                required,
+            },
+
+            email: {
+                required,
+                email
+            },
+
+            password: {
+                required,
+                minLength: minLength(6)
             }
         }
     },
@@ -62,6 +106,54 @@ export default {
 
         //Register
         async createUser(){
+            if(this.$v.user.$invalid){
+                if(!this.$v.user.name.required){
+                    var options = {
+                        text: "Nombre obligatorio",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM //optional
+                    }
+                    toast.show(options)
+                }
+
+                if(!this.$v.user.email.required){
+                    var options = {
+                        text: "Email obligatorio",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM //optional
+                    }
+                    toast.show(options)
+                }
+
+                if(!this.$v.user.email.email){
+                    var options = {
+                        text: "Ingresa un email valido",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM //optional
+                    }
+                    toast.show(options)
+                }
+
+                if(!this.$v.user.password.required){
+                    var options = {
+                        text: "Contraseña obligatoria",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM //optional
+                    }
+                    toast.show(options)
+                }
+
+                if(!this.$v.user.password.minLength){
+                    var options = {
+                        text: "Contraseña minimo 6 caracteres",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM //optional
+                    }
+                    toast.show(options)
+                }
+                return
+            }
+
             try {
                 let response = await firebase.createUser({
                     email: this.user.email,
@@ -72,7 +164,7 @@ export default {
 
                     let user = {
                             uid: response.uid,
-                            nombre: 'User-' + response.uid,
+                            name: this.user.name,
                             email: this.user.email,
                             infection: false,
                             userType: 'user',
@@ -82,7 +174,16 @@ export default {
                     if(response.additionalUserInfo.isNewUser){
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
                     }
+                    
+                    //Lanzar Toast
+                    var options = {
+                        text: "Cuenta creada con exito",
+                        duration : toast.DURATION.SHORT,
+                        position : toast.POSITION.BOTTOM //optional
+                    }
+                    toast.show(options)
 
                     this.getUser(response.uid)
 
@@ -113,6 +214,7 @@ export default {
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
                         //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
@@ -145,6 +247,7 @@ export default {
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
                         //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
                     }
 
@@ -176,6 +279,39 @@ export default {
             } catch (error) {
                 console.log(error)
             }
+        },
+
+        //Lanzamos la notificacion de bienvenida al usuario
+        getUserWelcome() {
+            LocalNotifications.schedule(
+                [{
+                    id: 1,
+                    title: 'Bienvenido',
+                    subtitle: 'Bienvenido a prevenapp',
+                    body: 'Muchas gracias por registrarte en nuestra aplicacion.',
+                    bigTextStyle: false,
+                    color: new Color("green"),
+                    //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
+                    thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
+                    forceShowWhenInForeground: true,
+                    channel: "vue-channel",
+                    ticker: "partnergrammer",
+                    at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
+                    actions: [
+                        {
+                            id: "yes",
+                            type: "button",
+                            title: "Entendido",
+                            launch: false
+                        },
+                        {
+                            id: "no",
+                            type: "button",
+                            title: "Ignorar",
+                            launch: false
+                        }
+                    ]
+                }])
         },
     }
 }

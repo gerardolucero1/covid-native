@@ -50,7 +50,6 @@
                                 
                                 <StackLayout v-for="(item, index) in ubications" :key="index" marginTop="50">
                                     <StackLayout orientation="horizontal">
-                                        <Switch checked="false" @checkedChange="setDate(item)" />
                                         <Label :text="item.name" textWrap="true" />
                                     </StackLayout>
                                 </StackLayout>
@@ -97,6 +96,9 @@ const httpModule = require("tns-core-modules/http");
 import * as permissions from 'nativescript-permissions'
 import * as platform from 'platform'
 
+//Moment
+let moment = require('moment')
+
 //Camera firebase
 import { BarcodeFormat, MLKitScanBarcodesOnDeviceResult } from "nativescript-plugin-firebase/mlkit/barcodescanning";
 
@@ -142,10 +144,11 @@ export default {
 
     data(){
         return{
-            uid: '',
+            //uid: '76mL7dPrMoNi9yQJtZ7Y5GmAb8O2',
+            uid: 'zZai2ouHjCeVuS58K5tFUapLnR72',
             userData: null,
             ubications: [],
-            camera: true,
+            camera: false,
             cases: ''
         }
     },
@@ -249,6 +252,40 @@ export default {
             }
         },
 
+        //Actualizamos el estado del usuario
+        updateUser(){
+            confirm({
+                title: "¿Seguro?",
+                message: "Cambiar el estatus del usuario",
+                okButtonText: "ACEPTAR",
+                cancelButtonText: "CANCELAR"
+            }).then(result => {
+                if(result){
+                    this.updateStatusUser()
+                }
+            });
+        },
+
+        //Actualizamos el estatus del usuario
+        async updateStatusUser(){
+            try {
+                let response = await firebase.firestore.collection('users')
+                                                        .doc(this.uid)
+                                                        .update({ infection: !this.userData.infection })
+                if(this.userData.infection){
+                    console.log('NO actualizar')
+                }else{
+                    console.log('Si actualizar')
+                    this.getUbications()
+                }
+                
+                this.getUser()
+                
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
         //Obtenemos todas las ubicaciones en las que ha estado
         async getUbications(){
             this.ubications = []
@@ -264,32 +301,90 @@ export default {
                                                         }).catch(err => {
                                                             console.log("Error getting sub-collection documents", err);
                                                         })
+                
+                setTimeout(() => {
+                        this.updateUbications()
+                }, 5000)
+            } catch (error) {
+                console.log(error)
+            }
+            finally{
+                
+            }
+        },
+
+        updateUbications(){
+            //Obtenemos la fecha de hoy y una de 12 dias atras
+            let date_1 = moment(new Date()).format('L');
+            let date_2 = moment(new Date()).subtract('12', 'days').format('L');
+
+            let arrayUbications = []
+
+            //Recorremos una por una las ubicaciones del usuario
+            this.ubications.forEach((document) => {
+                let ubication = document
+                //Filtramos las fechas de visitas para obtener solo las que esten en el rango 
+                //de hoy y doce dias atras
+                let dates = document.dates.filter((doc) => {
+                    let date_3 = moment(doc.createdAt).format('L')
+                    return  date_3 >= date_2 && date_3 <= date_1
+                })
+                if(dates.length != 0){
+                    ubication.dates = dates
+                    arrayUbications.push(ubication)
+                }
+            })
+
+            this.addNewUbications(arrayUbications)
+        },
+        
+        //Dirigimos a una funcion especifica dependiendo si la ubicacion ya existe o es nueva
+        async addNewUbications(args){
+            try {
+                args.forEach(async (document) => {
+                    let response = await firebase.firestore.collection('infected_locations')
+                                                        .doc(document.placeId)
+                                                        .get()
+
+                    //Si la ubicacion ya fue registrada, solamente actualizamos el registro de hora de infeccion,
+                    //de caso contrario agregamos la ubicacion como nueva
+                    if(response.exists){
+                        this.updateUbication(document)
+                    }else{
+                        this.addNewUbication(document)
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
+            finally{
+                console.log('Echo')
+            }
+        },
+
+        //Si la ubicacion no ha sido marcada como zona de riesgo la agregamos
+        async addNewUbication(document){
+            try {
+
+                let response = await firebase.firestore.collection('infected_locations')
+                                                        .doc(document.placeId)
+                                                        .set(document)
+
             } catch (error) {
                 console.log(error)
             }
         },
 
-        //Actualizamos el estado del usuario
-        updateUser(){
-            confirm({
-                title: "¿Seguro?",
-                message: "Cambiar el estatus del usuario",
-                okButtonText: "ACEPTAR",
-                cancelButtonText: "CANCELAR"
-            }).then(result => {
-                if(result){
-                    this.updateStatusUser()
-                }
-            });
-        },
-
-        async updateStatusUser(){
+        //Si la zona ya habia sido marcada simplemente agregamos la nueva fecha de exposicion
+        async updateUbication(document){
             try {
-                let response = await firebase.firestore.collection('users')
-                                                        .doc(this.uid)
-                                                        .update({ infection: !this.userData.infection })
 
-                this.getUser()
+                let newDate = document.dates
+
+                let response = await firebase.firestore.collection('infected_locations')
+                                                        .doc(document.placeId)
+                                                        .update({dates: firebase.firestore.FieldValue.arrayUnion(newDate), origin: document.origin,})
+
             } catch (error) {
                 console.log(error)
             }

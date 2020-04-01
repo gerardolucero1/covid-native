@@ -7,13 +7,15 @@ import App from './components/App.vue'
 import store from './store'
 import VueDevtools from 'nativescript-vue-devtools'
 
+import Vuelidate from 'vuelidate'
+
 //Components
 import Sidedrawer from './components/shared/Sidedrawer.vue'
 import Actionbar from './components/shared/Actionbar.vue'
 import DateTimePicker from "nativescript-datetimepicker/vue";
 
 if(TNS_ENV !== 'production') {
-  Vue.use(VueDevtools, { host: '192.168.0.8' })
+  Vue.use(VueDevtools, { host: '192.168.0.3' })
 }
 
 //Local notifications
@@ -55,7 +57,7 @@ Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer')
 Vue.registerElement('MLKitBarcodeScanner', () => require('nativescript-plugin-firebase/mlkit/barcodescanning').MLKitBarcodeScanner)
 Vue.component('Sidedrawer', Sidedrawer)
 Vue.component('Actionbar', Actionbar)
-Vue.use(DateTimePicker)
+Vue.use(Vuelidate)
 
 
 new Vue({

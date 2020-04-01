@@ -19,9 +19,6 @@
                                 <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
                                 <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
                             </FlexboxLayout>
-                            <Button text="Dale" @tap="demo()" />
-                            
-
                             <!-- <Label v-if="origin" :text="locationDescription" textWrap="true" /> -->
                         </StackLayout>
 
@@ -185,14 +182,6 @@ const options = {
     // }
 };
 
-//Background service
-const utils = require("tns-core-modules/utils/utils");
-import * as application from "tns-core-modules/application";
-import { device } from "tns-core-modules/platform";
-const jobScheduler = require("../../service-helper");
-
-const app = require("tns-core-modules/application");
-
 //Pages
 import Login from './user/Login.vue'
 import Recomendations from '../pages/Recomendations'
@@ -219,6 +208,7 @@ export default {
             userLocations: [],
             flag: false,
             cases: '',
+            selectedUbications: [],
         }
     },
 
@@ -251,13 +241,6 @@ export default {
         this.getLocation()
         this.getCases()
 
-        app.android.registerBroadcastReceiver("customservice",
-
-        (androidContext, intent) => {
-                console.log("________________________________________________Data Received");
-                that.data = intent.getIntExtra("message",-1/*default value*/);
-                console.log("Data + " + that.data);
-        });
     },
 
     watch: {
@@ -309,9 +292,6 @@ export default {
     },
 
     methods: {
-        demo(){
-            jobScheduler.scheduleJob(utils.ad.getApplicationContext());
-        },
 
         //Obtener el contador de casos infectados de firebase
         async getCases(){
@@ -431,14 +411,14 @@ export default {
             }
         },
 
-        //Iniciamos un contador de 10 segundos, despues de eso obtenemos la posicion actual
+        //Iniciamos un contador de 60 segundos, despues de eso obtenemos la posicion actual
         getNewUbication(){
             this.breakTime = true
             this.saveUbicationVar = setTimeout(() => {
                 //Obtenemos la ubicacion
                 this.getLocation()
                 
-            }, 10000)
+            }, 60000)
         },
 
         //Antes de guardar la nueva direccion primero verificamos si el usuario ya ha visitado ese lugar
@@ -518,7 +498,7 @@ export default {
                                                         .doc(this.user.uid)
                                                         .collection('places')
                                                         .doc(id)
-                                                        .update({dates: firebase.firestore.FieldValue.arrayUnion(date)})
+                                                        .update({dates: firebase.firestore.FieldValue.arrayUnion(date), origin: this.origin,})
 
                 this.breakTime = false
             } catch (error) {
@@ -614,63 +594,139 @@ export default {
                                 if(Math.sign(diference) == (-1)){
                                     diference = diference * (-1)
                                 }
-                                console.log(diference)
 
                                 if(diference < 10){
-                                    this.getNotification()
+                                    //this.getNotification()
+                                    let selectUbication = {
+                                        name: ubicationFound.name,
+                                        dateUser: diff_1,
+                                        dateRegister: diff_2,
+                                    }
+
+                                    this.selectedUbications.push(selectUbication)
                                 }
                             }
                         })
-                    }else{
-                        console.log('No encontro ubicacion')
                     }
                     
                 })
+                this.getResults()
+                console.log('Termino el analizis')
             } catch (error) {
                 console.log(error)
             }
             
         },
 
+        getResults(){
+            console.log(this.selectedUbications.length)
+            if(this.selectedUbications.length != 0){
+                this.getNotification(1)
+            }else{
+                this.getNotification(2)
+            }
+        },
+
         //Lanzamos la notificacion de aviso de infeccion
-        getNotification() {
-            LocalNotifications.schedule(
-                [{
-                    id: 1,
-                    title: 'Alerta de exposicion',
-                    subtitle: 'Posible riesgo de exposicion',
-                    body: 'Se detecto que una de las zonas que visitaste recientemente pudiera haber estado expuesta.',
-                    bigTextStyle: false,
-                    color: new Color("green"),
-                    //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
-                    thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
-                    forceShowWhenInForeground: true,
-                    channel: "vue-channel",
-                    ticker: "partnergrammer",
-                    at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
-                    actions: [
-                        {
-                            id: "yes",
-                            type: "button",
-                            title: "Entendido",
-                            launch: true
-                        },
-                        {
-                            id: "no",
-                            type: "button",
-                            title: "Ignorar",
-                            launch: false
-                        }
-                    ]
-                }])
-                    // .then(() => {
-                    //     alert({
-                    //         title: "Notification scheduled",
-                    //         message: "ID: 1",
-                    //         okButtonText: "OK, thanks"
-                    //     });
-                    // })
-                    // .catch(error => console.log("doSchedule error: " + error));
+        getNotification(args) {
+            switch (args) {
+                case 1:
+                    LocalNotifications.schedule(
+                    [{
+                        id: 1,
+                        title: 'Alerta de exposicion',
+                        subtitle: 'Posible riesgo de exposicion',
+                        body: 'Se detecto que una de las zonas que visitaste recientemente pudiera haber estado expuesta.',
+                        bigTextStyle: false,
+                        color: new Color("green"),
+                        //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
+                        thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
+                        forceShowWhenInForeground: true,
+                        channel: "vue-channel",
+                        ticker: "partnergrammer",
+                        at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
+                        actions: [
+                            {
+                                id: "yes",
+                                type: "button",
+                                title: "Entendido",
+                                launch: true
+                            },
+                            {
+                                id: "no",
+                                type: "button",
+                                title: "Ignorar",
+                                launch: false
+                            }
+                        ]
+                    }])
+                    break;
+
+                case 2:
+                    LocalNotifications.schedule(
+                    [{
+                        id: 1,
+                        title: 'Analisis finalizado',
+                        subtitle: 'Se ha terminado el analisis',
+                        body: 'No se detectaron zonas expuestas en tus ubicaciones.',
+                        bigTextStyle: false,
+                        color: new Color("green"),
+                        //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
+                        thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
+                        forceShowWhenInForeground: true,
+                        channel: "vue-channel",
+                        ticker: "partnergrammer",
+                        at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
+                        actions: [
+                            {
+                                id: "yes",
+                                type: "button",
+                                title: "Entendido",
+                                launch: false
+                            },
+                            {
+                                id: "no",
+                                type: "button",
+                                title: "Ignorar",
+                                launch: false
+                            }
+                        ]
+                    }])
+                    break;
+            
+                default:
+                    LocalNotifications.schedule(
+                    [{
+                        id: 1,
+                        title: 'Analisis finalizado',
+                        subtitle: 'Se ha terminado el analisis',
+                        body: 'No se detectaron zonas expuestas en tus ubicaciones.',
+                        bigTextStyle: false,
+                        color: new Color("green"),
+                        //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",
+                        thumbnail: "https://i.ibb.co/jfb3LCh/logo.png",
+                        forceShowWhenInForeground: true,
+                        channel: "vue-channel",
+                        ticker: "partnergrammer",
+                        at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now
+                        actions: [
+                            {
+                                id: "yes",
+                                type: "button",
+                                title: "Entendido",
+                                launch: false
+                            },
+                            {
+                                id: "no",
+                                type: "button",
+                                title: "Ignorar",
+                                launch: false
+                            }
+                        ]
+                    }])
+                    break;
+            }
+            
         },
     }
 }
