@@ -4,8 +4,8 @@
             <StackLayout width="70%" row="1" col="1">
                 <Label marginBottom="20" horizontalAlignment="center" text="ACCEDER" fontSize="25" textWrap="true" />
                 
-                <TextField hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
-                <TextField hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
+                <TextField class="text_field" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
+                <TextField class="text_field" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
                 
                 <!-- <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" /> -->
 
@@ -272,5 +272,9 @@ export default {
 </script>
 
 <style>
-
+    .text_field{
+        border: none;
+        border-bottom: 1px solid black;
+        border-width: 0 0 1px 0;
+    }
 </style>

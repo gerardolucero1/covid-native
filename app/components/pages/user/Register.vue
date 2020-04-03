@@ -4,17 +4,17 @@
             <StackLayout width="70%" row="1" col="1">
                 <Label marginBottom="20" horizontalAlignment="center" text="REGISTRO" fontSize="25" textWrap="true" />
                 
-                <TextField hint="Nombre" fontSize="14" v-model="user.name" text="" keyboardType="text" />
+                <TextField class="text_field" hint="Nombre" fontSize="14" v-model="user.name" text="" keyboardType="text" />
                 <!-- <StackLayout>
                     <Label v-if="!$v.user.name.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
                 </StackLayout> -->
                 
-                <TextField hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
+                <TextField class="text_field" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
                 <!-- <StackLayout>
                     <Label v-if="!$v.user.email.email" text="Ingresa un email valido" textWrap="true" fontSize="9" marginLeft="5" color="red" />
                 </StackLayout> -->
 
-                <TextField ref="pw" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
+                <TextField class="text_field" ref="pw" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
                 <!-- <StackLayout>
                     <Label v-if="!$v.user.password.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
                 </StackLayout> -->
@@ -318,5 +318,9 @@ export default {
 </script>
 
 <style>
-
+    .text_field{
+        border: none;
+        border-bottom: 1px solid black;
+        border-width: 0 0 1px 0;
+    }
 </style>

@@ -1,3 +1,11 @@
+<style>
+    .text_field{
+        border: none;
+        border-bottom: 1px solid black;
+        border-width: 0 0 1px 0;
+    }
+</style>
+
 <template>
     <Page actionBarHidden="false">
         <ActionBar>
@@ -13,7 +21,7 @@
                 <ScrollView col="0" row="0">
                     <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
                         <StackLayout orientation="vertical">
-                            <TextField hint="User number" text="" fontSize="12" marginTop="20" v-model="uid" width="100%" />
+                            <TextField class="text_field" hint="User number" text="" fontSize="12" marginTop="20" v-model="uid" width="100%" />
                             <Button text="Obtener" @tap="getUser" width="100%" />
 
                             <MLKitBarcodeScanner
@@ -60,16 +68,16 @@
                         <StackLayout v-if="user.userType == 'webmaster'">
                             <StackLayout>
                                 <Label text="Confirmados" textWrap="true" />
-                                <TextField hint="" text="" v-model="cases.confirmed" keyboardType="number" />
+                                <TextField class="text_field" hint="" text="" v-model="cases.confirmed" keyboardType="number" />
                             </StackLayout>
 
                             <StackLayout>
                                 <Label text="Sospechosos" textWrap="true" />
-                                <TextField hint="" text="" v-model="cases.suspect" keyboardType="number" />
+                                <TextField class="text_field" hint="" text="" v-model="cases.suspect" keyboardType="number" />
                             </StackLayout>
                             <StackLayout>
                                 <Label text="Recuperados" textWrap="true" />
-                                <TextField hint="" text="" v-model="cases.recovered" keyboardType="number" />
+                                <TextField class="text_field" hint="" text="" v-model="cases.recovered" keyboardType="number" />
                             </StackLayout>
 
                             <Button text="Actualizar casos" @tap="updateCases" />
@@ -101,6 +109,9 @@ let moment = require('moment')
 
 //Camera firebase
 import { BarcodeFormat, MLKitScanBarcodesOnDeviceResult } from "nativescript-plugin-firebase/mlkit/barcodescanning";
+
+//iOS or Android
+import { isAndroid, isIOS } from "tns-core-modules/ui/page";
 
 //Loader
 const LoadingIndicator = require('@nstudio/nativescript-loading-indicator').LoadingIndicator;
@@ -155,19 +166,23 @@ export default {
 
     created(){
         this.getCases()
-        /* list of permissions needed */
-        let permissionsNeeded = [
-            android.Manifest.permission.CAMERA,
-        ]
+        if (isAndroid) {
+            /* list of permissions needed */
+            let permissionsNeeded = [
+                android.Manifest.permission.CAMERA,
+            ]
 
-        /* showing up permissions dialog */
-        permissions
-            .requestPermissions(permissionsNeeded, "Give it to me!")
-            .then(() => {
-                this.allowExecution = true
-                this.getLocation()
-            })
-            .catch(() => this.allowExecution = false)
+            /* showing up permissions dialog */
+            permissions
+                .requestPermissions(permissionsNeeded, "Give it to me!")
+                .then(() => {
+                    this.allowExecution = true
+                    this.getLocation()
+                })
+                .catch(() => this.allowExecution = false)
+            } else if (isIOS) {
+                // iOS code here
+            }
     },
 
     mounted(){
@@ -401,6 +416,3 @@ export default {
     }
 }
 </script>
-
-<style>
-</style>

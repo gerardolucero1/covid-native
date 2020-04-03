@@ -1,6 +1,12 @@
 # JetBrains project files
 .idea
 
+# Cloud
+.cloud
+
+# Cloud
+.update_backup
+
 # NPM
 node_modules
 
