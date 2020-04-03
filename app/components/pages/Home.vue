@@ -28,7 +28,7 @@
                                 <Label text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
                             </FlexboxLayout>
 
-                            <Label v-if="!user.infection" text="SIN EXPOSICION" marginLeft="20" fontSize="25" fontWeight="bold" color="black" textWrap="true" />
+                            <Label v-if="!user.infection" text="SIN EXPOSICIÓN" marginLeft="20" fontSize="25" fontWeight="bold" color="black" textWrap="true" />
                             <Label v-else text="EXPUESTO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" color="red" />
                             
                             <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
