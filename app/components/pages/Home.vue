@@ -2,7 +2,7 @@
     <Page actionBarHidden="false">
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
-                <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+                <Label text="Menú" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
             </GridLayout>
         </ActionBar>
 
@@ -15,17 +15,21 @@
                         <StackLayout marginTop="20">
                             <Label :text="'Hola, ' + user.name" fontSize="25" fontWeight="lighter" textWrap="true" horizontalAlignment="left" />
                             <FlexboxLayout marginTop="10">
-                                <Label text="" class="font-awesome" textWrap="true" />
+                                <Label text="Ubicación Actual:" class="font-awesome" textWrap="true" />
+                                </FlexboxLayout>
+                                <FlexboxLayout marginTop="4">
                                 <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
-                                <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
+                                </FlexboxLayout>
+                                <FlexboxLayout marginTop="4">
+                                <Label style="background:#339CFF; color:white; border-radius:10px; padding:5px" text="Actualizar Ubicacion" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
                             </FlexboxLayout>
                             <!-- <Label v-if="origin" :text="locationDescription" textWrap="true" /> -->
                         </StackLayout>
 
                         <StackLayout>
                             <FlexboxLayout marginTop="40">
-                                <Label text="" class="font-awesome" textWrap="true" />
-                                <Label text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
+                                
+                                <Label text="Estado Actual" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
                             </FlexboxLayout>
 
                             <Label v-if="!user.infection" text="SIN EXPOSICIÓN" marginLeft="20" fontSize="25" fontWeight="bold" color="black" textWrap="true" />

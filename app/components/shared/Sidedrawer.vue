@@ -45,7 +45,7 @@
             </FlexboxLayout>
 
             <FlexboxLayout class="drawer-item-container" justifyContent="flex-start" alignItems="center" @tap="goToHome">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label text=">" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Inicio" />
             </FlexboxLayout>
 
@@ -55,7 +55,7 @@
             </FlexboxLayout> -->
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToRecomendations">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label text=">" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Informacion" />
             </FlexboxLayout>
 
@@ -67,17 +67,17 @@
             </FlexboxLayout> -->
 
             <FlexboxLayout v-if="user.userType == 'admin' || user.userType == 'webmaster'" class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToDashboard">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label text=">" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Estado"/>
             </FlexboxLayout>
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToQR">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label text=">" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Compartir ID"/>
             </FlexboxLayout>
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label text=">" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Salir"/>
             </FlexboxLayout>
         </StackLayout>

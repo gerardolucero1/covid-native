@@ -1,8 +1,9 @@
 <template>
     <ActionBar>
         <GridLayout width="100%" columns="auto, *">
-            <Label text="" class="font-awesome" fontSize="20" @tap="$emit('sideDrawer')" col="0"/>
+            <Label text="Menú" class="font-awesome" fontSize="20" @tap="$emit('sideDrawer')" col="0"/>
         </GridLayout>
+    
     </ActionBar>
 </template>
 

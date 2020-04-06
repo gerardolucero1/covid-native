@@ -4,17 +4,16 @@
             <StackLayout width="70%" row="1" col="1">
                 <Label marginBottom="20" horizontalAlignment="center" text="ACCEDER" fontSize="25" textWrap="true" />
                 
-                <TextField hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
-                <TextField hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
+                <TextField style="padding:10px; border-bottom:solid" borderBottom="solid" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
+                <TextField style="padding:10px; border-bottom:solid" borderBottom="solid" marginTop="15" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
                 
                 <!-- <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" /> -->
 
-                <Button text="Acceder" borderRadius="20" backgroundColor="white" marginTop="20" color="black" @tap="loginEmail" />
+                <Button text="Acceder" borderRadius="20" backgroundColor="#2c4494" marginTop="20" color="white" @tap="loginEmail" />
                 
-                <Label text="¿No tienes una cuenta? Registrate" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToRegister" />
+                <Label style="color:blue" text="¿No tienes una cuenta? Registrate" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToRegister" />
                 
-                <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
-                <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" />
+                
                 
             </StackLayout>
         </GridLayout>
