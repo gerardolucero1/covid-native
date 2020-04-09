@@ -23,9 +23,9 @@
                                    <HtmlView html="https://prevencion.partnergrammer.com/index.php/terminos-y-condiciones/"></HtmlView>
                                 </StackLayout>
 
-                                <FlexboxLayout justifyContent="center" alignItems="space-around">
-                                    <Button text="ACEPTAR" @tap="acceptTerms" />
-                                    <Button text="DECLINAR" @tap="goToLogin" />
+                                <FlexboxLayout justifyContent="center" alignItems="space-around" marginTop="15">
+                                    <Button text="ACEPTAR" backgroundColor="green" marginRight="10" borderRadius="20" padding="10 20" color="white" @tap="acceptTerms" />
+                                    <Button text="DECLINAR" backgroundColor="red" borderRadius="20" padding="10 20" color="white" @tap="goToLogin" />
                                     
                                 </FlexboxLayout>
                             </StackLayout>
@@ -102,5 +102,7 @@ export default {
 </script>
 
 <style>
-
+    Label{
+        color: black;
+    }
 </style>

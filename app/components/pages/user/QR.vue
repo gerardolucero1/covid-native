@@ -1,8 +1,11 @@
 <template>
     <Page>
         <ActionBar>
-            <GridLayout width="100%" columns="auto, *">
-                <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+            <GridLayout width="100%" columns="*, *">
+                <StackLayout col="0" paddingBottom="10" paddingTop="10" paddingLeft="10" @tap="$refs.drawer.nativeView.showDrawer()">
+                    <Label text="" class="font-awesome" fontSize="20" />
+                </StackLayout>
+                <!-- <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/> -->
             </GridLayout>
         </ActionBar>
 
@@ -21,6 +24,11 @@
                             <StackLayout row="1" col="0">
                                 <StackLayout marginTop="20">
                                     <Image src="" @loaded="generateQR($event)" horizontalAlignment="center" verticalAlignment="center"></Image>
+
+                                    <StackLayout >
+                                        <Label text="CLAVE" fontWeight="bold" horizontalAlignment="center" marginTop="10" />
+                                        <Label :text="user.uid" horizontalAlignment="center" marginTop="10" />
+                                    </StackLayout>
                                 </StackLayout>
                             </StackLayout>
                         </GridLayout>
@@ -111,5 +119,7 @@ export default {
 </script>
 
 <style>
-
+    Label{
+        color: black;
+    }
 </style>

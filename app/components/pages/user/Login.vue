@@ -9,12 +9,13 @@
                 
                 <!-- <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" /> -->
 
-                <Button text="Acceder" borderRadius="20" backgroundColor="white" marginTop="20" color="black" @tap="loginEmail" />
+                <Button text="Acceder" borderRadius="20" backgroundColor="#1D5A7B" marginTop="20" color="white" @tap="loginEmail" />
                 
                 <Label text="¿No tienes una cuenta? Registrate" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToRegister" />
                 
                 <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
                 <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" />
+                <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" />
                 
             </StackLayout>
         </GridLayout>
@@ -33,6 +34,9 @@ import { Color } from "tns-core-modules/color";
 //Toast
 const toast = require('nativescript-toasts')
 
+//iOS or Android
+import { isAndroid, isIOS } from "tns-core-modules/ui/page";
+
 //Pages
 import Home from '../Home.vue'
 import Register from '../user/Register.vue'
@@ -46,7 +50,17 @@ export default {
             user: {
                 email: '',
                 password: '',
-            }
+            },
+
+            android: true,
+        }
+    },
+
+    created(){
+        if(isAndroid){
+            this.android = true
+        }else{
+            this.android = false
         }
     },
 
@@ -213,6 +227,40 @@ export default {
             }
         },
 
+        async loginApple(){
+
+            try{
+                let response = await firebase.login({
+                    type: firebase.LoginType.APPLE,
+                    
+                })
+
+                if(response){
+                    console.log(JSON.stringify(response.additionalUserInfo.isNewUser))
+
+                    if(response.additionalUserInfo.isNewUser){
+                        let user = {
+                            uid: response.uid,
+                            name: response.displayName,
+                            email: response.additionalUserInfo.profile.email,
+                            infection: false,
+                            userType: 'user',
+                            terms: false,
+                        }
+
+                        await firebase.firestore.collection('users').doc(user.uid).set(user)
+                        this.getUserWelcome()
+                        //await firebase.firestore.collection('user_locations').doc(user.uid).set(locations)
+                    }
+
+                    this.getUser(response.uid)
+                }
+            }
+            catch(e){
+                console.log(e)
+            }
+        },
+
         //We get the user data from firebase
         async getUser(uid){
             try {
@@ -272,6 +320,10 @@ export default {
 </script>
 
 <style>
+    Label{
+        color: black;
+    }
+    
     .text_field{
         border: none;
         border-bottom: 1px solid black;

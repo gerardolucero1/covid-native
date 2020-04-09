@@ -1,8 +1,16 @@
+<style>
+    Label{
+        color: black;
+    }
+</style>
+
 <template>
     <Page actionBarHidden="false">
         <ActionBar>
-            <GridLayout width="100%" columns="auto, *">
-                <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+            <GridLayout width="100%" columns="*, *">
+                <StackLayout col="0" paddingBottom="10" paddingTop="10" paddingLeft="10" @tap="$refs.drawer.nativeView.showDrawer()">
+                    <Label text="" class="font-awesome" fontSize="20" />
+                </StackLayout>
                 <!-- <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/> -->
             </GridLayout>
         </ActionBar>
@@ -732,6 +740,3 @@ export default {
     }
 }
 </script>
-
-<style>
-</style>

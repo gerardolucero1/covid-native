@@ -21,6 +21,7 @@
     "moment": "^2.24.0",
     "nativescript-geolocation": "^5.1.0",
     "nativescript-local-notifications": "^4.2.1",
+    "nativescript-phone": "^1.4.1",
     "nativescript-plugin-firebase": "^10.5.0",
     "nativescript-qr-generator": "^1.0.0",
     "nativescript-socketio": "^3.3.1",

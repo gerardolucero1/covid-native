@@ -1,4 +1,8 @@
 <style scoped>
+    Label{
+        color: black;
+    }
+    
     .drawer-body{
         background: rgb(255,255,255);
         background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33%, rgba(250,250,250,1) 100%);
@@ -37,9 +41,14 @@
 <template>
     <GridLayout class="drawer-body" ~drawerContent rows="*, 60">
         <StackLayout row="0">
-            <FlexboxLayout height="200" justifyContent="center" alignItems="center" flexDirection="column">
+            <FlexboxLayout v-if="android" height="200" justifyContent="center" alignItems="center" flexDirection="column">
                 <Image width="50" marginBottom="10" src="http://partnergrammer.com/img/logoHeaderBlack.png" />
 
+                <Label color="black" :text="user.name" fontWeight="bold" fontSize="15" />
+                <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="12" />
+            </FlexboxLayout>
+
+            <FlexboxLayout v-else height="100" justifyContent="center" alignItems="center" flexDirection="column">
                 <Label color="black" :text="user.name" fontWeight="bold" fontSize="15" />
                 <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="12" />
             </FlexboxLayout>
@@ -80,10 +89,22 @@
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Salir"/>
             </FlexboxLayout>
+
+            <StackLayout class="line" marginTop="20" />
+
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="center" alignItems="center">
+                <Label color="black" fontSize="13" text="Si presentas sintomas o requieres ayuda, marca el siguiente numero:" textWrap="true"/>
+            </FlexboxLayout>
+
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToPhone">
+                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label color="black" fontSize="13" class="drawer-item" text="200-48-10"/>
+            </FlexboxLayout>
         </StackLayout>
 
-        <FlexboxLayout row="1" justifyContent="center" alignItems="center">
+        <FlexboxLayout row="1" justifyContent="center" alignItems="center" flexDirection="column">
             <Label color="#43809D" fontSize="20" fontWeight="bold" text="PrevenApp" />
+            <Label class="font-awesome" color="#43809D" fontSize="9" text="Crafted with  by PartnerGrammer" />
         </FlexboxLayout>
     </GridLayout>
 </template>
@@ -94,6 +115,12 @@ const firebase = require("nativescript-plugin-firebase")
 
 //Vuex
 import { mapState } from 'vuex'
+
+//Telephone
+import * as TNSPhone from 'nativescript-phone'
+
+//iOS or Android
+import { isAndroid, isIOS } from "tns-core-modules/ui/page";
 
 //Pages
 import Login from '../pages/user/Login'
@@ -108,7 +135,15 @@ export default {
 
     data() {
         return {
-            
+            android: true,
+        }
+    },
+
+    created(){
+        if(isAndroid){
+            this.android = true
+        }else{
+            this.android = false
         }
     },
 
@@ -173,7 +208,16 @@ export default {
                     name: 'fade',
                 },
             })
-        }
+        },
+
+        goToPhone(){
+            console.log('Hola Mundo')
+            const phoneNumber = '614-200-48-10'
+
+            TNSPhone.requestCallPermission('You should accept the permission to be able to make a direct phone call.')
+                .then(() => TNSPhone.dial(phoneNumber, false))
+                .catch(() => TNSPhone.dial(phoneNumber, true))
+        },
     }
 }
 </script>

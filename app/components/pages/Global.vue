@@ -1,11 +1,11 @@
 <template>
     <Page>
         <ActionBar>
-            <GridLayout width="100%" columns="auto, *">
-                <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+            <GridLayout width="100%" columns="auto, *" backgroundColor="red">
+                <Label backgroundColor="red" text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
             </GridLayout>
         </ActionBar>
-
+        
         <RadSideDrawer ref="drawer">
             <Sidedrawer />
 

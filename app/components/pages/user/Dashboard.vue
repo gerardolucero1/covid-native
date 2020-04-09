@@ -4,13 +4,20 @@
         border-bottom: 1px solid black;
         border-width: 0 0 1px 0;
     }
+
+    Label{
+        color: black;
+    }
 </style>
 
 <template>
     <Page actionBarHidden="false">
         <ActionBar>
-            <GridLayout width="100%" columns="auto, *">
-                <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+            <GridLayout width="100%" columns="*, *">
+                <StackLayout col="0" paddingBottom="10" paddingTop="10" paddingLeft="10" @tap="$refs.drawer.nativeView.showDrawer()">
+                    <Label text="" class="font-awesome" fontSize="20" />
+                </StackLayout>
+                <!-- <Label text="" class="font-awesome" fontSize="20" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/> -->
             </GridLayout>
         </ActionBar>
 
@@ -22,7 +29,7 @@
                     <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
                         <StackLayout orientation="vertical">
                             <TextField class="text_field" hint="User number" text="" fontSize="12" marginTop="20" v-model="uid" width="100%" />
-                            <Button text="Obtener" @tap="getUser" width="100%" />
+                            <Button text="Obtener" marginTop="10" backgroundColor="#3883FB" color="white" @tap="getUser" width="100%" />
 
                             <MLKitBarcodeScanner
                                 v-if="camera"
@@ -34,7 +41,7 @@
                                 supportInverseBarcodes="false"
                                 @scanResult="getQRResult($event)">
                             </MLKitBarcodeScanner>
-                            <Button text="Camara" @tap="camera = !camera" width="100%" />
+                            <Button text="" class="font-awesome" backgroundColor="#3883FB" marginTop="10" color="white" @tap="camera = !camera" width="100%" />
                         </StackLayout>
 
                         <StackLayout v-if="userData != null" marginTop="20">
@@ -53,7 +60,7 @@
                                     <Label text="Historial de ubicaciones" textWrap="true" fontSize="20" marginLeft="10" />
                                 </FlexboxLayout>
 
-                                <Button text="Obtener" @tap="getUbications" width="100%" />
+                                <Button text="Obtener" backgroundColor="#3883FB" color="white" @tap="getUbications" width="100%" />
                                 
                                 
                                 <StackLayout v-for="(item, index) in ubications" :key="index" marginTop="50">
@@ -80,7 +87,7 @@
                                 <TextField class="text_field" hint="" text="" v-model="cases.recovered" keyboardType="number" />
                             </StackLayout>
 
-                            <Button text="Actualizar casos" @tap="updateCases" />
+                            <Button text="Actualizar casos" marginTop="10" backgroundColor="#3883FB" color="white" @tap="updateCases" />
                             
                         </StackLayout>
                     </WrapLayout>
