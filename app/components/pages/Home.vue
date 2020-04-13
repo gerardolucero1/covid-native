@@ -2,6 +2,13 @@
     Label{
         color: black;
     }
+
+    .under-line{
+        border-width: 0 0 4px 0;
+        border-color: black;
+        width: 80%;
+        text-align: center;
+    }
 </style>
 
 <template>
@@ -43,84 +50,145 @@
                             <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
                             <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
 
-                            <Label horizontalAlignment="center" marginTop="10" fontSize="25" color="black" text="CASOS EN CHIHUAHUA" fontWeight="bold"  textWrap="true" />
+                            <Label horizontalAlignment="center" marginTop="10" fontSize="25" color="black" :text="nameState" fontWeight="bold"  textWrap="true" />
 
-                            <StackLayout verticalAlignment="center" marginTop="10">
-                                <Label horizontalAlignment="center" fontSize="18" text="Confirmados" textWrap="true" />
-
-                                <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#EC462F" borderRadius="150" marginTop="5">
-                                    <Label :text="cases.confirmed" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
-                                </StackLayout>
-                            </StackLayout>
-
-                            <StackLayout verticalAlignment="center" marginTop="10">
-                                <Label horizontalAlignment="center" fontSize="18" text="Sospechosos" textWrap="true" />
-
-                                <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#E6A82E" borderRadius="150" marginTop="5">
-                                    <Label :text="cases.suspect" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
-                                </StackLayout>
-                            </StackLayout>
-
-                            <StackLayout verticalAlignment="center" marginTop="10">
-                                <Label horizontalAlignment="center" fontSize="18" text="Negativos" textWrap="true" />
-
-                                <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#3C8106" borderRadius="150" marginTop="5">
-                                    <Label :text="cases.recovered" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
-                                </StackLayout>
-                            </StackLayout>
-                            
-                            <!-- <StackLayout width="100%" backgroundColor="red" borderRadius="15" marginTop="20">
-                                <Label text="Casos Confirmados" fontSize="18" horizontalAlignment="center" textWrap="true" color="white" marginTop="10" />
-                                
-                                <GridLayout columns="*, *" rows="100">
-                                    <FlexboxLayout row="0" col="0" flexDirection="column" justifyContent="center" alignItems="center">
-                                        <Label :text="infoDirection.country" fontSize="18" color="white" textWrap="true" />
-                                        <Label text="82" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
-                                    </FlexboxLayout>
-
-                                    <FlexboxLayout row="0" col="1" flexDirection="column" justifyContent="center" alignItems="center">
-                                        <Label :text="infoDirection.state" fontSize="18" color="white" textWrap="true" />
-                                        <Label text="6" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
-                                    </FlexboxLayout>
+                            <StackLayout marginTop="10">
+                                <GridLayout columns="*, *" rows="50">
+                                    <StackLayout row="0" col="0" @tap="selectedIndex = 0">
+                                        <Label fontSize="17" :class="[ selectedIndex == 0 ? activeClass : '' ]" text="CIUDAD" horizontalAlignment="center" />
+                                    </StackLayout>
+                                    <StackLayout row="0" col="1" @tap="selectedIndex = 1">
+                                        <Label fontSize="17" :class="[ selectedIndex == 1 ? activeClass : '' ]" text="ESTADO" horizontalAlignment="center" />
+                                    </StackLayout>
                                 </GridLayout>
                             </StackLayout>
 
-                            <StackLayout width="100%" backgroundColor="orange" borderRadius="15" marginTop="20">
-                                <Label text="Casos Sospechosos" fontSize="18" horizontalAlignment="center" textWrap="true" color="white" marginTop="10" />
-                                
-                                <GridLayout columns="*, *" rows="100">
-                                    <FlexboxLayout row="0" col="0" flexDirection="column" justifyContent="center" alignItems="center">
-                                        <Label :text="infoDirection.country" fontSize="18" color="white" textWrap="true" />
-                                        <Label text="82" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
+                            <StackLayout v-if="selectedIndex == 0">
+                                <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="casesCity.confirmed" textWrap="true" />
                                     </FlexboxLayout>
-
-                                    <FlexboxLayout row="0" col="1" flexDirection="column" justifyContent="center" alignItems="center">
-                                        <Label :text="infoDirection.state" fontSize="18" color="white" textWrap="true" />
-                                        <Label text="6" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
+                                    </FlexboxLayout>
+                                </GridLayout>
+                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="casesCity.suspect" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
+                                    </FlexboxLayout>
+                                </GridLayout>
+                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="casesCity.recovered" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Negativos" t fontSize="20" color="black" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
                             </StackLayout>
-
-                            <StackLayout width="100%" backgroundColor="green" borderRadius="15" marginTop="20">
-                                <Label text="Casos Negativos" fontSize="18" horizontalAlignment="center" textWrap="true" color="white" marginTop="10" />
-                                
-                                <GridLayout columns="*, *" rows="100">
-                                    <FlexboxLayout row="0" col="0" flexDirection="column" justifyContent="center" alignItems="center">
-                                        <Label :text="infoDirection.country" fontSize="18" color="white" textWrap="true" />
-                                        <Label text="82" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
+                            <StackLayout v-if="selectedIndex == 1">
+                                <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="cases.confirmed" textWrap="true" />
                                     </FlexboxLayout>
-
-                                    <FlexboxLayout row="0" col="1" flexDirection="column" justifyContent="center" alignItems="center">
-                                        <Label :text="infoDirection.state" fontSize="18" color="white" textWrap="true" />
-                                        <Label text="6" fontSize="16" color="white" fontWeight="bold" textWrap="true" />
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
-                            </StackLayout> -->
-
-                            <StackLayout width="100%" marginTop="20">
-                                <Button text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" />
-                                
+                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="cases.suspect" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
+                                    </FlexboxLayout>
+                                </GridLayout>
+                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="cases.recovered" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Negativos" t fontSize="20" color="black" textWrap="true" />
+                                    </FlexboxLayout>
+                                </GridLayout>
                             </StackLayout>
+                            <!-- <StackLayout verticalAlignment="center" marginTop="10">
+                                        <Label horizontalAlignment="center" fontSize="18" text="Confirmados" textWrap="true" />
+
+                                        <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#EC462F" borderRadius="150" marginTop="5">
+                                            <Label :text="cases.confirmed" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <StackLayout verticalAlignment="center" marginTop="10">
+                                        <Label horizontalAlignment="center" fontSize="18" text="Sospechosos" textWrap="true" />
+
+                                        <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#E6A82E" borderRadius="150" marginTop="5">
+                                            <Label :text="cases.suspect" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <StackLayout verticalAlignment="center" marginTop="10">
+                                        <Label horizontalAlignment="center" fontSize="18" text="Negativos" textWrap="true" />
+
+                                        <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#3C8106" borderRadius="150" marginTop="5">
+                                            <Label :text="cases.recovered" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
+                                        </StackLayout>
+                                    </StackLayout> -->
+                        </StackLayout>
+
+                        <StackLayout width="100%" marginTop="20">
+                            <Button text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" /> 
+                        </StackLayout>
+
+                        <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
+                        <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
+
+                        <StackLayout marginTop="10">
+                            <Label horizontalAlignment="center" fontSize="25" color="black" text="MARCA AL:" textWrap="true" />
+
+                            <GridLayout marginTop="10" rows="60" columns="*, *, *, *, *, *, *" @tap="goToPhone">
+                                <StackLayout row="0" col="0" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="2" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                                <StackLayout row="0" col="1" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="0" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                                <StackLayout row="0" col="2" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="0" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                                <StackLayout row="0" col="3" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="4" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                                <StackLayout row="0" col="4" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="8" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                                <StackLayout row="0" col="5" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="1" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                                <StackLayout row="0" col="6" padding="2">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
+                                        <Label text="0" fontSize="22" color="white" textWrap="true" />
+                                    </FlexboxLayout>
+                                </StackLayout>
+                            </GridLayout>
+
+                            <Label horizontalAlignment="center" fontSize="13" color="black" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLOGÍCA" textWrap="true" />
                         </StackLayout>
                     </WrapLayout>
                 </ScrollView>
@@ -155,6 +223,9 @@ import apiKeyHelper from '../key.js'
 
 //Moment
 let moment = require('moment')
+
+//Telephone
+import * as TNSPhone from 'nativescript-phone'
 
 //Local notification
 import { LocalNotifications } from "nativescript-local-notifications";
@@ -194,6 +265,7 @@ const options = {
 //Pages
 import Login from './user/Login.vue'
 import Recomendations from '../pages/Recomendations'
+import Info from '../pages/Info'
 
 export default {
     name: 'Home',
@@ -206,8 +278,6 @@ export default {
             },
             infoDirection: {
                 direction: 'No se puede obtener tu direccion...',
-                country: '',
-                state: '',
                 placeId: '',
             },
             breakTime: false,
@@ -217,7 +287,14 @@ export default {
             userLocations: [],
             flag: false,
             cases: '',
+            casesCity: '',
             selectedUbications: [],
+
+            selectedIndex: 0,
+            activeClass: 'under-line',
+
+            city: '',
+            state: '',
         }
     },
 
@@ -242,7 +319,7 @@ export default {
         //     .catch(() => this.allowExecution = false)
 
         LocalNotifications.addOnMessageReceivedCallback(notificationData => {
-            this.$navigateTo(Recomendations)
+            this.$navigateTo(Info)
         });
     },
 
@@ -297,20 +374,48 @@ export default {
 
         locationDescription() {
             return `You are at ${this.origin.latitude}, ${this.origin.longitude}.`;
+        },
+
+        nameState(){
+            return `CASOS EN ${this.state.toUpperCase()}`
         }
     },
 
     methods: {
 
-        //Obtener el contador de casos infectados de firebase
+        indexChange: function(args) {
+            let newIndex = args.value
+            console.log('Current tab index: ' + newIndex)
+        },
+
+        //Obtener el contador de casos infectados de firebase a nivel estado
         async getCases(){
             try {
                 let response = await firebase.firestore.collection('cases')
-                                                        .doc('chihuahua')
+                                                        .doc(this.state)
                                                         .onSnapshot((doc) => {
                                                             this.cases = doc.data()
                                                             console.log(this.cases)
                                                         })
+
+                // this.getCasesCity()
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        //Obtener el contador de casos infectados de firebase a nivel ciudad
+        async getCasesCity(){
+            try {
+                let response = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
+                                                        .collection('cities')
+                                                        .doc(this.city)
+                                                        .onSnapshot((doc) => {
+                                                            this.casesCity = doc.data()
+                                                            console.log(this.casesCity)
+                                                        })
+
             } catch (error) {
                 console.log(error)
             }
@@ -370,18 +475,35 @@ export default {
         //Obtenemos la direccion por medio de las coordenadas dadas
         reverseGeo(){
             httpModule.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origin.latitude},${this.origin.longitude}&key=${this.apiKey}`).then((r) => {
-                if(r.results[0].address_components.length == 6){
-                    this.infoDirection.direction = r.results[0].formatted_address
-                    this.infoDirection.country = r.results[0].address_components[5].long_name
-                    this.infoDirection.state = r.results[0].address_components[4].long_name
-                    this.infoDirection.placeId = r.results[0].place_id
-                }else{
-                    this.infoDirection.direction = r.results[0].formatted_address
-                    this.infoDirection.country = r.results[0].address_components[6].long_name
-                    this.infoDirection.state = r.results[0].address_components[5].long_name
-                    this.infoDirection.placeId = r.results[0].place_id
-                }
+                r.results[0].address_components.forEach(element => {
+                    if (element.types.includes('locality')){
+                       this.city = element.long_name
+                    }
+
+                    if (element.types.includes('administrative_area_level_1')){
+                       this.state = element.long_name
+                   }
+
+                });
+
+                this.infoDirection.direction = r.results[0].formatted_address
+                this.infoDirection.placeId = r.results[0].place_id
                 
+                // if(r.results[0].address_components){
+                //     this.infoDirection.direction = r.results[0].formatted_address
+                //     this.infoDirection.country = r.results[0].address_components[5].long_name
+                //     this.infoDirection.state = r.results[0].address_components[4].long_name
+                //     this.infoDirection.placeId = r.results[0].place_id
+                // }else{
+                //     this.infoDirection.direction = r.results[0].formatted_address
+                //     this.infoDirection.country = r.results[0].address_components[6].long_name
+                //     this.infoDirection.state = r.results[0].address_components[5].long_name
+                //     this.infoDirection.placeId = r.results[0].place_id
+                // }
+
+                //Obtenemos los casos
+                this.getCases()
+                this.getCasesCity()
 
                 //Despues de obtener la direccion nos dirigimos a guardarla en la BDD
                 this.saveUbication()
@@ -517,12 +639,17 @@ export default {
 
         //Alert de iniciar analizis
         startAnalysis(){
-            alert({
-                title: "Iniciar Analisis",
-                message: "Esto comenzara un analisis de tus ubicaciones, porfavor no cierres la aplicacion.",
-                okButtonText: "Entendido"
-            }).then(() => {
-                this.getInfectedLocations()
+            confirm({
+                title: "Iniciar Análisis",
+                message: "Esto comenzara un análisis de tus ubicaciones, por favor no cierres la aplicación.",
+                okButtonText: "Entendido",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+
+                if(result){
+                    this.getInfectedLocations()
+                }
+                
             });
         },
 
@@ -643,8 +770,8 @@ export default {
                     LocalNotifications.schedule(
                     [{
                         id: 1,
-                        title: 'Alerta de exposicion',
-                        subtitle: 'Posible riesgo de exposicion',
+                        title: 'Alerta de exposición',
+                        subtitle: 'Posible riesgo de exposición',
                         body: 'Se detecto que una de las zonas que visitaste recientemente pudiera haber estado expuesta.',
                         bigTextStyle: false,
                         color: new Color("green"),
@@ -675,8 +802,8 @@ export default {
                     LocalNotifications.schedule(
                     [{
                         id: 1,
-                        title: 'Analisis finalizado',
-                        subtitle: 'Se ha terminado el analisis',
+                        title: 'Análisis finalizado',
+                        subtitle: 'Se ha terminado el análisis',
                         body: 'No se detectaron zonas expuestas en tus ubicaciones.',
                         bigTextStyle: false,
                         color: new Color("green"),
@@ -707,8 +834,8 @@ export default {
                     LocalNotifications.schedule(
                     [{
                         id: 1,
-                        title: 'Analisis finalizado',
-                        subtitle: 'Se ha terminado el analisis',
+                        title: 'Análisis finalizado',
+                        subtitle: 'Se ha terminado el análisis',
                         body: 'No se detectaron zonas expuestas en tus ubicaciones.',
                         bigTextStyle: false,
                         color: new Color("green"),
@@ -736,6 +863,15 @@ export default {
                     break;
             }
             
+        },
+
+        goToPhone(){
+            console.log('Hola Mundo')
+            const phoneNumber = '200-48-10'
+
+            TNSPhone.requestCallPermission('You should accept the permission to be able to make a direct phone call.')
+                .then(() => TNSPhone.dial(phoneNumber, false))
+                .catch(() => TNSPhone.dial(phoneNumber, true))
         },
     }
 }

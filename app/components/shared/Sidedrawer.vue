@@ -90,7 +90,7 @@
                 <Label color="black" fontSize="13" class="drawer-item" text="Salir"/>
             </FlexboxLayout>
 
-            <StackLayout class="line" marginTop="20" />
+            <!-- <StackLayout class="line" marginTop="20" />
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="center" alignItems="center">
                 <Label color="black" fontSize="13" text="Si presentas sintomas o requieres ayuda, marca el siguiente numero:" textWrap="true"/>
@@ -99,7 +99,7 @@
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToPhone">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="200-48-10"/>
-            </FlexboxLayout>
+            </FlexboxLayout> -->
         </StackLayout>
 
         <FlexboxLayout row="1" justifyContent="center" alignItems="center" flexDirection="column">

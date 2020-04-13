@@ -15,7 +15,7 @@
                 
                 <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
                 <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" />
-                <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" />
+                <!-- <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" /> -->
                 
             </StackLayout>
         </GridLayout>
@@ -290,7 +290,7 @@ export default {
                     id: 1,
                     title: 'Bienvenido',
                     subtitle: 'Bienvenido a prevenapp',
-                    body: 'Muchas gracias por registrarte en nuestra aplicacion.',
+                    body: 'Muchas gracias por registrarte en nuestra aplicación.',
                     bigTextStyle: false,
                     color: new Color("green"),
                     //image: "https://images-na.ssl-images-amazon.com/images/I/61mx-VbrS0L.jpg",

@@ -15,12 +15,14 @@
                         
                         <GridLayout rows="*, 2*" colums="*">
                             <StackLayout row="0" col="0">
-                                <Label text="Terminos y condiciones" horizontalAlignment="center" marginTop="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                <Label class="font-awesome" text="" horizontalAlignment="center" marginTop="20" fontSize="50" fontWeight="bold" textWrap="true" />
                             </StackLayout>
 
                             <StackLayout row="1" col="0">
+                                
                                 <StackLayout marginTop="20">
-                                   <HtmlView html="https://prevencion.partnergrammer.com/index.php/terminos-y-condiciones/"></HtmlView>
+                                   <Label textAlignemnt="center" text="Antes de usar esta aplicación revisa los términos  y condiciones del servicio en el siguiente enlace:" textWrap="true" />
+                                    <HtmlView html="https://prevencion.partnergrammer.com/index.php/terminos-y-condiciones/"></HtmlView>
                                 </StackLayout>
 
                                 <FlexboxLayout justifyContent="center" alignItems="space-around" marginTop="15">

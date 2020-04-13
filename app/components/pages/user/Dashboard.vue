@@ -150,20 +150,13 @@ const options = {
     // }
 };
 
-//Modals
-import ModalDate from '../../modals/UbicationDate'
-
 export default {
     name: 'Dashboard',
-
-    components: [
-        ModalDate,
-    ],
 
     data(){
         return{
             //uid: '76mL7dPrMoNi9yQJtZ7Y5GmAb8O2',
-            uid: 'zZai2ouHjCeVuS58K5tFUapLnR72',
+            uid: '',
             userData: null,
             ubications: [],
             camera: false,
@@ -410,15 +403,6 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-        },
-
-        //Abrimos modal para seleciconar fecha
-        setDate(item){
-            this.$showModal(ModalDate, {
-                props:{
-                    item: item,
-                }
-            })
         },
     }
 }

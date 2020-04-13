@@ -3,6 +3,7 @@ import Login from './components/pages/user/Login.vue'
 import Home from './components/pages/Home.vue'
 import Terms from './components/pages/Terms.vue'
 import App from './components/App.vue'
+import ModalLogin from './components/modals/ModalLogin'
 
 import store from './store'
 import VueDevtools from 'nativescript-vue-devtools'
@@ -14,7 +15,7 @@ import Sidedrawer from './components/shared/Sidedrawer.vue'
 import Actionbar from './components/shared/Actionbar.vue'
 
 if(TNS_ENV !== 'production') {
-  Vue.use(VueDevtools, { host: '192.168.0.3' })
+  Vue.use(VueDevtools, { host: '192.168.0.6' })
 }
 
 //Local notifications
@@ -59,30 +60,37 @@ Vue.component('Actionbar', Actionbar)
 Vue.use(Vuelidate)
 
 
+
 new Vue({
-  store,
-  mounted(){
-    firebase.getCurrentUser()
-          .then(async (user) => {
-            
-              let response = await firebase.firestore.collection('users')
-                                                      .doc(user.uid)
-                                                      .get()
+    store,
 
-              if(response.exists){
-                    let user = response.data()
+    components: [
+        ModalLogin,
+    ],
 
-                    if(user.terms){
-                        this.$store.commit('updateUser', user)
-                        this.$navigateTo(Home)
-                    }else{
-                        this.$store.commit('updateUser', user)
-                        this.$navigateTo(Terms)
+    mounted(){
+        firebase.getCurrentUser()
+                .then(async (user) => {
+                    this.$showModal(ModalLogin)
+
+                    let response = await firebase.firestore.collection('users')
+                                                        .doc(user.uid)
+                                                        .get()
+
+                    if(response.exists){
+                        let user = response.data()
+
+                        if(user.terms){
+                            this.$store.commit('updateUser', user)
+                            this.$navigateTo(Home)
+                        }else{
+                            this.$store.commit('updateUser', user)
+                            this.$navigateTo(Terms)
+                        }
+                        
                     }
-                    
-                }
-            })
-          .catch(error => console.log("Trouble in paradise: " + error));
-  },
-  render: h => h('frame', [h(Login)])
+                })
+            .catch(error => console.log("Trouble in paradise: " + error));
+    },
+    render: h => h('frame', [h(Login)])
 }).$start()
