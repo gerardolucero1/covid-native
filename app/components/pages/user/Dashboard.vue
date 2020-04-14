@@ -74,6 +74,11 @@
 
                         <StackLayout v-if="user.userType == 'webmaster'">
                             <StackLayout>
+                                <Label horizontalAlignment="center" fontSize="22" text="Ciudad:" textWrap="true" />
+                                <Label horizontalAlignment="center" fontSize="19" :text="city" textWrap="true" />
+                                
+                            </StackLayout>
+                            <StackLayout>
                                 <Label text="Confirmados" textWrap="true" />
                                 <TextField class="text_field" hint="" text="" v-model="cases.confirmed" keyboardType="number" />
                             </StackLayout>
@@ -86,8 +91,12 @@
                                 <Label text="Recuperados" textWrap="true" />
                                 <TextField class="text_field" hint="" text="" v-model="cases.recovered" keyboardType="number" />
                             </StackLayout>
+                            <StackLayout>
+                                <Label text="Muertes" textWrap="true" />
+                                <TextField class="text_field" hint="" text="" v-model="cases.deaths" keyboardType="number" />
+                            </StackLayout>
 
-                            <Button text="Actualizar casos" marginTop="10" backgroundColor="#3883FB" color="white" @tap="updateCases" />
+                            <Button text="Actualizar casos" marginTop="10" backgroundColor="#3883FB" color="white" @tap="confirmUpdate" />
                             
                         </StackLayout>
                     </WrapLayout>
@@ -160,7 +169,8 @@ export default {
             userData: null,
             ubications: [],
             camera: false,
-            cases: ''
+            cases: '',
+            update: true,
         }
     },
 
@@ -195,7 +205,9 @@ export default {
 
     computed: {
         ...mapState([
-                'user'
+                'user',
+                'state',
+                'city',
             ]),
 
         minDatePicker(){
@@ -211,9 +223,44 @@ export default {
         //Obtener casos de covid
         async getCases(){
             try {
-                let response = await firebase.firestore.collection('cases')
-                                                        .doc('chihuahua')
+
+                let data = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
                                                         .get()
+
+                if(data.exists){
+                    console.log('Existe el estado')
+                    let response = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
+                                                        .collection('cities')
+                                                        .doc(this.city)
+                                                        .get()
+
+                    if(response.exists){
+                        console.log('Existe la ciudad')
+                        this.cases = response.data()
+                    }else{
+                        this.update = false
+
+                        this.cases = {
+                            confirmed: 0,
+                            suspect: 0,
+                            recovered: 0,
+                            deaths: 0,
+                        }
+                    }
+                }else{
+                    this.update = false
+
+                    this.cases = {
+                        confirmed: 0,
+                        suspect: 0,
+                        recovered: 0,
+                        deaths: 0,
+                    }
+                }
+
+                
 
                 if(response.exists){
                     this.cases = response.data()
@@ -224,11 +271,42 @@ export default {
             }
         },
 
+        confirmUpdate(){
+            confirm({
+                title: "¿Actualizar los datos?",
+                message: `Se actualizaran los datos de la siguiente ciudad: ${this.city}.`,
+                okButtonText: "Entendido",
+                cancelButtonText: "Cancelar"
+            }).then(result => {
+                if(result){
+                    this.updateCases()
+                }
+            });
+        },
+
         async updateCases(){
             try {
-                let response = await firebase.firestore.collection('cases')
-                                                        .doc('chihuahua')
+                if(this.update){
+                    let response = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
+                                                        .collection('cities')
+                                                        .doc(this.city)
                                                         .update(this.cases)
+                }else{
+                    let response = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
+                                                        .collection('cities')
+                                                        .doc(this.city)
+                                                        .set(this.cases)
+                }
+
+                alert({
+                    title: "Datos actualizados",
+                    message: `Se han actualizado los datos de la siguiente ciudad: ${this.city}.`,
+                    okButtonText: "Entendido"
+                }).then(() => {
+                    console.log("Alert dialog closed");
+                });
             } catch (error) {
                 console.log(error)
             }

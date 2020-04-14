@@ -65,7 +65,7 @@
 
             <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToRecomendations">
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
-                <Label color="black" fontSize="13" class="drawer-item" text="Informacion" />
+                <Label color="black" fontSize="13" class="drawer-item" text="Información" />
             </FlexboxLayout>
 
             <StackLayout class="line" marginTop="20" />

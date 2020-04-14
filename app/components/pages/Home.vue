@@ -85,7 +85,15 @@
                                         <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="casesCity.recovered" textWrap="true" />
                                     </FlexboxLayout>
                                     <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Negativos" t fontSize="20" color="black" textWrap="true" />
+                                        <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
+                                    </FlexboxLayout>
+                                </GridLayout>
+                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="black" fontSize="35" fontWeight="bold" :text="casesCity.deaths" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Muertes" fontSize="20" color="black" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
                             </StackLayout>
@@ -111,33 +119,18 @@
                                         <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="cases.recovered" textWrap="true" />
                                     </FlexboxLayout>
                                     <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Negativos" t fontSize="20" color="black" textWrap="true" />
+                                        <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
+                                    </FlexboxLayout>
+                                </GridLayout>
+                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                        <Label color="black" fontSize="35" fontWeight="bold" :text="cases.deaths" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                        <Label text="Muertes" fontSize="20" color="black" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
                             </StackLayout>
-                            <!-- <StackLayout verticalAlignment="center" marginTop="10">
-                                        <Label horizontalAlignment="center" fontSize="18" text="Confirmados" textWrap="true" />
-
-                                        <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#EC462F" borderRadius="150" marginTop="5">
-                                            <Label :text="cases.confirmed" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
-                                        </StackLayout>
-                                    </StackLayout>
-
-                                    <StackLayout verticalAlignment="center" marginTop="10">
-                                        <Label horizontalAlignment="center" fontSize="18" text="Sospechosos" textWrap="true" />
-
-                                        <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#E6A82E" borderRadius="150" marginTop="5">
-                                            <Label :text="cases.suspect" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
-                                        </StackLayout>
-                                    </StackLayout>
-
-                                    <StackLayout verticalAlignment="center" marginTop="10">
-                                        <Label horizontalAlignment="center" fontSize="18" text="Negativos" textWrap="true" />
-
-                                        <StackLayout verticalAlignment="center" width="100" height="100" backgroundColor="#3C8106" borderRadius="150" marginTop="5">
-                                            <Label :text="cases.recovered" color="white" fontSize="25" textWrap="true" horizontalAlignment="center" />
-                                        </StackLayout>
-                                    </StackLayout> -->
                         </StackLayout>
 
                         <StackLayout width="100%" marginTop="20">
@@ -188,7 +181,7 @@
                                 </StackLayout>
                             </GridLayout>
 
-                            <Label horizontalAlignment="center" fontSize="13" color="black" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLOGÍCA" textWrap="true" />
+                            <Label horizontalAlignment="center" fontSize="13" color="black" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLÓGICA" textWrap="true" />
                         </StackLayout>
                     </WrapLayout>
                 </ScrollView>
@@ -362,9 +355,13 @@ export default {
             }
         },
 
-        // userLocations(){
-        //     this.getDatesInfection()
-        // }
+        state(){
+            this.getCases()
+            
+            this.$store.commit('updateState', this.state)
+            this.$store.commit('updateCity', this.city)
+        },
+
     },
 
     computed: {
@@ -383,22 +380,31 @@ export default {
 
     methods: {
 
-        indexChange: function(args) {
-            let newIndex = args.value
-            console.log('Current tab index: ' + newIndex)
-        },
-
         //Obtener el contador de casos infectados de firebase a nivel estado
         async getCases(){
             try {
-                let response = await firebase.firestore.collection('cases')
+                let data = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
+                                                        .get()
+
+                if(data.exists){
+                    console.log('Existe el estado')
+                    let response = await firebase.firestore.collection('cases')
                                                         .doc(this.state)
                                                         .onSnapshot((doc) => {
                                                             this.cases = doc.data()
-                                                            console.log(this.cases)
                                                         })
 
-                // this.getCasesCity()
+                    this.getCasesCity()
+                }else{
+                    this.cases = {
+                        confirmed: 0,
+                        suspect: 0,
+                        recovered: 0,
+                        deaths: 0,
+                    }
+                }
+
             } catch (error) {
                 console.log(error)
             }
@@ -407,15 +413,30 @@ export default {
         //Obtener el contador de casos infectados de firebase a nivel ciudad
         async getCasesCity(){
             try {
-                let response = await firebase.firestore.collection('cases')
+                let data = await firebase.firestore.collection('cases')
+                                                        .doc(this.state)
+                                                        .collection('cities')
+                                                        .doc(this.city)
+                                                        .get()
+
+                if(data.exists){
+                    console.log('Existe la ciudad')
+                    let response = await firebase.firestore.collection('cases')
                                                         .doc(this.state)
                                                         .collection('cities')
                                                         .doc(this.city)
                                                         .onSnapshot((doc) => {
                                                             this.casesCity = doc.data()
-                                                            console.log(this.casesCity)
                                                         })
-
+                }else{
+                    this.casesCity = {
+                        confirmed: 0,
+                        suspect: 0,
+                        recovered: 0,
+                        deaths: 0,
+                    }
+                }
+                
             } catch (error) {
                 console.log(error)
             }
@@ -452,9 +473,6 @@ export default {
 
         //Geolocalizacion
         getLocation(){
-            //Loader activate
-            //loader.show(options)
-
             geolocation.getCurrentLocation({
                 desiredAccuracy: Accuracy.high,
                 maximumAge: 5000,
@@ -464,6 +482,7 @@ export default {
                     this.origin.latitude = location.latitude
                     this.origin.longitude = location.longitude
 
+                    // this.getState()
                     this.reverseGeo()
                     this.watchLocation()
                 }
@@ -482,7 +501,10 @@ export default {
 
                     if (element.types.includes('administrative_area_level_1')){
                        this.state = element.long_name
-                   }
+                    }
+
+                    console.log(`Este es el estado: ${this.state}`)
+                    console.log(`Esta es la ciudad: ${this.city}`)
 
                 });
 
@@ -501,15 +523,9 @@ export default {
                 //     this.infoDirection.placeId = r.results[0].place_id
                 // }
 
-                //Obtenemos los casos
-                this.getCases()
-                this.getCasesCity()
-
                 //Despues de obtener la direccion nos dirigimos a guardarla en la BDD
                 this.saveUbication()
 
-                //Loader deactivate
-                //loader.hide()
             }, (e) => {
                 console.log(e)
             });
@@ -641,7 +657,7 @@ export default {
         startAnalysis(){
             confirm({
                 title: "Iniciar Análisis",
-                message: "Esto comenzara un análisis de tus ubicaciones, por favor no cierres la aplicación.",
+                message: "Esto comenzará un análisis de tus ubicaciones, por favor no cierres la aplicación.",
                 okButtonText: "Entendido",
                 cancelButtonText: "Cancelar"
             }).then((result) => {

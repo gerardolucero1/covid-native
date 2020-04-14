@@ -8,7 +8,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 	  	user: null,
-      	token: null
+		token: null,
+		state: null,
+		city: null,  
 	},
 
   	mutations: {
@@ -18,7 +20,15 @@ export default new Vuex.Store({
 
 		updateToken(state, payload){
 			state.token = payload
-		}
+		},
+
+		updateState(state, payload){
+			state.state = payload
+		},
+
+		updateCity(state, payload){
+			state.city = payload
+		},
 	},
 
   	actions: {
