@@ -134,16 +134,23 @@
                         </StackLayout>
 
                         <StackLayout width="100%" marginTop="20">
-                            <Button text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" /> 
+                            <Button v-if="!analyzing" text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" /> 
+                            <ActivityIndicator v-else horizontalAlignment="center" busy="true" />
                         </StackLayout>
 
                         <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
                         <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
 
                         <StackLayout marginTop="10">
-                            <Label horizontalAlignment="center" fontSize="25" color="black" text="MARCA AL:" textWrap="true" />
+                            <FlexboxLayout justifyContent="center" alignItems="center" marginTop="5">
+                                <Label class="font-awesome" fontSize="25" color="black" text="" textWrap="true" />
+                                <Label marginLeft="10" fontWeight="normal" fontSize="25" color="black" text="MARCA AL:" textWrap="true" />
+                            </FlexboxLayout>
+                            <StackLayout>
+                                <Label horizontalAlignment="center" marginTop="5" fontWeight="bold" color="#707070" fontSize="40" text="200-48-10" textWrap="true" @tap="goToPhone" />
+                            </StackLayout>
 
-                            <GridLayout marginTop="10" rows="60" columns="*, *, *, *, *, *, *" @tap="goToPhone">
+                            <!-- <GridLayout marginTop="10" rows="60" columns="*, *, *, *, *, *, *" @tap="goToPhone">
                                 <StackLayout row="0" col="0" padding="2">
                                     <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
                                         <Label text="2" fontSize="22" color="white" textWrap="true" />
@@ -179,9 +186,9 @@
                                         <Label text="0" fontSize="22" color="white" textWrap="true" />
                                     </FlexboxLayout>
                                 </StackLayout>
-                            </GridLayout>
+                            </GridLayout> -->
 
-                            <Label horizontalAlignment="center" fontSize="13" color="black" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLÓGICA" textWrap="true" />
+                            <Label horizontalAlignment="center" marginTop="5" color="#707070" fontSize="13" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLÓGICA" textWrap="true" />
                         </StackLayout>
                     </WrapLayout>
                 </ScrollView>
@@ -288,6 +295,8 @@ export default {
 
             city: '',
             state: '',
+
+            analyzing:  false,
         }
     },
 
@@ -312,7 +321,7 @@ export default {
         //     .catch(() => this.allowExecution = false)
 
         LocalNotifications.addOnMessageReceivedCallback(notificationData => {
-            this.$navigateTo(Info)
+            this.$navigateTo(Recomendations)
         });
     },
 
@@ -663,6 +672,7 @@ export default {
             }).then((result) => {
 
                 if(result){
+                    this.analyzing = true
                     this.getInfectedLocations()
                 }
                 
@@ -771,6 +781,7 @@ export default {
         },
 
         getResults(){
+            this.analyzing = false
             console.log(this.selectedUbications.length)
             if(this.selectedUbications.length != 0){
                 this.getNotification(1)

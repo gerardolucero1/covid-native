@@ -260,12 +260,6 @@ export default {
                     }
                 }
 
-                
-
-                if(response.exists){
-                    this.cases = response.data()
-                }
-
             } catch (error) {
                 console.log(error)
             }

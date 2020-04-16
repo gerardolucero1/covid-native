@@ -16,3 +16,6 @@ platforms
 
 # Api Key
 app/components/key.js
+
+# Bundles
+Prevenapp.aab

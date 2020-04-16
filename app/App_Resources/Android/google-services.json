@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "53960835934-ep7u3ks93ti6392h7huehncke41cmdf3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.partnergrammer.prevenapp",
+            "certificate_hash": "e7c1598a35722b6acb8b243c55eb5345a8d12288"
+          }
+        },
+        {
           "client_id": "53960835934-ls7nal785rtk4dfvita5fq45tn4oju8r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -44,8 +52,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "53960835934-t8tudccjhh85kp28da1mboqerkm6qe7g.apps.googleusercontent.com",
+              "client_id": "53960835934-dst74905h19mvq56udoabunuu10el7uc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "53960835934-n97b86olkoerl40gvuvu6npsfvl5d64q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.partnergrammer.prevenapp"
+              }
             }
           ]
         }
