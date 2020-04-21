@@ -93,7 +93,7 @@
                                         <Label color="black" fontSize="35" fontWeight="bold" :text="casesCity.deaths" textWrap="true" />
                                     </FlexboxLayout>
                                     <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Muertes" fontSize="20" color="black" textWrap="true" />
+                                        <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
                             </StackLayout>
@@ -127,10 +127,16 @@
                                         <Label color="black" fontSize="35" fontWeight="bold" :text="cases.deaths" textWrap="true" />
                                     </FlexboxLayout>
                                     <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Muertes" fontSize="20" color="black" textWrap="true" />
+                                        <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
                                     </FlexboxLayout>
                                 </GridLayout>
                             </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout marginTop="10">
+                            <Label text="Ultima actualización:" horizontalAlignment="center" textWrap="true" />
+                            
+                            <Label :text="casesCity.date | formatDate" horizontalAlignment="center" textWrap="true" />
                         </StackLayout>
 
                         <StackLayout width="100%" marginTop="20">
@@ -331,6 +337,14 @@ export default {
 
     },
 
+    filters: {
+        formatDate(date){
+            moment.locale('es')
+            
+            return moment(date).format('LL')
+        }
+    },
+
     watch: {
         'origin.latitude': function (newVal, oldVal) {
             let number_1 = this.truncarNumbers(oldVal, 3)
@@ -411,6 +425,7 @@ export default {
                         suspect: 0,
                         recovered: 0,
                         deaths: 0,
+                        date: new Date(),
                     }
                 }
 

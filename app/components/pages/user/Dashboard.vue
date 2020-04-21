@@ -28,7 +28,7 @@
                 <ScrollView col="0" row="0">
                     <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
                         <StackLayout orientation="vertical">
-                            <TextField class="text_field" hint="User number" text="" fontSize="12" marginTop="20" v-model="uid" width="100%" />
+                            <TextField class="text_field" hint="Numero de usuario" text="" fontSize="12" marginTop="20" v-model="uid" width="100%" />
                             <Button text="Obtener" marginTop="10" backgroundColor="#3883FB" color="white" @tap="getUser" width="100%" />
 
                             <MLKitBarcodeScanner

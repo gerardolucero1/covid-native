@@ -68,6 +68,11 @@
                 <Label color="black" fontSize="13" class="drawer-item" text="Información" />
             </FlexboxLayout>
 
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToNews">
+                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label color="black" fontSize="13" class="drawer-item" text="Noticias" />
+            </FlexboxLayout>
+
             <StackLayout class="line" marginTop="20" />
 
             <!-- <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
@@ -129,6 +134,7 @@ import Home from '../pages/Home'
 import Recomendations from '../pages/Recomendations'
 import Global from '../pages/Global'
 import Dashboard from '../pages/user/Dashboard'
+import News from '../pages/News'
 
 export default {
     name: 'Navbar',
@@ -203,6 +209,15 @@ export default {
 
         goToHome(){
             this.$navigateTo(Home, {
+                animated: true,
+                transition: {
+                    name: 'fade',
+                },
+            })
+        },
+
+        goToNews(){
+            this.$navigateTo(News, {
                 animated: true,
                 transition: {
                     name: 'fade',
