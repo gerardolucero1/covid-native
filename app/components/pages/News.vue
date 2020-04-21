@@ -141,15 +141,15 @@ export default {
 
         //Obtenemos las noticias
         getNews(){
-            // loader.show(options);
+            loader.show(options);
             httpModule.getJSON(`https://chih-scrap.herokuapp.com/polls/`).then((response) => {
                 this.news = Object.keys(response).map(key => {
                     return response[key];
                 })
-                // loader.hide();
+                loader.hide();
             }, (e) => {
                 console.log(e)
-                // loader.hide();
+                loader.hide();
             });
         },
 

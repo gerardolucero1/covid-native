@@ -22,11 +22,15 @@
             </GridLayout>
         </ActionBar>
 
+        
+
         <RadSideDrawer ref="drawer">
             <Sidedrawer />
+            
 
             <GridLayout ~mainContent columns="*" rows="*" backgroundColor="#F3F3F3">
                 <ScrollView col="0" row="0">
+                    
                     <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
                         <StackLayout marginTop="20">
                             <Label :text="'Hola, ' + user.name" fontSize="25" fontWeight="lighter" textWrap="true" horizontalAlignment="left" />
@@ -35,7 +39,6 @@
                                 <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
                                 <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
                             </FlexboxLayout>
-                            <!-- <Label v-if="origin" :text="locationDescription" textWrap="true" /> -->
                         </StackLayout>
 
                         <StackLayout>
@@ -50,9 +53,9 @@
                             <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
                             <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
 
-                            <Label horizontalAlignment="center" marginTop="10" fontSize="25" color="black" :text="nameState" fontWeight="bold"  textWrap="true" />
+                            <Label horizontalAlignment="center" marginTop="10" fontSize="25" textAlignment="center" color="black" :text="nameState" fontWeight="bold" textWrap="true" v-if="registeredState" />
 
-                            <StackLayout marginTop="10">
+                            <StackLayout marginTop="10" v-if="registeredState">
                                 <GridLayout columns="*, *" rows="50">
                                     <StackLayout row="0" col="0" @tap="selectedIndex = 0">
                                         <Label fontSize="17" :class="[ selectedIndex == 0 ? activeClass : '' ]" text="CIUDAD" horizontalAlignment="center" />
@@ -63,83 +66,101 @@
                                 </GridLayout>
                             </StackLayout>
 
-                            <StackLayout v-if="selectedIndex == 0">
-                                <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="casesCity.confirmed" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="casesCity.suspect" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="casesCity.recovered" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="black" fontSize="35" fontWeight="bold" :text="casesCity.deaths" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                            </StackLayout>
-                            <StackLayout v-if="selectedIndex == 1">
-                                <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="cases.confirmed" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="cases.suspect" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="cases.recovered" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
-                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                        <Label color="black" fontSize="35" fontWeight="bold" :text="cases.deaths" textWrap="true" />
-                                    </FlexboxLayout>
-                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                        <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
-                                    </FlexboxLayout>
-                                </GridLayout>
+                            <StackLayout v-if="registeredState">
+                                <StackLayout v-if="selectedIndex == 0">
+                                    <StackLayout v-if="registeredCity">
+                                        <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="casesCity.confirmed" textWrap="true" />
+                                            </FlexboxLayout>
+                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
+                                            </FlexboxLayout>
+                                        </GridLayout>
+                                        <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="casesCity.suspect" textWrap="true" />
+                                            </FlexboxLayout>
+                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
+                                            </FlexboxLayout>
+                                        </GridLayout>
+                                        <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="casesCity.recovered" textWrap="true" />
+                                            </FlexboxLayout>
+                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
+                                            </FlexboxLayout>
+                                        </GridLayout>
+                                        <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                <Label color="black" fontSize="35" fontWeight="bold" :text="casesCity.deaths" textWrap="true" />
+                                            </FlexboxLayout>
+                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
+                                            </FlexboxLayout>
+                                        </GridLayout>
+                                    </StackLayout>
+                                    <StackLayout v-else backgroundColor="#EC462F" borderRadius="10" padding="10">
+                                        <Label color="white" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
+                                    </StackLayout>
+                                </StackLayout>
+                                
+                                
+                                <StackLayout v-if="selectedIndex == 1">
+                                    <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                            <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="cases.confirmed" textWrap="true" />
+                                        </FlexboxLayout>
+                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                            <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
+                                        </FlexboxLayout>
+                                    </GridLayout>
+                                    <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                            <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="cases.suspect" textWrap="true" />
+                                        </FlexboxLayout>
+                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                            <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
+                                        </FlexboxLayout>
+                                    </GridLayout>
+                                    <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                            <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="cases.recovered" textWrap="true" />
+                                        </FlexboxLayout>
+                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                            <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
+                                        </FlexboxLayout>
+                                    </GridLayout>
+                                    <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                            <Label color="black" fontSize="35" fontWeight="bold" :text="cases.deaths" textWrap="true" />
+                                        </FlexboxLayout>
+                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                            <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
+                                        </FlexboxLayout>
+                                    </GridLayout>
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
 
-                        <StackLayout marginTop="10">
+                        <!-- Mensaje de alerta -->
+                        <StackLayout marginTop="20">
+                            <StackLayout v-if="!registeredState" backgroundColor="#EC462F" borderRadius="10" padding="10">
+                                <Label color="white" :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
+                            </StackLayout>
+                        </StackLayout>
+
+                        <!-- Fecha de actualizacion -->
+                        <StackLayout marginTop="10" v-if="registeredState">
                             <Label text="Ultima actualización:" horizontalAlignment="center" textWrap="true" />
                             
                             <Label :text="casesCity.date | formatDate" horizontalAlignment="center" textWrap="true" />
                         </StackLayout>
 
-                        <StackLayout width="100%" marginTop="20">
+                        <!-- Analizar -->
+                        <StackLayout width="100%" marginTop="20" v-if="registeredState && registeredCity">
                             <Button v-if="!analyzing" text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" /> 
                             <ActivityIndicator v-else horizontalAlignment="center" busy="true" />
                         </StackLayout>
@@ -147,7 +168,8 @@
                         <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
                         <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
 
-                        <StackLayout marginTop="10">
+                        <!-- Telefono -->
+                        <StackLayout marginTop="10" v-if="registeredState">
                             <FlexboxLayout justifyContent="center" alignItems="center" marginTop="5">
                                 <Label class="font-awesome" fontSize="25" color="black" text="" textWrap="true" />
                                 <Label marginLeft="10" fontWeight="normal" fontSize="25" color="black" text="MARCA AL:" textWrap="true" />
@@ -155,44 +177,6 @@
                             <StackLayout>
                                 <Label horizontalAlignment="center" marginTop="5" fontWeight="bold" color="#707070" fontSize="40" text="200-48-10" textWrap="true" @tap="goToPhone" />
                             </StackLayout>
-
-                            <!-- <GridLayout marginTop="10" rows="60" columns="*, *, *, *, *, *, *" @tap="goToPhone">
-                                <StackLayout row="0" col="0" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="2" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                                <StackLayout row="0" col="1" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="0" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                                <StackLayout row="0" col="2" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="0" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                                <StackLayout row="0" col="3" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="4" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                                <StackLayout row="0" col="4" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="8" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                                <StackLayout row="0" col="5" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="1" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                                <StackLayout row="0" col="6" padding="2">
-                                    <FlexboxLayout justifyContent="center" alignItems="center" borderRadius="10" backgroundColor="red">
-                                        <Label text="0" fontSize="22" color="white" textWrap="true" />
-                                    </FlexboxLayout>
-                                </StackLayout>
-                            </GridLayout> -->
 
                             <Label horizontalAlignment="center" marginTop="5" color="#707070" fontSize="13" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLÓGICA" textWrap="true" />
                         </StackLayout>
@@ -303,6 +287,9 @@ export default {
             state: '',
 
             analyzing:  false,
+
+            registeredState: true,
+            registeredCity: true,
         }
     },
 
@@ -397,7 +384,7 @@ export default {
         },
 
         nameState(){
-            return `CASOS EN ${this.state.toUpperCase()}`
+            return `CASOS EN EL ESTADO DE ${this.state.toUpperCase()}`
         }
     },
 
@@ -412,6 +399,8 @@ export default {
 
                 if(data.exists){
                     console.log('Existe el estado')
+                    this.registeredState = true
+
                     let response = await firebase.firestore.collection('cases')
                                                         .doc(this.state)
                                                         .onSnapshot((doc) => {
@@ -420,7 +409,18 @@ export default {
 
                     this.getCasesCity()
                 }else{
+                    this.registeredState = false
+                    this.registeredCity = false
+
                     this.cases = {
+                        confirmed: 0,
+                        suspect: 0,
+                        recovered: 0,
+                        deaths: 0,
+                        date: new Date(),
+                    }
+
+                    this.casesCity = {
                         confirmed: 0,
                         suspect: 0,
                         recovered: 0,
@@ -445,6 +445,8 @@ export default {
 
                 if(data.exists){
                     console.log('Existe la ciudad')
+                    this.registeredCity = true
+
                     let response = await firebase.firestore.collection('cases')
                                                         .doc(this.state)
                                                         .collection('cities')
@@ -453,11 +455,14 @@ export default {
                                                             this.casesCity = doc.data()
                                                         })
                 }else{
+                    this.registeredCity = false
+
                     this.casesCity = {
                         confirmed: 0,
                         suspect: 0,
                         recovered: 0,
                         deaths: 0,
+                        date: new Date(),
                     }
                 }
                 
