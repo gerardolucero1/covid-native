@@ -1,8 +1,19 @@
-# covid-native
+<p align="center"><img src="https://i.ibb.co/jfb3LCh/logo.png" width="100"></p>
 
-> covid app
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+</p>
 
-## Usage
+# Sobre PrevenApp
+
+PrevenApp es una app que rastrea tus ubicaciones de manera confidencial de la misma manera que Google ya lo hace en tu celular.
+
+Es gracias a esta información, y en colaboración con el gobierno municipal, que podemos localizar los puntos de exposición de diferentes virus, como el COVID-19 y proteger a la población chihuahuense de éstas.
+
+PrevenApp es una aplicación para Android y Apple 100% segura y confidencial que no compartirá tu información con terceros.
+
+## Uso
 
 ``` bash
 # Install dependencies
