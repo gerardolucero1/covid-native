@@ -9,10 +9,191 @@
         width: 80%;
         text-align: center;
     }
+
+    .box-1{
+        background-image: url('~/assets/images/waves.png');
+        background-position: center;
+        background-size: cover;
+    }
+
+    .box-2{
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .bgColorBlue{
+        background-color: #2F4095;
+    }
+
+    .bgColorGray{
+        background-color: #404040;
+    }
+
+    @keyframes animate{
+        0%{
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    .pulse{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+
+    .pulse2{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 1s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+
+    .pulse3{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 2s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+
+    .pulse4{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 3s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    .pulse5{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 4s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    .pulse6{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 5s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    .pulse7{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 6s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    .pulse8{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 7s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    .pulse9{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 8s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    .pulse10{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 9s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+
+    .pulse11{
+        width: 700px;
+        height: 700px;
+        background-color: white;
+        border-radius: 500%;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-delay: 10s;
+        animation-iteration-count: 1;
+        opacity: 0;
+        backface-visibility: hidden;
+    }
+    
 </style>
 
 <template>
-    <Page actionBarHidden="false">
+    <Page actionBarHidden="false" @loaded="navigatingTo($event)">
         <ActionBar>
             <GridLayout width="100%" columns="*, *">
                 <StackLayout col="0" paddingBottom="10" paddingTop="10" paddingLeft="10" @tap="$refs.drawer.nativeView.showDrawer()">
@@ -27,161 +208,217 @@
         <RadSideDrawer ref="drawer">
             <Sidedrawer />
             
-
             <GridLayout ~mainContent columns="*" rows="*" backgroundColor="#F3F3F3">
-                <ScrollView col="0" row="0">
+                <AbsoluteLayout class="box-1" row="0" col="0" v-bind:class="[(!analyzing && !infected || analyzing) ? bgColorBlue : bgColorGray]">
+                    <AbsoluteLayout width="100%" height="100%">
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse2' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse3' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse4' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse5' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse6' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse7' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse8' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse9' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse10' : '']" />
+                        </FlexboxLayout>
+                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
+                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse11' : '']" />
+                        </FlexboxLayout>
+                    </AbsoluteLayout>
+                    <AbsoluteLayout width="100%" height="100%">
+                        <StackLayout width="100%" height="100%">
+                            <GridLayout rows="*, *, *" columns="*">
+                                <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                    <StackLayout width="90%">
+                                        <Label color="white" :text="'Hola, ' + user.name" fontSize="25" fontWeight="lighter" textWrap="true" horizontalAlignment="left" />
+                                        <FlexboxLayout marginTop="20">
+                                            <Label color="white" width="50" text="" class="font-awesome" textWrap="true" />
+                                            <Label color="white" :text="infoDirection.direction" fontSize="12" textWrap="true" />
+                                            <!-- <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" /> -->
+                                        </FlexboxLayout>
+                                    </StackLayout>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="1" col="0" justifyContent="center" alignItems="center">
+                                        <Image v-if="!analyzing && !infected" id="image-1" src="~/assets/images/fase-1.png" width="150" stretch="aspectFit" @touch="startAnalysis($event)" />
+                                        <Image v-if="analyzing" id="image-1" src="~/assets/images/fase-2.png" width="150" stretch="aspectFit" />
+                                        <Image v-if="!analyzing && infected" id="image-1" src="~/assets/images/fase-3.png" width="150" stretch="aspectFit" />
+                                </FlexboxLayout>
+                                <StackLayout row="2" col="0">
+                                    <StackLayout width="90%">
+                                        <FlexboxLayout marginTop="40">
+                                            <Label color="white" text="" class="font-awesome" textWrap="true" />
+                                            <Label color="white" text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
+                                        </FlexboxLayout>
+
+                                        <StackLayout v-if="!analyzing && !infected">
+                                            <Label color="white" v-if="!user.infection" text="SIN EXPOSICIÓN" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                            <Label color="white" v-else text="EXPUESTO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                        </StackLayout>
+                                        <StackLayout v-if="analyzing">
+                                            <Label color="white" text="ANALIZANDO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                        </StackLayout>
+                                        <StackLayout v-if="!analyzing && infected">
+                                            <Label color="white" text="EXPUESTO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" />
+                                        </StackLayout>
+                                        
+                                    </StackLayout>
+                                </StackLayout>
+                            </GridLayout>
+                        </StackLayout>
+                    </AbsoluteLayout>
                     
-                    <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
-                        <StackLayout marginTop="20">
-                            <Label :text="'Hola, ' + user.name" fontSize="25" fontWeight="lighter" textWrap="true" horizontalAlignment="left" />
-                            <FlexboxLayout marginTop="10">
-                                <Label text="" class="font-awesome" textWrap="true" />
-                                <Label :text="infoDirection.direction" marginLeft="10" fontSize="12" textWrap="true" />
-                                <Label text="" class="font-awesome" textWrap="true" marginLeft="10" @tap="getLocation" />
-                            </FlexboxLayout>
-                        </StackLayout>
+                </AbsoluteLayout>
+                <StackLayout id="box-2" ref="box2" class="box-2" row="0" col="0" backgroundColor="#F3F3F3">
+                    <GridLayout rows="50, *" columns="*">
+                        <FlexboxLayout justifyContent="center" alignItems="center" row="0" col="0"  @swipe="swipeBox2">
+                            <Label class="font-awesome" text="" fontSize="25" textWrap="true" />
+                        </FlexboxLayout>
+                        <ScrollView row="1" col="0">
+                            <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
+                                <!-- Estadisticas -->
+                                <StackLayout>
+                                    <Label horizontalAlignment="center" marginTop="10" fontSize="25" textAlignment="center" color="black" :text="nameState" fontWeight="bold" textWrap="true" v-if="registeredState" />
 
-                        <StackLayout>
-                            <FlexboxLayout marginTop="40">
-                                <Label text="" class="font-awesome" textWrap="true" />
-                                <Label text="Estado" marginLeft="10" fontSize="14" fontWeight="lighter" textWrap="true" />
-                            </FlexboxLayout>
-
-                            <Label v-if="!user.infection" text="SIN EXPOSICIÓN" marginLeft="20" fontSize="25" fontWeight="bold" color="black" textWrap="true" />
-                            <Label v-else text="EXPUESTO" marginLeft="20" fontSize="25" fontWeight="bold" textWrap="true" color="red" />
-                            
-                            <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
-                            <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
-
-                            <Label horizontalAlignment="center" marginTop="10" fontSize="25" textAlignment="center" color="black" :text="nameState" fontWeight="bold" textWrap="true" v-if="registeredState" />
-
-                            <StackLayout marginTop="10" v-if="registeredState">
-                                <GridLayout columns="*, *" rows="50">
-                                    <StackLayout row="0" col="0" @tap="selectedIndex = 0">
-                                        <Label fontSize="17" :class="[ selectedIndex == 0 ? activeClass : '' ]" text="CIUDAD" horizontalAlignment="center" />
-                                    </StackLayout>
-                                    <StackLayout row="0" col="1" @tap="selectedIndex = 1">
-                                        <Label fontSize="17" :class="[ selectedIndex == 1 ? activeClass : '' ]" text="ESTADO" horizontalAlignment="center" />
-                                    </StackLayout>
-                                </GridLayout>
-                            </StackLayout>
-
-                            <StackLayout v-if="registeredState">
-                                <StackLayout v-if="selectedIndex == 0">
-                                    <StackLayout v-if="registeredCity">
-                                        <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                                <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="casesCity.confirmed" textWrap="true" />
-                                            </FlexboxLayout>
-                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                                <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
-                                            </FlexboxLayout>
-                                        </GridLayout>
-                                        <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                                <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="casesCity.suspect" textWrap="true" />
-                                            </FlexboxLayout>
-                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                                <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
-                                            </FlexboxLayout>
-                                        </GridLayout>
-                                        <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                                <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="casesCity.recovered" textWrap="true" />
-                                            </FlexboxLayout>
-                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                                <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
-                                            </FlexboxLayout>
-                                        </GridLayout>
-                                        <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                                <Label color="black" fontSize="35" fontWeight="bold" :text="casesCity.deaths" textWrap="true" />
-                                            </FlexboxLayout>
-                                            <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                                <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
-                                            </FlexboxLayout>
+                                    <StackLayout marginTop="10" v-if="registeredState">
+                                        <GridLayout columns="*, *" rows="50">
+                                            <StackLayout row="0" col="0" @tap="selectedIndex = 0">
+                                                <Label fontSize="17" :class="[ selectedIndex == 0 ? activeClass : '' ]" text="CIUDAD" horizontalAlignment="center" />
+                                            </StackLayout>
+                                            <StackLayout row="0" col="1" @tap="selectedIndex = 1">
+                                                <Label fontSize="17" :class="[ selectedIndex == 1 ? activeClass : '' ]" text="ESTADO" horizontalAlignment="center" />
+                                            </StackLayout>
                                         </GridLayout>
                                     </StackLayout>
-                                    <StackLayout v-else backgroundColor="#EC462F" borderRadius="10" padding="10">
-                                        <Label color="white" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
+
+                                    <StackLayout v-if="registeredState">
+                                        <StackLayout v-if="selectedIndex == 0">
+                                            <StackLayout v-if="registeredCity">
+                                                <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                        <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="casesCity.confirmed" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                        <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                </GridLayout>
+                                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                        <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="casesCity.suspect" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                        <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                </GridLayout>
+                                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                        <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="casesCity.recovered" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                        <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                </GridLayout>
+                                                <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                    <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                        <Label color="black" fontSize="35" fontWeight="bold" :text="casesCity.deaths" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                    <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                        <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
+                                                    </FlexboxLayout>
+                                                </GridLayout>
+                                            </StackLayout>
+                                            <StackLayout v-else backgroundColor="#EC462F" borderRadius="10" padding="10">
+                                                <Label color="white" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
+                                            </StackLayout>
+                                        </StackLayout>
+                                        
+                                        
+                                        <StackLayout v-if="selectedIndex == 1">
+                                            <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                    <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="cases.confirmed" textWrap="true" />
+                                                </FlexboxLayout>
+                                                <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                    <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
+                                                </FlexboxLayout>
+                                            </GridLayout>
+                                            <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                    <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="cases.suspect" textWrap="true" />
+                                                </FlexboxLayout>
+                                                <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                    <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
+                                                </FlexboxLayout>
+                                            </GridLayout>
+                                            <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                    <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="cases.recovered" textWrap="true" />
+                                                </FlexboxLayout>
+                                                <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                    <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
+                                                </FlexboxLayout>
+                                            </GridLayout>
+                                            <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
+                                                <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                                                    <Label color="black" fontSize="35" fontWeight="bold" :text="cases.deaths" textWrap="true" />
+                                                </FlexboxLayout>
+                                                <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
+                                                    <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
+                                                </FlexboxLayout>
+                                            </GridLayout>
+                                        </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
-                                
-                                
-                                <StackLayout v-if="selectedIndex == 1">
-                                    <GridLayout rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                            <Label color="#EC462F" fontSize="35" fontWeight="bold" :text="cases.confirmed" textWrap="true" />
-                                        </FlexboxLayout>
-                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                            <Label text="Confirmados" fontSize="20" color="black" textWrap="true" />
-                                        </FlexboxLayout>
-                                    </GridLayout>
-                                    <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                            <Label color="#E6A82E" fontSize="35" fontWeight="bold" :text="cases.suspect" textWrap="true" />
-                                        </FlexboxLayout>
-                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                            <Label text="Sospechosos" fontSize="20" color="black" textWrap="true" />
-                                        </FlexboxLayout>
-                                    </GridLayout>
-                                    <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                            <Label color="#3C8106" fontSize="35" fontWeight="bold" :text="cases.recovered" textWrap="true" />
-                                        </FlexboxLayout>
-                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                            <Label text="Recuperados" fontSize="20" color="black" textWrap="true" />
-                                        </FlexboxLayout>
-                                    </GridLayout>
-                                    <GridLayout marginTop="10" rows="100" columns="*, *" backgroundColor="white" borderRadius="10">
-                                        <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
-                                            <Label color="black" fontSize="35" fontWeight="bold" :text="cases.deaths" textWrap="true" />
-                                        </FlexboxLayout>
-                                        <FlexboxLayout row="0" col="1" justifyContent="center" alignItems="center">
-                                            <Label text="Defunciones" fontSize="20" color="black" textWrap="true" />
-                                        </FlexboxLayout>
-                                    </GridLayout>
+
+                                <!-- Mensaje de alerta -->
+                                <StackLayout marginTop="20">
+                                    <StackLayout v-if="!registeredState" backgroundColor="#EC462F" borderRadius="10" padding="10">
+                                        <Label color="white" :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </StackLayout>
 
-                        <!-- Mensaje de alerta -->
-                        <StackLayout marginTop="20">
-                            <StackLayout v-if="!registeredState" backgroundColor="#EC462F" borderRadius="10" padding="10">
-                                <Label color="white" :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
-                            </StackLayout>
-                        </StackLayout>
+                                <!-- Fecha de actualizacion -->
+                                <StackLayout marginTop="10" v-if="registeredState">
+                                    <Label text="Ultima actualización:" horizontalAlignment="center" textWrap="true" />
+                                    
+                                    <Label :text="casesCity.date | formatDate" horizontalAlignment="center" textWrap="true" />
+                                </StackLayout>
 
-                        <!-- Fecha de actualizacion -->
-                        <StackLayout marginTop="10" v-if="registeredState">
-                            <Label text="Ultima actualización:" horizontalAlignment="center" textWrap="true" />
-                            
-                            <Label :text="casesCity.date | formatDate" horizontalAlignment="center" textWrap="true" />
-                        </StackLayout>
+                                <!-- Telefono -->
+                                <StackLayout marginTop="10" v-if="registeredState">
+                                    <FlexboxLayout justifyContent="center" alignItems="center" marginTop="5">
+                                        <Label class="font-awesome" fontSize="25" color="black" text="" textWrap="true" />
+                                        <Label marginLeft="10" fontWeight="normal" fontSize="25" color="black" text="MARCA AL:" textWrap="true" />
+                                    </FlexboxLayout>
+                                    <StackLayout>
+                                        <Label horizontalAlignment="center" marginTop="5" fontWeight="bold" color="#707070" fontSize="40" text="200-48-10" textWrap="true" @tap="goToPhone" />
+                                    </StackLayout>
 
-                        <!-- Analizar -->
-                        <StackLayout width="100%" marginTop="20" v-if="registeredState && registeredCity">
-                            <Button v-if="!analyzing" text="Analizar" @tap="startAnalysis" backgroundColor="black" color="white" width="100%" /> 
-                            <ActivityIndicator v-else horizontalAlignment="center" busy="true" />
-                        </StackLayout>
-
-                        <StackLayout marginTop="20" borderWidth="1 0 0 0" borderColor="black" width="100%" />
-                        <StackLayout marginTop="5" borderWidth="1 0 0 0" borderColor="black" width="100%" />
-
-                        <!-- Telefono -->
-                        <StackLayout marginTop="10" v-if="registeredState">
-                            <FlexboxLayout justifyContent="center" alignItems="center" marginTop="5">
-                                <Label class="font-awesome" fontSize="25" color="black" text="" textWrap="true" />
-                                <Label marginLeft="10" fontWeight="normal" fontSize="25" color="black" text="MARCA AL:" textWrap="true" />
-                            </FlexboxLayout>
-                            <StackLayout>
-                                <Label horizontalAlignment="center" marginTop="5" fontWeight="bold" color="#707070" fontSize="40" text="200-48-10" textWrap="true" @tap="goToPhone" />
-                            </StackLayout>
-
-                            <Label horizontalAlignment="center" marginTop="5" color="#707070" fontSize="13" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLÓGICA" textWrap="true" />
-                        </StackLayout>
-                    </WrapLayout>
-                </ScrollView>
+                                    <Label horizontalAlignment="center" marginTop="5" color="#707070" fontSize="13" text="PARA RECIBIR ATENCIÓN MEDICA Y PSICOLÓGICA" textWrap="true" />
+                                </StackLayout>
+                            </WrapLayout>
+                        </ScrollView>
+                    </GridLayout>
+                </StackLayout>
             </GridLayout>
         </RadSideDrawer>
     </Page>
@@ -217,13 +454,14 @@ let moment = require('moment')
 //Telephone
 import * as TNSPhone from 'nativescript-phone'
 
-//Platform
-const platformModule = require("tns-core-modules/platform");
-
 //Local notification
 import { LocalNotifications } from "nativescript-local-notifications";
 import { alert } from "tns-core-modules/ui/dialogs";
 import { Color } from "tns-core-modules/color";
+
+import { AnimationCurve } from "tns-core-modules/ui/enums";
+//Platform
+const platformModule = require("tns-core-modules/platform");
 
 //Loader
 const LoadingIndicator = require('@nstudio/nativescript-loading-indicator').LoadingIndicator;
@@ -261,7 +499,7 @@ import Recomendations from '../pages/Recomendations'
 import Info from '../pages/Info'
 
 export default {
-    name: 'Home',
+    name: 'Index',
 
     data(){
         return{
@@ -289,7 +527,11 @@ export default {
             city: '',
             state: '',
 
+            bgColorBlue: 'bgColorBlue',
+            bgColorGray: 'bgColorGray',
+
             analyzing:  false,
+            infected: false,
 
             registeredState: true,
             registeredCity: true,
@@ -319,13 +561,11 @@ export default {
         LocalNotifications.addOnMessageReceivedCallback(notificationData => {
             this.$navigateTo(Recomendations)
         });
-
     },
 
     mounted(){
         this.getLocation()
         this.getCases()
-
     },
 
     filters: {
@@ -384,15 +624,60 @@ export default {
             ]),
 
         locationDescription() {
-            return `You are at ${this.origin.latitude}, ${this.origin.longitude}.`;
+            return `Estas en ${this.origin.latitude}, ${this.origin.longitude}.`;
         },
 
         nameState(){
-            return `CASOS EN EL ESTADO DE ${this.state.toUpperCase()}`
+            let text = ''
+            if(this.selectedIndex == 0){
+                text = 'EN LA CIUDAD'
+            }else{
+                text = 'EN EL ESTADO'
+            }
+            
+            return `CASOS ${text} DE ${this.state.toUpperCase()}`
         }
     },
 
     methods: {
+        navigatingTo(args){
+            const page = args.object.page
+            const box = page.getViewById('box-2')
+            box.animate({
+                translate: {
+                    x: 0,
+                    y: platformModule.screen.mainScreen.heightDIPs - 140
+                },
+                curve: AnimationCurve.easeIn,
+                duration: 100,
+            })
+        },
+        
+        swipeBox2(args){
+            const page = args.object.page
+            const box = page.getViewById('box-2')
+            if (args.direction == 4) {
+                box.animate({
+                    translate: {
+                        x: 0,
+                        y: 0
+                    },
+                    curve: AnimationCurve.easeIn,
+                    duration: 400,
+                })
+            }
+
+            if (args.direction == 8) {
+                box.animate({
+                    translate: {
+                        x: 0,
+                        y: platformModule.screen.mainScreen.heightDIPs - 140
+                    },
+                    curve: AnimationCurve.easeIn,
+                    duration: 400,
+                })
+            }
+        },
 
         //Obtener el contador de casos infectados de firebase a nivel estado
         async getCases(){
@@ -687,20 +972,57 @@ export default {
         },
 
         //Alert de iniciar analizis
-        startAnalysis(){
-            confirm({
-                title: "Iniciar Análisis",
-                message: "Esto comenzará un análisis de tus ubicaciones, por favor no cierres la aplicación.",
-                okButtonText: "Entendido",
-                cancelButtonText: "Cancelar"
-            }).then((result) => {
+        startAnalysis(args){
+            // console.log(`screen.mainScreen.heightPixels ${platformModule.screen.mainScreen.heightDIPs - 50}`);
+            // return
+            console.log(args.action)
 
-                if(result){
-                    this.analyzing = true
-                    this.getInfectedLocations()
-                }
-                
-            });
+            const page = args.object.page
+            const image = page.getViewById('image-1')
+            if(args.action === 'down'){
+                image.animate({
+                    scale: {
+                        x: 0.90,
+                        y: 0.90
+                    },
+                    opacity: 0.8,
+                    curve: AnimationCurve.easeIn,
+                    duration: 80,
+                })
+            }
+
+            if(args.action === 'up'){
+                image.animate({
+                    scale: {
+                        x: 1,
+                        y: 1
+                    },
+                    opacity: 1,
+                    curve: AnimationCurve.easeIn,
+                    duration: 80,
+                })
+
+                this.analyzing = true
+                this.getInfectedLocations()
+
+                // confirm({
+                //     title: "Iniciar Análisis",
+                //     message: "Esto comenzará un análisis de tus ubicaciones, por favor no cierres la aplicación.",
+                //     okButtonText: "Entendido",
+                //     cancelButtonText: "Cancelar"
+                // }).then((result) => {
+                //     const page = args.object.page
+                //     const image = page.getViewById('image-2')
+                    
+                //     if(result){
+                //         this.analyzing = true
+                //         this.getInfectedLocations()
+                //     }
+                    
+                // });
+            }
+            
+            
         },
 
         //Obtenemos las zonas infectadas hasta el momento, y despues pasamos a compararlas con
@@ -809,8 +1131,11 @@ export default {
             console.log(this.selectedUbications.length)
             if(this.selectedUbications.length != 0){
                 this.getNotification(1)
+                this.infected = true
             }else{
                 this.getNotification(2)
+                //Cambiar a false
+                this.infected = false
             }
         },
 

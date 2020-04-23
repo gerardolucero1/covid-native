@@ -131,6 +131,7 @@ import { isAndroid, isIOS } from "tns-core-modules/ui/page";
 import Login from '../pages/user/Login'
 import QR from '../pages/user/QR'
 import Home from '../pages/Home'
+import Index from '../pages/Index'
 import Recomendations from '../pages/Recomendations'
 import Global from '../pages/Global'
 import Dashboard from '../pages/user/Dashboard'
@@ -208,7 +209,7 @@ export default {
         },
 
         goToHome(){
-            this.$navigateTo(Home, {
+            this.$navigateTo(Index, {
                 animated: true,
                 transition: {
                     name: 'fade',
