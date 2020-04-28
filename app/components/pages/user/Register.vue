@@ -1,34 +1,78 @@
+<style scoped>
+    Label{
+        color: black;
+    }
+    
+    .text_field{
+        border: none;
+        border-bottom: 1px solid black;
+        border-width: 0 0 1px 0;
+    }
+
+    .box-1{
+        /* background-image: url('~/assets/images/bg-login-1.png');
+        background-position: center top;
+        background-size: cover;
+        background-repeat: no-repeat; */
+        background-color: #2F4095;
+        border-radius: 0 0 100px 0;
+    }
+
+    .box-2{
+        /* background-image: url('~/assets/images/bg-login-2.png');
+        background-size: cover;
+        background-repeat: no-repeat; */
+        border-radius: 100px 0 0 0;
+    }
+</style>
+
 <template>
     <Page actionBarHidden="true" loaded="onLoaded" navigatedTo="onNavigatedTo">
         <GridLayout rows="*, 2*" colums="*">
-            <StackLayout width="70%" row="1" col="1">
-                <Label marginBottom="20" horizontalAlignment="center" text="REGISTRO" fontSize="25" textWrap="true" />
-                
-                <TextField class="text_field" hint="Nombre" fontSize="14" v-model="user.name" text="" keyboardType="text" />
-                <!-- <StackLayout>
-                    <Label v-if="!$v.user.name.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
-                </StackLayout> -->
-                
-                <TextField class="text_field" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
-                <!-- <StackLayout>
-                    <Label v-if="!$v.user.email.email" text="Ingresa un email valido" textWrap="true" fontSize="9" marginLeft="5" color="red" />
-                </StackLayout> -->
+            <StackLayout row="0" col="1">
+                <FlexboxLayout width="100%" height="100%" class="box-1" padding="0 75" justifyContent="center" alignItems="center">
+                    <Image src="~/assets/images/logo-completo.png" stretch="aspectFit" verticalAlignment="center" horizontalAlignment="center" />
+                    
+                </FlexboxLayout>
+            </StackLayout>
 
-                <TextField class="text_field" ref="pw" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
-                <!-- <StackLayout>
-                    <Label v-if="!$v.user.password.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
-                </StackLayout> -->
+            <StackLayout row="1" col="1" backgroundColor="#2F4095">
+                <StackLayout class="box-2" width="100%" height="100%" backgroundColor="white">
+                    <StackLayout width="70%">
+                        <Label marginBottom="20" marginTop="20" horizontalAlignment="center" text="Crear cuenta" fontSize="25" textWrap="true" />
+                        
+                        <TextField class="text_field" hint="Nombre" fontSize="14" v-model="user.name" text="" keyboardType="text" />
+                        <!-- <StackLayout>
+                            <Label v-if="!$v.user.name.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
+                        </StackLayout> -->
+                        
+                        <TextField class="text_field" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
+                        <!-- <StackLayout>
+                            <Label v-if="!$v.user.email.email" text="Ingresa un email valido" textWrap="true" fontSize="9" marginLeft="5" color="red" />
+                        </StackLayout> -->
 
-                <Label col="0" row="0" class="forget-password" fontSize="12" text="Ver/Ocultar" @tap="showHidePassword" />
+                        <TextField class="text_field" ref="pw" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
+                        <!-- <StackLayout>
+                            <Label v-if="!$v.user.password.required" text="Obligatorio" textWrap="true" fontSize="9" marginLeft="5" color="red" />
+                        </StackLayout> -->
 
-                <Button text="Registrarse" borderRadius="20" backgroundColor="#1D5A7B" marginTop="20" color="white" @tap="createUser" />
-                
-                <Label text="¿Ya tienes una cuenta? Inicia sesion" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToLogin" />
-                
-                <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
-                <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" />
-                <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" />
+                        <Label col="0" row="0" class="forget-password" color="#9D9D9D" marginLeft="10" fontSize="10" text="Ver/Ocultar" @tap="showHidePassword" />
+                        
+                        <Label text="¿Ya tienes una cuenta? Inicia sesión" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToLogin" />
+                        
+                        <Button text="Crear cuenta" borderRadius="20" backgroundColor="#2F4095" marginTop="20" color="white" @tap="createUser" />
+
+                        <Label text="Crear cuenta con:" marginTop="40" textWrap="true" horizontalAlignment="center" />
+                        
+                        <FlexboxLayout justifyContent="center" alignItems="center" marginTop="10">
+                            <Image src="~/assets/images/social-icon-1.png" width="30" marginRight="5" stretch="aspectFit" @tap="loginGoogle" />
+                            <Image src="~/assets/images/social-icon-2.png" width="30" marginLeft="5" stretch="aspectFit" @tap="loginFacebook" />
+                            
+                        </FlexboxLayout>
+                        <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" />
             
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
         </GridLayout>
     </Page>
@@ -54,6 +98,7 @@ import { isAndroid, isIOS } from "tns-core-modules/ui/page";
 
 //Pages
 import Home from '../Home.vue'
+import Index from '../Index.vue'
 import Login from '../user/Login'
 import Terms from '../Terms'
 
@@ -317,7 +362,7 @@ export default {
 
                     if(user.terms){
                         this.$store.commit('updateUser', user)
-                        this.$navigateTo(Home)
+                        this.$navigateTo(Index)
                     }else{
                         this.$store.commit('updateUser', user)
                         this.$navigateTo(Terms)
@@ -364,15 +409,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    Label{
-        color: black;
-    }
-    
-    .text_field{
-        border: none;
-        border-bottom: 1px solid black;
-        border-width: 0 0 1px 0;
-    }
-</style>

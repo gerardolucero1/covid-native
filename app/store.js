@@ -29,6 +29,10 @@ export default new Vuex.Store({
 		updateCity(state, payload){
 			state.city = payload
 		},
+
+		updateStatusUser(state, payload){
+			state.user.infection = false
+		}
 	},
 
   	actions: {

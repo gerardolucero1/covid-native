@@ -35,27 +35,25 @@
         <RadSideDrawer ref="drawer">
             <Sidedrawer />
 
-            <GridLayout ~mainContent columns="*" rows="*" backgroundColor="#F3F3F3">
-                <ScrollView col="0" row="0">
-                    <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
-                        <GridLayout rows="*, 2*" colums="*">
-                            <StackLayout row="0" col="0">
-                                <Label text="NOTICIAS" horizontalAlignment="center" marginTop="20" fontSize="25" fontWeight="bold" textWrap="true" />
-                                
-                            </StackLayout>
-
-                            <StackLayout row="1" col="0">
-                                <StackLayout v-for="(item, index) in news" :key="index" width="100%" backgroundColor="#F8F9FA" padding="10" marginTop="10">
+            <GridLayout ~mainContent columns="*" rows="50, *" backgroundColor="#F3F3F3">
+                <StackLayout row="0" col="0">
+                    <Label text="Noticias Relevantes" horizontalAlignment="left" marginTop="20" marginLeft="20" fontSize="25" textWrap="true" />
+                </StackLayout>
+                <ScrollView col="0" row="1"  androidElevation="15" backgroundColor="white" margin="1" marginTop="20" borderRadius="20 20 0 0">
+                    <WrapLayout orientation="vertical" width="100%" paddingBottom="20">
+                        <!-- <Label text="Hola" textWrap="true" v-for="(item, index) in 100" :key="index" /> -->
+                        
+                        <StackLayout v-for="(item, index) in news" :key="index" width="100%" padding="20" marginTop="10">
+                            <GridLayout rows="*" columns="*, 2*" @tap="goToURL(item.Link)">
+                                <StackLayout row="0" col="0">
                                     <Image :src="item.Image" stretch="aspectFit" />
-                                    <Label :text="item.Title" horizontalAlignment="center" fontSize="17" marginTop="5" fontWeight="bold" textWrap="true" />
-                                    
-                                    <StackLayout class="line" marginTop="10" />
-                                    
-                                    <Label class="excerpt" :text="item.Excerpt"  marginTop="10" textWrap="true" />
-                                    <Button text="LEER MAS" marginTop="10" horizontalAlignment="center" backgroundColor="black" color="white" @tap="goToURL(item.Link)" />
                                 </StackLayout>
-                            </StackLayout>
-                        </GridLayout>
+                                <FlexboxLayout row="0" col="1" paddingLeft="20" flexDirection="column" justifyContent="space-between">                                            
+                                    <Label class="excerpt" :text="item.Excerpt" color="#707070" textWrap="true" />
+                                    <Label text="comunicachihuahua.desarrollosenlanube.net" fontSize="9" color="#707070" textWrap="true" />
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </StackLayout>
                     </WrapLayout>
                 </ScrollView>
             </GridLayout>

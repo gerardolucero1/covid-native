@@ -1,22 +1,64 @@
+<style scoped>
+    Label{
+        color: black;
+    }
+    
+    .text_field{
+        border: none;
+        border-bottom: 1px solid black;
+        border-width: 0 0 1px 0;
+    }
+
+    .box-1{
+        /* background-image: url('~/assets/images/bg-login-1.png');
+        background-position: center top;
+        background-size: cover;
+        background-repeat: no-repeat; */
+        background-color: #2F4095;
+        border-radius: 0 0 100px 0;
+    }
+
+    .box-2{
+        /* background-image: url('~/assets/images/bg-login-2.png');
+        background-size: cover;
+        background-repeat: no-repeat; */
+        border-radius: 100px 0 0 0;
+    }
+</style>
+
 <template>
     <Page actionBarHidden="true" loaded="onLoaded" navigatedTo="onNavigatedTo">
         <GridLayout rows="*, 2*" colums="*">
-            <StackLayout width="70%" row="1" col="1">
-                <Label marginBottom="20" horizontalAlignment="center" text="ACCEDER" fontSize="25" textWrap="true" />
-                
-                <TextField class="text_field" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
-                <TextField class="text_field" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
-                
-                <!-- <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" /> -->
+            <StackLayout row="0" col="1">
+                <FlexboxLayout width="100%" height="100%" class="box-1" padding="0 75" justifyContent="center" alignItems="center">
+                    <Image src="~/assets/images/logo-completo.png" stretch="aspectFit" verticalAlignment="center" horizontalAlignment="center" />
+                    
+                </FlexboxLayout>
+            </StackLayout>
+            <StackLayout row="1" col="1" backgroundColor="#2F4095">
+                <StackLayout class="box-2" width="100%" height="100%" backgroundColor="white">
+                    <StackLayout width="70%">
+                        <Label marginBottom="20" marginTop="20" horizontalAlignment="center" text="Iniciar sesión" fontSize="25" textWrap="true" />
+                    
+                        <TextField class="text_field" hint="E-mail" fontSize="14" v-model="user.email" text="" keyboardType="email" />
+                        <TextField class="text_field" hint="Contraseña" fontSize="14" v-model="user.password" text="" keyboardType="password" secure="true" />
+                        
+                        <!-- <Label text="Olvide mi contraseña" fontSize="11" textWrap="true" /> -->
+                        <Label text="¿No tienes una cuenta? Crea una." marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToRegister" />
 
-                <Button text="Acceder" borderRadius="20" backgroundColor="#1D5A7B" marginTop="20" color="white" @tap="loginEmail" />
-                
-                <Label text="¿No tienes una cuenta? Registrate" marginTop="20" textWrap="true" horizontalAlignment="center" @tap="goToRegister" />
-                
-                <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
-                <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" />
-                <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" />
-                
+                        <Button text="Iniciar sesión" borderRadius="20" backgroundColor="#2F4095" marginTop="20" color="white" @tap="loginEmail" />
+                        
+                        <Label text="Inciar sesión con:" marginTop="40" textWrap="true" horizontalAlignment="center" />
+                        <FlexboxLayout justifyContent="center" alignItems="center" marginTop="10">
+                            <Image src="~/assets/images/social-icon-1.png" width="30" marginRight="5" stretch="aspectFit" @tap="loginGoogle" />
+                            <Image src="~/assets/images/social-icon-2.png" width="30" marginLeft="5" stretch="aspectFit" @tap="loginFacebook" />
+                            
+                        </FlexboxLayout>
+                        <!-- <Button borderRadius="20" text="Login con Google" marginTop="20" color="white" backgroundColor="red" @tap="loginGoogle" />
+                        <Button borderRadius="20" text="Login con Facebook" marginTop="10" color="white" backgroundColor="blue" @tap="loginFacebook" /> -->
+                        <Button v-if="!android" borderRadius="20" text="Login con Apple" marginTop="10" color="white" backgroundColor="black" @tap="loginApple" />
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
         </GridLayout>
     </Page>
@@ -41,6 +83,7 @@ import { isAndroid, isIOS } from "tns-core-modules/ui/page";
 
 //Pages
 import Home from '../Home.vue'
+import Index from '../Index.vue'
 import Register from '../user/Register.vue'
 import Terms from '../Terms'
 
@@ -281,7 +324,7 @@ export default {
 
                     if(user.terms){
                         this.$store.commit('updateUser', user)
-                        this.$navigateTo(Home)
+                        this.$navigateTo(Index)
                     }else{
                         this.$store.commit('updateUser', user)
                         this.$navigateTo(Terms)
@@ -328,15 +371,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    Label{
-        color: black;
-    }
-    
-    .text_field{
-        border: none;
-        border-bottom: 1px solid black;
-        border-width: 0 0 1px 0;
-    }
-</style>

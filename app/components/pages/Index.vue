@@ -1,4 +1,4 @@
-<style>
+<style scoped>
     Label{
         color: black;
     }
@@ -26,168 +26,23 @@
     }
 
     .bgColorGray{
-        background-color: #404040;
+        background-color: #E65B50;
     }
 
-    @keyframes animate{
-        0%{
-            transform: scale(0.5);
-            opacity: 0;
-        }
-        50%{
-            opacity: 1;
-        }
-        100%{
-            transform: scale(2);
-            opacity: 0;
-        }
+    .pulse-1, .pulse-2{
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        border-radius: 500%;
+        margin-left: -10px;
     }
 
-    .pulse{
-        width: 700px;
-        height: 700px;
+    .pulse-special{
+        width: 100px;
+        height: 100px;
         background-color: white;
         border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-
-    .pulse2{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 1s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-
-    .pulse3{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 2s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-
-    .pulse4{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 3s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-    .pulse5{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 4s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-    .pulse6{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 5s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-    .pulse7{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 6s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-    .pulse8{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 7s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-    .pulse9{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 8s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-    .pulse10{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 9s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
-    }
-
-    .pulse11{
-        width: 700px;
-        height: 700px;
-        background-color: white;
-        border-radius: 500%;
-        animation-name: animate;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-delay: 10s;
-        animation-iteration-count: 1;
-        opacity: 0;
-        backface-visibility: hidden;
+        margin-left: -10px;
     }
     
 </style>
@@ -209,40 +64,22 @@
             <Sidedrawer />
             
             <GridLayout ~mainContent columns="*" rows="*" backgroundColor="#F3F3F3">
-                <AbsoluteLayout class="box-1" row="0" col="0" v-bind:class="[(!analyzing && !infected || analyzing) ? bgColorBlue : bgColorGray]">
+                <AbsoluteLayout id="box-1" class="box-1" row="0" col="0" v-bind:class="[(!analyzing && !infected || analyzing ) ? bgColorBlue : bgColorGray]">
                     <AbsoluteLayout width="100%" height="100%">
+                        <!-- Animaciones, se podrian hacer con solo dos stacks y una clase...pero si ya funciona... -->
                         <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse' : '']" />
+                            <StackLayout id="pulse-1" v-show="analyzing" class="pulse-1" />
                         </FlexboxLayout>
                         <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse2' : '']" />
+                            <StackLayout id="pulse-2" v-show="analyzing" class="pulse-2" />
                         </FlexboxLayout>
+
                         <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse3' : '']" />
+                            <StackLayout id="pulse-danger" v-show="!analyzing && infected" class="pulse-special" />
                         </FlexboxLayout>
+
                         <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse4' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse5' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse6' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse7' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse8' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse9' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse10' : '']" />
-                        </FlexboxLayout>
-                        <FlexboxLayout width="100%" height="100%" justifyContent="center" alignItems="center" >
-                            <StackLayout v-show="analyzing" :class="[(analyzing) ? 'pulse11' : '']" />
+                            <StackLayout id="pulse-special" v-show="!analyzing && !infected" class="pulse-special" />
                         </FlexboxLayout>
                     </AbsoluteLayout>
                     <AbsoluteLayout width="100%" height="100%">
@@ -261,7 +98,7 @@
                                 <FlexboxLayout row="1" col="0" justifyContent="center" alignItems="center">
                                         <Image v-if="!analyzing && !infected" id="image-1" src="~/assets/images/fase-1.png" width="150" stretch="aspectFit" @touch="startAnalysis($event)" />
                                         <Image v-if="analyzing" id="image-1" src="~/assets/images/fase-2.png" width="150" stretch="aspectFit" />
-                                        <Image v-if="!analyzing && infected" id="image-1" src="~/assets/images/fase-3.png" width="150" stretch="aspectFit" />
+                                        <Image v-if="!analyzing && infected" id="image-1" src="~/assets/images/fase-3.png" width="150" stretch="aspectFit" @touch="startAnalysis($event)" />
                                 </FlexboxLayout>
                                 <StackLayout row="2" col="0">
                                     <StackLayout width="90%">
@@ -346,9 +183,15 @@
                                                     </FlexboxLayout>
                                                 </GridLayout>
                                             </StackLayout>
-                                            <StackLayout v-else backgroundColor="#EC462F" borderRadius="10" padding="10">
-                                                <Label color="white" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
+
+                                            <StackLayout v-else androidElevation="5" backgroundColor="white" margin="10" borderRadius="20" padding="10 10 20 10">
+                                                <FlexboxLayout width="50" height="50" borderRadius="25" justifyContent="center" alignItems="center" backgroundColor="#ED1806">
+                                                    <Label color="white" class="font-awesome" text="" fontSize="20" textWrap="true" />
+                                                </FlexboxLayout>
+                                                
+                                                <Label marginTop="10" color="#707070" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
                                             </StackLayout>
+                                                
                                         </StackLayout>
                                         
                                         
@@ -391,8 +234,21 @@
 
                                 <!-- Mensaje de alerta -->
                                 <StackLayout marginTop="20">
-                                    <StackLayout v-if="!registeredState" backgroundColor="#EC462F" borderRadius="10" padding="10">
-                                        <Label color="white" :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
+                                    <StackLayout v-if="!registeredState" androidElevation="5" backgroundColor="white" margin="10" borderRadius="20" padding="10 10 20 10">
+                                        <FlexboxLayout width="50" height="50" borderRadius="25" justifyContent="center" alignItems="center" backgroundColor="#ED1806">
+                                            <Label color="white" class="font-awesome" text="" fontSize="20" textWrap="true" />
+                                        </FlexboxLayout>
+                                        
+                                        <Label marginTop="10" color="#707070"  :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <!-- Seleccion de municipio -->
+                                <StackLayout marginTop="10">
+                                    <Button width="100%" backgroundColor="black" color="white" text="Seleccionar otro municipio" @tap="camera = !camera" />
+                                    <StackLayout v-if="camera">
+                                        <!-- <Label v-for="(item, index) in listOfMunicipalities" :key="index" :text="item" textWrap="true" /> -->
+                                        <ListPicker v-if="listOfMunicipalities.length != 0" :items="listOfMunicipalities" @selectedIndexChange="selectedNewCity($event)" />
                                     </StackLayout>
                                 </StackLayout>
 
@@ -535,6 +391,11 @@ export default {
 
             registeredState: true,
             registeredCity: true,
+
+            boxSize: 0,
+            camera: false,
+            listOfMunicipalities: [],
+            selectedMunicipality: '',
         }
     },
 
@@ -566,6 +427,10 @@ export default {
     mounted(){
         this.getLocation()
         this.getCases()
+
+        if(this.user.infection){
+            this.infected = true
+        }
     },
 
     filters: {
@@ -616,6 +481,11 @@ export default {
             this.$store.commit('updateCity', this.city)
         },
 
+        city(){
+            this.getCases()
+        },
+
+
     },
 
     computed: {
@@ -630,27 +500,82 @@ export default {
         nameState(){
             let text = ''
             if(this.selectedIndex == 0){
-                text = 'EN LA CIUDAD'
+                text = `CASOS EN LA CIUDAD DE ${this.city.toUpperCase()}`
             }else{
-                text = 'EN EL ESTADO'
+                text = `CASOS EN EL ESTADO DE ${this.state.toUpperCase()}`
             }
             
-            return `CASOS ${text} DE ${this.state.toUpperCase()}`
+            return text
         }
     },
 
     methods: {
+        async getMunicipalities(){
+            try {
+                this.listOfMunicipalities = []
+                let response = await firebase.firestore.collection("cases")
+                                                    .doc(this.city)
+                                                    .collection("cities")
+                                                    .get()
+                                                    .then(querySnapshot => {
+                                                        querySnapshot.forEach(doc => {
+                                                            console.log(doc.id, " => ", doc.data());
+                                                            this.listOfMunicipalities.push(doc.id)
+                                                        });
+                                                    });
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        selectedNewCity(args){
+            this.city = this.listOfMunicipalities[args.value]
+        },
+
         navigatingTo(args){
             const page = args.object.page
             const box = page.getViewById('box-2')
-            box.animate({
-                translate: {
-                    x: 0,
-                    y: platformModule.screen.mainScreen.heightDIPs - 140
-                },
-                curve: AnimationCurve.easeIn,
-                duration: 100,
-            })
+            const box1 = page.getViewById('box-1')
+            const pulse = page.getViewById('pulse-special')
+
+            const pulse_1 = page.getViewById('pulse-1')
+            const pulse_2 = page.getViewById('pulse-2')
+            const pulse_danger = page.getViewById('pulse-danger')
+
+            setTimeout(() => {
+                console.log('Este es el tamaño: ' + box1.getActualSize().height)
+                this.boxSize = box1.getActualSize().height
+
+                box.animate({
+                    translate: {
+                        x: 0,
+                        y: (this.boxSize - 50)
+                    },
+                    curve: AnimationCurve.easeIn,
+                    duration: 100,
+                })
+            }, 100)
+
+            
+
+            if(this.infected){
+                pulse_danger.animate({
+                    scale: { x: 9, y: 9},
+                    opacity: 0,
+                    curve: AnimationCurve.easeIn,
+                    duration: 1000,
+                    iterations: Number.POSITIVE_INFINITY,
+                })
+            }else{
+                pulse.animate({
+                    scale: { x: 6, y: 6},
+                    opacity: 0,
+                    curve: AnimationCurve.easeIn,
+                    duration: 2000,
+                    iterations: Number.POSITIVE_INFINITY,
+                })
+            }
+
         },
         
         swipeBox2(args){
@@ -671,7 +596,7 @@ export default {
                 box.animate({
                     translate: {
                         x: 0,
-                        y: platformModule.screen.mainScreen.heightDIPs - 140
+                        y: (this.boxSize - 50)
                     },
                     curve: AnimationCurve.easeIn,
                     duration: 400,
@@ -826,6 +751,8 @@ export default {
 
                 });
 
+                this.getMunicipalities()
+
                 this.infoDirection.direction = r.results[0].formatted_address
                 this.infoDirection.placeId = r.results[0].place_id
                 
@@ -973,12 +900,16 @@ export default {
 
         //Alert de iniciar analizis
         startAnalysis(args){
-            // console.log(`screen.mainScreen.heightPixels ${platformModule.screen.mainScreen.heightDIPs - 50}`);
-            // return
             console.log(args.action)
 
             const page = args.object.page
             const image = page.getViewById('image-1')
+
+
+            const pulse_1 = page.getViewById('pulse-1')
+            const pulse_2 = page.getViewById('pulse-2')
+            const pulse_danger = page.getViewById('pulse-danger')
+
             if(args.action === 'down'){
                 image.animate({
                     scale: {
@@ -1000,6 +931,31 @@ export default {
                     opacity: 1,
                     curve: AnimationCurve.easeIn,
                     duration: 80,
+                })
+
+                pulse_1.animate({
+                    scale: { x: 9, y: 9},
+                    opacity: 0,
+                    curve: AnimationCurve.easeIn,
+                    duration: 1300,
+                    iterations: Number.POSITIVE_INFINITY,
+                })
+
+                pulse_2.animate({
+                    scale: { x: 9, y: 9},
+                    opacity: 0,
+                    curve: AnimationCurve.easeIn,
+                    duration: 1300,
+                    delay: 500,
+                    iterations: Number.POSITIVE_INFINITY,
+                })
+
+                pulse_danger.animate({
+                    scale: { x: 9, y: 9},
+                    opacity: 0,
+                    curve: AnimationCurve.easeIn,
+                    duration: 1000,
+                    iterations: Number.POSITIVE_INFINITY,
                 })
 
                 this.analyzing = true
@@ -1136,6 +1092,12 @@ export default {
                 this.getNotification(2)
                 //Cambiar a false
                 this.infected = false
+
+                //Solo si el usuario ya se encontraba expuesto es que cambiamos la variable
+                //para tener el background naranja
+                if(this.user.infection){
+                    this.infected = true
+                }
             }
         },
 

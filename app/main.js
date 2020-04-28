@@ -16,7 +16,7 @@ import Sidedrawer from './components/shared/Sidedrawer.vue'
 import Actionbar from './components/shared/Actionbar.vue'
 
 if(TNS_ENV !== 'production') {
-  Vue.use(VueDevtools, { host: '192.168.0.7' })
+  Vue.use(VueDevtools, { host: '192.168.0.3' })
 }
 
 //Local notifications

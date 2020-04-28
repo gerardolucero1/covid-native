@@ -6,37 +6,29 @@
             </GridLayout>
         </ActionBar>
 
-        <RadSideDrawer ref="drawer">
-            <Sidedrawer />
 
-            <GridLayout ~mainContent columns="*" rows="*" backgroundColor="#F3F3F3">
-                <ScrollView col="0" row="0">
-                    <WrapLayout orientation="vertical" width="90%" paddingBottom="20">
-                        
-                        <GridLayout rows="*, 2*" colums="*">
-                            <StackLayout row="0" col="0">
-                                <Label class="font-awesome" text="" horizontalAlignment="center" marginTop="20" fontSize="50" fontWeight="bold" textWrap="true" />
-                            </StackLayout>
+        <GridLayout rows="*, 2*" colums="*" backgroundColor="#F3F3F3">   
+            <StackLayout row="0" col="1">
+                <FlexboxLayout width="100%" height="100%" class="box-1" justifyContent="center" alignItems="flex-end">
+                    <Image src="~/assets/images/terms.png" width="150" stretch="aspectFit" verticalAlignment="center" horizontalAlignment="center" />
+                    
+                </FlexboxLayout>
+            </StackLayout>
 
-                            <StackLayout row="1" col="0">
-                                
-                                <StackLayout marginTop="20">
-                                   <Label textAlignemnt="center" text="Antes de usar esta aplicación revisa los términos  y condiciones del servicio en el siguiente enlace:" textWrap="true" />
-                                    <HtmlView html="https://prevencion.partnergrammer.com/index.php/terminos-y-condiciones/"></HtmlView>
-                                </StackLayout>
+            <StackLayout row="1" col="0" width="70%">
+                
+                <StackLayout marginTop="20">
+                    <Label textAlignment="center" color="#9D9D9D" text="Antes de usar esta aplicación revisa los términos  y condiciones del servicio en el siguiente enlace:" textWrap="true" />
+                    <HtmlView html="https://prevencion.partnergrammer.com/index.php/terminos-y-condiciones/"></HtmlView>
+                </StackLayout>
 
-                                <FlexboxLayout justifyContent="center" alignItems="space-around" marginTop="15">
-                                    <Button text="ACEPTAR" backgroundColor="green" marginRight="10" borderRadius="20" padding="10 20" color="white" @tap="acceptTerms" />
-                                    <Button text="DECLINAR" backgroundColor="red" borderRadius="20" padding="10 20" color="white" @tap="goToLogin" />
-                                    
-                                </FlexboxLayout>
-                            </StackLayout>
-                        </GridLayout>
-                        
-                    </WrapLayout>
-                </ScrollView>
-            </GridLayout>
-        </RadSideDrawer>
+                <FlexboxLayout justifyContent="center" alignItems="space-around" marginTop="15">
+                    <Button text="ACEPTAR" backgroundColor="#2F4095" marginRight="10" borderRadius="20" padding="10 20" color="white" @tap="acceptTerms" />
+                    <Button text="DECLINAR" backgroundColor="red" borderRadius="20" padding="10 20" color="white" @tap="goToLogin" />
+                    
+                </FlexboxLayout>
+            </StackLayout>
+        </GridLayout>
 
         
     </Page>
@@ -59,7 +51,7 @@ const httpModule = require("tns-core-modules/http");
 let moment = require('moment')
 
 //Pages
-import Home from '../pages/Home'
+import Index from '../pages/Index'
 import Login from '../pages/user/Login'
 
 export default {
@@ -91,7 +83,7 @@ export default {
         },
 
         goToHome(){
-            this.$navigateTo(Home)
+            this.$navigateTo(Index)
         },
 
         goToLogin(){
