@@ -19,3 +19,14 @@ app/components/key.js
 
 # Bundles
 Prevenapp.aab
+
+.DS_Store
+**/*.log
+tags
+
+### Vue ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*

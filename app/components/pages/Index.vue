@@ -188,10 +188,8 @@
                                                 <FlexboxLayout width="50" height="50" borderRadius="25" justifyContent="center" alignItems="center" backgroundColor="#ED1806">
                                                     <Label color="white" class="font-awesome" text="" fontSize="20" textWrap="true" />
                                                 </FlexboxLayout>
-                                                
-                                                <Label marginTop="10" color="#707070" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
+                                                <Label textWrap="true" textAlignment="center" marginTop="10" color="#707070" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" />
                                             </StackLayout>
-                                                
                                         </StackLayout>
                                         
                                         
@@ -238,8 +236,7 @@
                                         <FlexboxLayout width="50" height="50" borderRadius="25" justifyContent="center" alignItems="center" backgroundColor="#ED1806">
                                             <Label color="white" class="font-awesome" text="" fontSize="20" textWrap="true" />
                                         </FlexboxLayout>
-                                        
-                                        <Label marginTop="10" color="#707070"  :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
+                                        <Label textWrap="true" textAlignment="center" marginTop="10" color="#707070" :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" />
                                     </StackLayout>
                                 </StackLayout>
 
