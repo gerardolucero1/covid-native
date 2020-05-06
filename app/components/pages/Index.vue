@@ -734,9 +734,18 @@ export default {
         //Obtenemos la direccion por medio de las coordenadas dadas
         reverseGeo(){
             httpModule.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origin.latitude},${this.origin.longitude}&key=${this.apiKey}`).then((r) => {
+                let compound_code = r.plus_code.compound_code.split(",")
+                let split_city = compound_code[0].substr(compound_code[0].indexOf(' ')+1)
+
                 r.results[0].address_components.forEach(element => {
                     if (element.types.includes('locality')){
-                       this.city = element.long_name
+                        if (split_city != element.long_name) {
+                            this.city = split_city
+                        } else {
+                            this.city = element.long_name
+                        }
+                    } else {
+                        this.city = split_city
                     }
 
                     if (element.types.includes('administrative_area_level_1')){
@@ -745,7 +754,6 @@ export default {
 
                     console.log(`Este es el estado: ${this.state}`)
                     console.log(`Esta es la ciudad: ${this.city}`)
-
                 });
 
                 this.getMunicipalities()
