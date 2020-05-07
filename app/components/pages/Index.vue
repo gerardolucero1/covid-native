@@ -554,7 +554,7 @@ export default {
                     curve: AnimationCurve.easeIn,
                     duration: 100,
                 })
-            }, 100)
+            }, 500)
 
             
 

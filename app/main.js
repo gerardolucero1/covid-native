@@ -3,6 +3,7 @@ import Login from './components/pages/user/Login.vue'
 import Home from './components/pages/Home.vue'
 import Index from './components/pages/Index.vue'
 import Terms from './components/pages/Terms.vue'
+import Info from './components/pages/Info.vue'
 import App from './components/App.vue'
 import ModalLogin from './components/modals/ModalLogin'
 
@@ -84,6 +85,7 @@ new Vue({
                         if(user.terms){
                             this.$store.commit('updateUser', user)
                             this.$navigateTo(Index)
+                            // this.$navigateTo(Info)
                         }else{
                             this.$store.commit('updateUser', user)
                             this.$navigateTo(Terms)
