@@ -188,10 +188,8 @@
                                                 <FlexboxLayout width="50" height="50" borderRadius="25" justifyContent="center" alignItems="center" backgroundColor="#ED1806">
                                                     <Label color="white" class="font-awesome" text="" fontSize="20" textWrap="true" />
                                                 </FlexboxLayout>
-                                                
-                                                <Label marginTop="10" color="#707070" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" textWrap="true" />
+                                                <Label textWrap="true" textAlignment="center" marginTop="10" color="#707070" :text="`Detectamos que te encuentras en un municipio del cual no contamos con información oficial. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles para algunos municipios del estado de Chihuahua.`" />
                                             </StackLayout>
-                                                
                                         </StackLayout>
                                         
                                         
@@ -238,8 +236,7 @@
                                         <FlexboxLayout width="50" height="50" borderRadius="25" justifyContent="center" alignItems="center" backgroundColor="#ED1806">
                                             <Label color="white" class="font-awesome" text="" fontSize="20" textWrap="true" />
                                         </FlexboxLayout>
-                                        
-                                        <Label marginTop="10" color="#707070"  :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" textWrap="true" />
+                                        <Label textWrap="true" textAlignment="center" marginTop="10" color="#707070" :text="`Detectamos que te encuentras fuera del estado de Chihuahua. Por el momento, los datos mostrados aquí y PrevenApp solo se encuentran disponibles dentro del estado de Chihuahua.`" />
                                     </StackLayout>
                                 </StackLayout>
 
@@ -737,9 +734,18 @@ export default {
         //Obtenemos la direccion por medio de las coordenadas dadas
         reverseGeo(){
             httpModule.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origin.latitude},${this.origin.longitude}&key=${this.apiKey}`).then((r) => {
+                let compound_code = r.plus_code.compound_code.split(",")
+                let split_city = compound_code[0].substr(compound_code[0].indexOf(' ')+1)
+
                 r.results[0].address_components.forEach(element => {
                     if (element.types.includes('locality')){
-                       this.city = element.long_name
+                        if (split_city != element.long_name) {
+                            this.city = split_city
+                        } else {
+                            this.city = element.long_name
+                        }
+                    } else {
+                        this.city = split_city
                     }
 
                     if (element.types.includes('administrative_area_level_1')){
@@ -748,7 +754,6 @@ export default {
 
                     console.log(`Este es el estado: ${this.state}`)
                     console.log(`Esta es la ciudad: ${this.city}`)
-
                 });
 
                 this.getMunicipalities()
