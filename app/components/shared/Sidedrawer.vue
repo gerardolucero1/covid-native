@@ -214,6 +214,7 @@ export default {
                 transition: {
                     name: 'fade',
                 },
+                clearHistory: true,
             })
         },
 
