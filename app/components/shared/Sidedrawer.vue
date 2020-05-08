@@ -44,13 +44,13 @@
             <FlexboxLayout v-if="android" height="200" justifyContent="center" alignItems="center" flexDirection="column">
                 <Image width="50" marginBottom="10" src="http://partnergrammer.com/img/logoHeaderBlack.png" />
 
-                <Label color="black" :text="user.name" fontWeight="bold" fontSize="15" />
-                <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="12" />
+                <Label color="black" :text="user.name" fontWeight="bold" fontSize="5" />
+                <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="5" />
             </FlexboxLayout>
 
             <FlexboxLayout v-else height="100" justifyContent="center" alignItems="center" flexDirection="column">
-                <Label color="black" :text="user.name" fontWeight="bold" fontSize="15" />
-                <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="12" />
+                <Label color="black" :text="user.name" fontWeight="bold" fontSize="18" />
+                <Label color="#5FA5C4" :text="user.email" fontWeight="bold" fontSize="16" />
             </FlexboxLayout>
 
             <FlexboxLayout class="drawer-item-container" justifyContent="flex-start" alignItems="center" @tap="goToHome">
