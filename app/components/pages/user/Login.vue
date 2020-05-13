@@ -84,6 +84,7 @@ import { isAndroid, isIOS } from "tns-core-modules/ui/page";
 //Pages
 import Home from '../Home.vue'
 import Index from '../Index.vue'
+import Form from '../Form.vue'
 import Register from '../user/Register.vue'
 import Terms from '../Terms'
 
@@ -163,6 +164,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -226,6 +228,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -259,6 +262,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -292,6 +296,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -324,7 +329,11 @@ export default {
 
                     if(user.terms){
                         this.$store.commit('updateUser', user)
-                        this.$navigateTo(Index)
+                        if(!user.cuestionario){
+                            this.$navigateTo(Form)
+                        }else{
+                            this.$navigateTo(Index)
+                        }
                     }else{
                         this.$store.commit('updateUser', user)
                         this.$navigateTo(Terms)

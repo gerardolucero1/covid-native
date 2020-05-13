@@ -52,6 +52,7 @@ let moment = require('moment')
 
 //Pages
 import Index from '../pages/Index'
+import Form from '../pages/Form'
 import Login from '../pages/user/Login'
 
 export default {
@@ -76,14 +77,14 @@ export default {
                                                         .doc(this.user.uid)
                                                         .update({ terms: true })
 
-                this.goToHome()
+                this.goToForm()
             } catch (error) {
-                console.lgo(error)
+                console.log(error)
             }
         },
 
-        goToHome(){
-            this.$navigateTo(Index)
+        goToForm(){
+            this.$navigateTo(Form)
         },
 
         goToLogin(){

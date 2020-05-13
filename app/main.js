@@ -4,6 +4,7 @@ import Home from './components/pages/Home.vue'
 import Index from './components/pages/Index.vue'
 import Terms from './components/pages/Terms.vue'
 import Info from './components/pages/Info.vue'
+import Form from './components/pages/Form.vue'
 import App from './components/App.vue'
 import ModalLogin from './components/modals/ModalLogin'
 
@@ -57,6 +58,16 @@ Vue.config.debug = (TNS_ENV !== 'production')
 
 Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer)
 Vue.registerElement('MLKitBarcodeScanner', () => require('nativescript-plugin-firebase/mlkit/barcodescanning').MLKitBarcodeScanner)
+Vue.registerElement(
+    'CheckBox',
+    () => require('@nstudio/nativescript-checkbox').CheckBox,
+    {
+      model: {
+        prop: 'checked',
+        event: 'checkedChange'
+      }
+    }
+  );
 Vue.component('Sidedrawer', Sidedrawer)
 Vue.component('Actionbar', Actionbar)
 Vue.use(Vuelidate)
@@ -84,8 +95,11 @@ new Vue({
 
                         if(user.terms){
                             this.$store.commit('updateUser', user)
-                            this.$navigateTo(Index)
-                            // this.$navigateTo(Info)
+                            if(!user.cuestionario){
+                                this.$navigateTo(Form)
+                            }else{
+                                this.$navigateTo(Index)
+                            }
                         }else{
                             this.$store.commit('updateUser', user)
                             this.$navigateTo(Terms)
