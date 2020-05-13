@@ -324,7 +324,7 @@ export default {
 
                     if(user.terms){
                         this.$store.commit('updateUser', user)
-                        this.$navigateTo(Index)
+                        this.$navigateTo(Index, { clearHistory: true })
                     }else{
                         this.$store.commit('updateUser', user)
                         this.$navigateTo(Terms)

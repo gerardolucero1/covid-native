@@ -23,6 +23,7 @@ Prevenapp.aab
 .DS_Store
 **/*.log
 tags
+.vscode
 
 ### Vue ###
 .DS_*
