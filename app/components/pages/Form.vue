@@ -26,11 +26,11 @@
                             <StackLayout v-if="control == 1" width="100%" height="100%" backgroundColor="#2F4095" borderRadius="20 20 0 0" padding="20 30"> 
                                 <GridLayout rows="*, *, 50" columns="*">
                                     <StackLayout row="0" col="0">
-                                        <Image src="~/assets/images/info-3.png" stretch="aspectFit" />
+                                        <Image src="~/assets/images/form1.png" stretch="aspectFit" />
                                     </StackLayout>
                                     <FlexboxLayout row="1" col="0" justifyContent="center" alignItems="center" flexDirection="column">
-                                        <Label color="white" text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed a illo, pariatur cum beatae expedita rem aliquid architecto repellendus, officiis libero illum suscipit voluptates atque. Mollitia veniam aliquid voluptate aspernatur?" textWrap="true" />
-                                        <Label color="white" marginTop="10" text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed a illo, pariatur cum beatae expedita rem aliquid architecto repellendus, officiis libero illum suscipit voluptates atque. Mollitia veniam aliquid voluptate aspernatur?" textWrap="true" />
+                                        <Label color="white" text="Esta herramienta puede ayudarte a comprender que hacer con respecto al COVID-19. Responde las siguientes preguntas sobre síntomas, viajes, y contacto que has tenido con otros para conocer tu estado." textWrap="true" />
+                                        <Label color="white" marginTop="10" text="Las recomendaciones proporcionadas por esta herramienta no reemplazan la atencion médica y no deberian de usarse para diagnosticar o tratar condiciones médicas." textWrap="true" />
                                     </FlexboxLayout>
                                     <FlexboxLayout row="2" col="0" justifyContent="center" alignItems="center" borderRadius="10">
                                         <Button text="INICIAR CUESTIONARIO" backgroundColor="white" color="black" width="100%" @tap="control++" />
@@ -43,7 +43,7 @@
                             <StackLayout v-if="control == 2" width="100%" height="100%" backgroundColor="white" borderRadius="20 20 0 0" padding="20 30"> 
                                 <GridLayout rows="*, *, *, 50" columns="*">
                                     <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center" flexDirection="column">
-                                        <Image src="~/assets/images/info-3.png" stretch="none" width="100" />
+                                        <Image src="~/assets/images/form2.png" stretch="aspectFit" width="100" />
                                         <FlexboxLayout justifyContent="center" alignItems="center" flexDirection="column">
                                             <Label fontSize="17" fontWeight="bold" text="¿Es una emergencia?" textWrap="true" />
                                             <Label fontWeight="bold" text="Marca al 911 si estas sintiendo:" textWrap="true" />
@@ -93,9 +93,9 @@
 
                             <!-- finalizar -->
                             <StackLayout v-if="(control == 3) && (form1)" width="100%" height="100%" backgroundColor="white" borderRadius="20 20 0 0" padding="20 30"> 
-                                <GridLayout rows="*, 2*" columns="*">
+                                <GridLayout rows="*, 3*" columns="*">
                                     <StackLayout row="0" col="0">
-                                        <Image src="~/assets/images/info-3.png" stretch="aspectFit" />
+                                        <Image src="~/assets/images/form3.png" stretch="aspectFit" width="100" />
                                     </StackLayout>
                                     <FlexboxLayout row="1" col="0" justifyContent="center" alignItems="center" flexDirection="column">
                                         <Label textAlignment="center" fontWeight="bold" fontSize="25" color="black" text="De acuerdo a tus respuestas, necesitas buscar atencion medica inmediatamente" textWrap="true" />
@@ -448,7 +448,7 @@
                             <StackLayout v-if="control == 9" width="100%" height="100%" backgroundColor="#2F4095" borderRadius="20 20 0 0" padding="20 30"> 
                                 <GridLayout rows="*, *, 50" columns="*">
                                     <StackLayout row="0" col="0">
-                                        <Image src="~/assets/images/info-3.png" stretch="aspectFit" />
+                                        <Image src="~/assets/images/form4.png" stretch="aspectFit" />
                                     </StackLayout>
                                     <FlexboxLayout v-if="flag" row="1" col="0" justifyContent="center" alignItems="center" flexDirection="column">
                                         <Label color="white" text="Es importante que te comuniques con un profesional de la salud proque algunas de tus respuestas nos indican que puedes estar en una situacion de riesgo" textWrap="true" />
@@ -495,7 +495,7 @@ export default {
 
     data(){
         return{
-            control: 1
+            control: 3
             ,
             // Form
             form1: false,
@@ -528,7 +528,10 @@ export default {
             form7: false,
 
             contador: 0,
-            flag: true,
+            flag: false,
+
+            objeto1: {},
+            objeto2: {},
         }
     },
 
@@ -540,16 +543,22 @@ export default {
 
     watch: {
         control(){
+
             if(this.control == 0){
                 this.control = 1
             }
 
-            if(this.control == 9){
-                this.acceptCuestionario()
+            if(this.control == 5){
+                this.objeto1 = JSON.parse(JSON.stringify(this.sintomas))
             }
 
-            return
+            if(this.control == 6){
+                this.objeto2 = JSON.parse(JSON.stringify(this.condiciones))
+            }
+
+            if(this.control == 9){
                 let valor = 0
+                
                 switch (this.form2) {
                     case 1:
                         valor = 0
@@ -568,61 +577,72 @@ export default {
                         this.contador = this.contador
                         break;
                 }
-
+                
                 valor = 0
-                for (const prop in this.sintomas) {
-                    if(this.sintomas[prop] == true){
+                for (const prop in this.objeto1) {
+                    if(this.objeto1[prop] == true){
                         valor++
                     }
 
-                    if(prop == 'sintoma9' && this.sintomas[prop] == false) valor = 0
+                    if(prop == 'sintoma9' && this.objeto1[prop] == true) valor = 0
                 }
 
                 this.contador = this.contador + valor
 
                 valor = 0
-                for (const prop in this.condiciones) {
-                    if(this.sintomas[prop] == true){
+                for (const prop in this.objeto2) {
+                    if(this.objeto2[prop] == true){
                         valor++
                     }
 
-                    if(prop == 'sintoma10' && this.condiciones[prop] == false) valor = 0
+                    if(prop == 'sintoma10' && this.objeto2[prop] == true) valor = 0
                 }
-                contador = contador + valor
+                this.contador = this.contador + valor
 
                 valor = 0
                 if(this.form5) valor++
-                contador = contador + valor
+                this.contador = this.contador + valor
 
                 valor = 0
                 switch (this.form6) {
                     case 1:
                         valor = 3
-                        contador = contador + valor
+                        this.contador = this.contador + valor
                         break;
                     case 2:
                         valor = 2
-                        contador = contador + valor
+                        this.contador = this.contador + valor
                         break;
                     case 3:
                         valor = 0
-                        contador = contador + valor
+                        this.contador = this.contador + valor
                         break;
                     case 4:
                         valor = 1
-                        contador = contador + valor
+                        this.contador = this.contador + valor
                         break;
                 
                     default:
-                        contador = contador
+                        this.contador = this.contador
                         break;
                 }
 
                 valor = 0
                 if(this.form7) valor++
-                contador = contador + valor
+                this.contador = this.contador + valor
 
                 console.log(this.contador)
+                if(this.contador < 10){
+                    this.flag = false
+                }else if(this.contador >= 10){
+                    this.flag = true
+                }
+            }
+
+            
+            
+
+                
         }
     },
 
