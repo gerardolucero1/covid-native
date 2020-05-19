@@ -495,8 +495,7 @@ export default {
 
     data(){
         return{
-            control: 3
-            ,
+            control: 1,
             // Form
             form1: false,
             form2: 1,
