@@ -3,5 +3,9 @@ module.exports = function (api) {
 
   return {
     presets: [['@babel/env', { targets: { esmodules: true } }]],
+
+    plugins: [
+      ["@babel/plugin-proposal-decorators", { "legacy": true }]
+    ]
   }
 }

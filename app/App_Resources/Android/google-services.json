@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "53960835934",
+    "firebase_url": "https://prevenapp-5a803.firebaseio.com",
+    "project_id": "prevenapp-5a803",
+    "storage_bucket": "prevenapp-5a803.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53960835934:android:ff89970b81a8eb5d2905cf",
+        "android_client_info": {
+          "package_name": "com.partnergrammer.prevenapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53960835934-ep7u3ks93ti6392h7huehncke41cmdf3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.partnergrammer.prevenapp",
+            "certificate_hash": "e7c1598a35722b6acb8b243c55eb5345a8d12288"
+          }
+        },
+        {
+          "client_id": "53960835934-ls7nal785rtk4dfvita5fq45tn4oju8r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.partnergrammer.prevenapp",
+            "certificate_hash": "5e898fb4af30c6e88838ce627baad4521930f8fa"
+          }
+        },
+        {
+          "client_id": "53960835934-r5ihqhnpgnti89inh88hlu2vf8so026l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.partnergrammer.prevenapp",
+            "certificate_hash": "4d01dc23127d0e4fbcc9ce69f3b1f792b7100551"
+          }
+        },
+        {
+          "client_id": "53960835934-t8tudccjhh85kp28da1mboqerkm6qe7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe29u16J1wMY-dsjuu5wQpNb5op2oWSw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53960835934-dst74905h19mvq56udoabunuu10el7uc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "53960835934-n97b86olkoerl40gvuvu6npsfvl5d64q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.partnergrammer.prevenapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>53960835934-n97b86olkoerl40gvuvu6npsfvl5d64q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.53960835934-n97b86olkoerl40gvuvu6npsfvl5d64q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>53960835934-ep7u3ks93ti6392h7huehncke41cmdf3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAFA4Q7TeS5SxhxLQhh3p5Hbb2bY2YsDk8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>53960835934</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.partnergrammer.prevenapp</string>
+	<key>PROJECT_ID</key>
+	<string>prevenapp-5a803</string>
+	<key>STORAGE_BUCKET</key>
+	<string>prevenapp-5a803.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:53960835934:ios:ad85c364b8c23c602905cf</string>
+	<key>DATABASE_URL</key>
+	<string>https://prevenapp-5a803.firebaseio.com</string>
+</dict>
+</plist>
