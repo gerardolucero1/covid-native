@@ -228,6 +228,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                     if(response.additionalUserInfo.isNewUser){
@@ -270,6 +271,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -303,6 +305,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)
@@ -337,6 +340,7 @@ export default {
                             infection: false,
                             userType: 'user',
                             terms: false,
+                            cuestionario: false,
                         }
 
                         await firebase.firestore.collection('users').doc(user.uid).set(user)

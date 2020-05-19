@@ -73,6 +73,11 @@
                 <Label color="black" fontSize="13" class="drawer-item" text="Noticias" />
             </FlexboxLayout>
 
+            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToForm">
+                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
+                <Label color="black" fontSize="13" class="drawer-item" text="Cuestionario" />
+            </FlexboxLayout>
+
             <StackLayout class="line" marginTop="20" />
 
             <!-- <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="logout">
@@ -94,17 +99,6 @@
                 <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
                 <Label color="black" fontSize="13" class="drawer-item" text="Salir"/>
             </FlexboxLayout>
-
-            <!-- <StackLayout class="line" marginTop="20" />
-
-            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="center" alignItems="center">
-                <Label color="black" fontSize="13" text="Si presentas sintomas o requieres ayuda, marca el siguiente numero:" textWrap="true"/>
-            </FlexboxLayout>
-
-            <FlexboxLayout class="drawer-item-container" marginTop="20" justifyContent="flex-start" alignItems="center" @tap="goToPhone">
-                <Label text="" textWrap="true" fontSize="18" color="black" class="font-awesome" />
-                <Label color="black" fontSize="13" class="drawer-item" text="200-48-10"/>
-            </FlexboxLayout> -->
         </StackLayout>
 
         <FlexboxLayout row="1" justifyContent="center" alignItems="center" flexDirection="column">
@@ -132,6 +126,7 @@ import Login from '../pages/user/Login'
 import QR from '../pages/user/QR'
 import Home from '../pages/Home'
 import Index from '../pages/Index'
+import Form from '../pages/Form'
 import Recomendations from '../pages/Recomendations'
 import Global from '../pages/Global'
 import Dashboard from '../pages/user/Dashboard'
@@ -215,6 +210,15 @@ export default {
                     name: 'fade',
                 },
                 clearHistory: true,
+            })
+        },
+
+        goToForm(){
+            this.$navigateTo(Form, {
+                animated: true,
+                transition: {
+                    name: 'fade',
+                },
             })
         },
 
