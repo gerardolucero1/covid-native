@@ -22,10 +22,13 @@
                     <HtmlView html="https://prevencion.partnergrammer.com/index.php/terminos-y-condiciones/"></HtmlView>
                 </StackLayout>
 
+                <StackLayout marginTop="10">
+                    <Label textAlignment="center" fontSize="11" color="#9D9D9D" text="Toda la información recolectada es usada como parte de datos estadísticos para mejorar los servicios ofrecidos por el gobierno local y la experiencia de usuario. Tus datos son confidenciales y nunca son compartidos con terceros; puedes leer más información sobre esto en nuestros términos y condiciones." textWrap="true" />
+                </StackLayout>
+
                 <FlexboxLayout justifyContent="center" alignItems="space-around" marginTop="15">
                     <Button text="ACEPTAR" backgroundColor="#2F4095" marginRight="10" borderRadius="20" padding="10 20" color="white" @tap="acceptTerms" />
                     <Button text="DECLINAR" backgroundColor="red" borderRadius="20" padding="10 20" color="white" @tap="goToLogin" />
-                    
                 </FlexboxLayout>
             </StackLayout>
         </GridLayout>
