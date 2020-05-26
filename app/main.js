@@ -5,6 +5,7 @@ import Index from './components/pages/Index.vue'
 import Terms from './components/pages/Terms.vue'
 import Info from './components/pages/Info.vue'
 import Form from './components/pages/Form.vue'
+import Admin from './components/pages/Admin.vue'
 import App from './components/App.vue'
 import ModalLogin from './components/modals/ModalLogin'
 
@@ -18,7 +19,7 @@ import Sidedrawer from './components/shared/Sidedrawer.vue'
 import Actionbar from './components/shared/Actionbar.vue'
 
 if(TNS_ENV !== 'production') {
-  Vue.use(VueDevtools, { host: '192.168.0.3' })
+  Vue.use(VueDevtools, { host: '192.168.0.2' })
 }
 
 //Local notifications
