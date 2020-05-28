@@ -24,6 +24,12 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location history will not be saved on your device, and never shared with others, your history locations register will be used only for stadistic data</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location history will not be saved on your device, and never shared with others, your history locations register will be used only for stadistic data</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location history will not be saved on your device, and never shared with others, your history locations register will be used only for stadistic data</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
