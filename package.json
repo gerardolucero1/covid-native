@@ -19,7 +19,7 @@
     "@nstudio/nativescript-loading-indicator": "^3.0.4",
     "@vue/devtools": "^5.3.3",
     "@webileapps/nativescript-radiobutton": "^0.2.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "moment": "^2.24.0",
     "nativescript-geolocation": "^5.1.0",
     "nativescript-local-notifications": "^4.2.1",
