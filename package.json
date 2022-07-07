@@ -20,7 +20,7 @@
     "@vue/devtools": "^5.3.3",
     "@webileapps/nativescript-radiobutton": "^0.2.7",
     "axios": "^0.19.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "nativescript-geolocation": "^5.1.0",
     "nativescript-local-notifications": "^4.2.1",
     "nativescript-phone": "^1.4.1",
